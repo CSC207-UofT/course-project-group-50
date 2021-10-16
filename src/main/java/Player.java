@@ -27,6 +27,10 @@ public class Player {
         this.cash = cash;
     }
 
+    public void addCash(int amount) {
+        this.cash = this.cash + amount;
+    }
+
     public int getNetWorth() {
         return this.netWorth;
     }
