@@ -54,7 +54,7 @@ walkthrough.
 implement remaining classes/interfaces.
 - **Danny**: Worked on specifications and CRC cards. Will continue to implement classes & interfaces in order to ensure smooth
 interactions between classes.
-- **Steve**: Everything
+- **Steve**: Worked on specifications and CRC cards. Will continue to implement necessary parts of the program and make sure our program is congruent to clean architecture modelling.
 - **Parth**: Worked on CRC cards and walkthrough. Will continue to implement classes & interfaces in order to ensure smooth
 interactions between classes.
 - **Anis**: Worked on CRC cards and skeleton program. Will continue to refine CRC model and implement remaining classes/interfaces according to the principles of clean architecture
