@@ -1,6 +1,3 @@
-## Replace this README.md!
+## Simplified Monopoly
 
-This is a standard README.md file for you to replace. You'll want to include your own content here!
-
-MD (Markdown) files use [Markdown formatting](https://guides.github.com/features/mastering-markdown/): 
-these look very much like .txt files, so you can write them in a very similar way.
+Our goal is to create a simplified version of the popular real-estate board game, Monopoly. Players participate in a game with up to three other players. Before the game begins, players can set a net worth goal and a maximum number of rounds. The objective of the game is to be the first player to reach this net worth goal within the specified maximum number of rounds. If all but one player has gone bankrupt, the remaining non-bankrupt player wins. Each player starts with $1000 in cash and players take turns rolling a die, moving across the board, interacting with special board tiles (Jail, Auction, Surprise tiles), paying rent to other players, and buying, selling, auctioning, trading, and upgrading properties (cities and public properties) until the game ends.
