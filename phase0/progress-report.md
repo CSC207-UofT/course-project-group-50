@@ -46,23 +46,19 @@ the controller’s `BoardManager` from the *runPlayerSetup()** method, which con
 walkthrough.
 
 - ### Skeleton Program Output
+ ![](walkthrough-output.png)
 
 ## Contribution
 
-- **Jacqueline**
- - Worked on specification and skeleton program. Going forward, will continue to refine CRC model and gradually
+- **Jacqueline**: Worked on specification and skeleton program. Going forward, will continue to refine CRC model and gradually
 implement remaining classes/interfaces.
-- **Danny**
- - Worked on specifications and CRC cards. Will continue to implement classes & interfaces in order to ensure smooth
+- **Danny**: Worked on specifications and CRC cards. Will continue to implement classes & interfaces in order to ensure smooth
 interactions between classes.
-- **Steve**
- - Everything
-- **Parth**
- - TEAM PARTH
-- **Anis**
- - I am a troll
-- **Samooj**
- - I am also a troll
+- **Steve**: Everything
+- **Parth**: Worked on CRC cards and walkthrough. Will continue to implement classes & interfaces in order to ensure smooth
+interactions between classes.
+- **Anis**: Worked on CRC cards and skeleton program. Will continue to refine CRC model and implement remaining classes/interfaces according to the principles of clean architecture
+- **Samooj**: Worked on unit tests and CRC cards. Will continue to refine CRC model and implement classes/interfaces.
 
 ## What worked out
 
