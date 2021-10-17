@@ -1,4 +1,4 @@
-#Progress Report Phase 0
+# Progress Report Phase 0
 
 This is our progress report as of Phase 0. We wish to add more details as we start getting into conceiving how we will
 implement various components of the program.
@@ -6,7 +6,7 @@ implement various components of the program.
 We also hope this becomes a physical evidence on how much we've progressed throughout the term and push us further
 into collaborative developing.
 
-##Specification
+## Specification
 Our goal is to create a simplified version of the popular real-estate board game, Monopoly. Players participate in a
 game with up to three other players. Before the game begins, players can set a net worth goal and a maximum number of
 rounds. The objective of the game is to be the first player to reach this net worth goal within the specified maximum
@@ -15,7 +15,7 @@ with $1000 in cash and players take turns rolling a die, moving across the board
 (Jail, Auction, Surprise tiles), paying rent to other players, and buying, selling, auctioning, trading, and upgrading
 properties (cities and public properties) until the game ends.
 
-##CRC Model
+## CRC Model
 
 **User Interface**: `CMDLineUI` takes in inputs from the user.
 
@@ -28,7 +28,7 @@ the controller and access entities such as `Tile`, `Board`, `Player`, etc.
 **Entities**: `Tile`, `Board`, `Player`, and many more classes act as the entities where they represent the domain of
 our game.
 
-##Scenario Walkthrough
+## Scenario Walkthrough
 When the program is run, the command line (`CmdLineUI`) prompts the user to input the numbers of players in the game
 (between 2 to 4 inclusive). Next, it asks the user to enter the usernames of each player.
 Then the `GameController` starts and runs the game. At the beginning of a game, the `GameController` works with the
@@ -36,7 +36,7 @@ Then the `GameController` starts and runs the game. At the beginning of a game, 
 Once this is set up, a string containing the `name`, `cash`, and `netWorth` of each player
 (the respective attributes of the `Player` objects) is displayed.
 
-##Skeleton Program
+## Skeleton Program
 For this program, we implemented `CmdLineUI` (framework), `GameController` (controller), `BoardManager`(use case interactor),
 `Player` and `Token` (both entities). In Main.java, we create an instance of our `GameController` and our `CmdLineUI`.
 We call `CmdLineUI`’s **runPlayerSetup()** to prompt the user for the total number of players and the usernames of each player
@@ -45,9 +45,9 @@ and to call the controller’s **runPlayerSetup()** method. The `GameController`
 the controller’s `BoardManager` from the *runPlayerSetup()** method, which contains a list of the players as described in the
 walkthrough.
 
-- ###Skeleton Program Output
+- ### Skeleton Program Output
 
-##Contribution
+## Contribution
 
 - **Jacqueline**
  - Worked on specification and skeleton program. Going forward, will continue to refine CRC model and gradually
@@ -64,7 +64,7 @@ interactions between classes.
 - **Samooj**
  - I am also a troll
 
-##What worked out
+## What worked out
 
 After writing down our specification, we started to make CRC card based on the choices of nouns and verbs we used in
 describing our specification. At first, we had no idea how to start these off but soon enough, we had over 20 cards
@@ -79,7 +79,7 @@ principles of clean architecture.
 the relationships between these objects in a standard Monopoly game.
 
 
-##Obstacles
+## Obstacles
 1. We are having some issues with IntelliJ and test cases clashing with gradle for which we had to find a fix in settings
 through stack overflow, is this supposed to happen or did we mess something up.
 2. Whether use cases can interact with other use cases, or should the controller interact with them.
