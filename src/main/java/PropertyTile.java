@@ -57,10 +57,18 @@ public class PropertyTile extends Tile implements Buyable{
         return this.owner;
     }
 
-    /*
-    I think this method does not belong in this class, purchase property should be managed by money manager
-    or board manager, wherever it is implemented we would call set owner and stuff to make it work, same for sell
-     */
-    public void purchase(Player buyer){}
-    public void sell(){}
+    public void purchase(Player buyer){
+        if((buyer.getCash() - price) > 0){
+            this.owned = true;
+            this.owner = buyer;
+            buyer.subtractCash(this.price);
+        }
+    }
+
+    public void sell(){
+        Player seller = this.owner;
+        this.owned = false;
+        this.owner = null;
+        seller.addCash(sale_price);
+    }
 }
