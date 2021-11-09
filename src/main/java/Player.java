@@ -3,12 +3,14 @@ public class Player {
     private int cash;
     private int netWorth;
     private Token token;
+    private boolean bankrupt;
 
     public Player(String username) {
         this.username = username;
         this.cash = 1000;
         this.netWorth = 1000;
         this.token = new Token();
+        this.bankrupt = false;
     }
 
     public String getUsername() {
@@ -28,7 +30,11 @@ public class Player {
     }
 
     public void addCash(int amount) {
-        this.cash = this.cash + amount;
+        this.cash += amount;
+    }
+
+    public void subtractCash(int amount) {
+        this.cash = this.cash - amount;
     }
 
     public int getNetWorth() {
@@ -37,6 +43,22 @@ public class Player {
 
     public void setNetWorth(int netWorth) {
         this.netWorth = netWorth;
+    }
+
+    public boolean isBankrupt() {
+        return this.bankrupt;
+    }
+
+    public void setBankrupt(boolean bankrupt) {
+        this.bankrupt = bankrupt;
+    }
+
+    public int roll() {
+        return (int)(Math.random()*6+1);
+    }
+
+    public Token getToken() {
+        return this.token;
     }
 
     @Override
