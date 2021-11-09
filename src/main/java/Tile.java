@@ -1,2 +1,2 @@
-public class Tile {
+abstract class Tile {
 }
