@@ -33,6 +33,10 @@ public class Player {
         this.cash += amount;
     }
 
+    public void subtractCash(int amount) {
+        this.cash = this.cash - amount;
+    }
+
     public int getNetWorth() {
         return this.netWorth;
     }
