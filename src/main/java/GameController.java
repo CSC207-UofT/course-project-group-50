@@ -38,16 +38,15 @@ public class GameController {
         // not sure where we are getting the usernames from
         List<String> usernames = new ArrayList<>();
         runPlayerSetUp(usernames);
-        this.boardManager.initializeLocations();
         List<Integer> order = generateOrder();
 
         while(!isWinner()) {
             for(int i : order) {
                 Player currPlayer = this.boardManager.getPlayers().get(i);
                 int currRoll = currPlayer.roll();
-                this.boardManager.updatePos(currPlayer, currRoll);
-
+                currPlayer.getToken().move(currRoll);
             }
+            updateBankruptcy();
         }
     }
 

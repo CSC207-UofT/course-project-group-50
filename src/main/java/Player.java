@@ -53,6 +53,10 @@ public class Player {
         return (int)(Math.random()*6+1);
     }
 
+    public Token getToken() {
+        return this.token;
+    }
+
     @Override
     public String toString() {
         return "Player " + username + " – " + "Cash: $" + this.cash  + ", Net Worth: $" + this.netWorth;
