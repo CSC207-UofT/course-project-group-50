@@ -13,7 +13,7 @@ public class PropertyTile extends Tile implements Buyable{
         this.name = name;
         this.price = price;
         this.rent = rent;
-        this.sale_price = (int) Math.round(rent * 0.8);
+        this.sale_price = (int) Math.round(price * 0.8);
         this.owned = false;
         this.owner = null;
     }
@@ -66,9 +66,8 @@ public class PropertyTile extends Tile implements Buyable{
     }
 
     public void sell(){
-        Player seller = this.owner;
-        this.owned = false;
+        this.owner.addCash(sale_price);
         this.owner = null;
-        seller.addCash(sale_price);
+        this.owned = false;
     }
 }
