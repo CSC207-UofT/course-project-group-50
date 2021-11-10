@@ -1,2 +1,2 @@
-public class SpecialTile {
+public class SpecialTile extends Tile{
 }
