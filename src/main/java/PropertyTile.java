@@ -9,7 +9,7 @@ public class PropertyTile extends Tile implements Buyable{
     private Player owner;
 
     //  I think we initialize all properties at the beginning of the game from a hard coded list with rent and price
-    public PropertyTile(String name, int rent, int price){
+    public PropertyTile(String name, int price, int rent){
         this.name = name;
         this.price = price;
         this.rent = rent;
