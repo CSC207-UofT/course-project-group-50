@@ -23,6 +23,8 @@ public class City extends PropertyTile implements Buildable, Auctionable, Buyabl
 
     // TODO: before implementing removeBuilding, we should have a conversation about what types of
     //  buildings / building identifiers we want to use here
+    // Steve: For the sake of interfaces, I am going to temporarily implement removeBuilding() Method.
+    public void removeBuilding(Building b) {buildings.remove(b); }
 
     public ArrayList<Building> getBuildings(){
         return buildings;
