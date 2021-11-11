@@ -9,7 +9,7 @@ public class PropertyTileTest {
 
     @Before
     public void setUp(){
-        test_property = new PropertyTile("samraj's house", 20, 200);
+        test_property = new PropertyTile("samraj's house", 200, 20);
         test_player = new Player("samrooj");
     }
 
@@ -50,22 +50,5 @@ public class PropertyTileTest {
     public void TestSetOwner_and_GetOwner() {
         test_property.setOwner(test_player);
         assertEquals(test_player, test_property.getOwner());
-    }
-
-    @Test(timeout = 50)
-    public void Testpurchase() {
-        test_property.purchase(test_player);
-        assertTrue(test_property.isOwned());
-        assertEquals(test_player, test_property.getOwner());
-        assertEquals(800, test_player.getCash());
-    }
-
-    @Test(timeout = 50)
-    public void Testsell() {
-        test_property.purchase(test_player);
-        test_property.sell();
-        assertFalse(test_property.isOwned());
-        assertNull(test_property.getOwner());
-        assertEquals(960, test_player.getCash());
     }
 }

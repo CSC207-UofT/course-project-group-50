@@ -22,11 +22,7 @@ public class PropertyTile extends Tile implements Buyable{
         return this.rent;
     }
 
-    /*
-    we would call this when someone builds(upgrades) on a property, we would probably pull the new_rent from a hard
-    coded list with all base properties and cost as well as new_rent, maybe a dictionary something like this
-    String(property name) -> tuple(int price, int rent, arraylist<int> upgrade_costs, arraylist<int> upgraded_rents)
-     */
+    // we would call this when someone builds(upgrades) on a property or collects a set
     public void setRent(int new_rent) {
         this.rent = new_rent;
     }
@@ -49,25 +45,18 @@ public class PropertyTile extends Tile implements Buyable{
     }
 
     public void setOwner(Player owner){
-        this.owner = owner;
-        this.owned = true;
+        if(owner != null){
+            this.owner = owner;
+            this.owned = true;
+        }else{
+            this.owner = null;
+            this.owned = false;
+        }
+
     }
 
     public Player getOwner() {
         return this.owner;
     }
 
-    public void purchase(Player buyer){
-        if((buyer.getCash() - price) > 0){
-            this.owned = true;
-            this.owner = buyer;
-            buyer.subtractCash(this.price);
-        }
-    }
-
-    public void sell(){
-        this.owner.addCash(sale_price);
-        this.owner = null;
-        this.owned = false;
-    }
 }
