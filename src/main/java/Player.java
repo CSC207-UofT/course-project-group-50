@@ -4,6 +4,8 @@ public class Player {
     private int netWorth;
     private Token token;
     private boolean bankrupt;
+    private boolean inJail;
+    private int jailDays;
 
     public Player(String username) {
         this.username = username;
@@ -11,6 +13,8 @@ public class Player {
         this.netWorth = 1000;
         this.token = new Token();
         this.bankrupt = false;
+        this.inJail = false;
+        this.jailDays = 0;
     }
 
     public String getUsername() {
@@ -45,6 +49,14 @@ public class Player {
         this.netWorth = netWorth;
     }
 
+    public void addNetWorth(int amount) {
+        this.netWorth += amount;
+    }
+
+    public void subtractNetWorth(int amount) {
+        this.netWorth = this.netWorth - amount;
+    }
+
     public boolean isBankrupt() {
         return this.bankrupt;
     }
@@ -55,6 +67,22 @@ public class Player {
 
     public int roll() {
         return (int)(Math.random()*6+1);
+    }
+
+    public int getJailDays() {
+        return this.jailDays;
+    }
+
+    public void setJailDays(int jailDays) {
+        this.jailDays = jailDays;
+    }
+
+    public void setInJail() {
+        this.inJail = true;
+    }
+
+    public boolean isInJail() {
+        return this.inJail;
     }
 
     public Token getToken() {

@@ -5,6 +5,8 @@ import java.util.stream.IntStream;
 
 public class GameController {
     private BoardManager boardManager;
+    private BankManager bankManager;
+    private PropertyManager propertyManager;
     private long id;
     private final String filepath;
     private final int netWorthGoal;
@@ -16,6 +18,8 @@ public class GameController {
         this.players = players;
         this.netWorthGoal = 5000;
         this.boardManager = new BoardManager();
+        this.bankManager = new BankManager();
+        this.propertyManager = new PropertyManager();
     }
 
     public GameController(long id, String filepath, ArrayList<Player> players, int netWorthGoal) {
@@ -24,6 +28,8 @@ public class GameController {
         this.players = players;
         this.netWorthGoal = netWorthGoal;
         this.boardManager = new BoardManager();
+        this.bankManager = new BankManager();
+        this.propertyManager = new PropertyManager();
     }
 
     public void runPlayerSetUp(List<String> usernames){
