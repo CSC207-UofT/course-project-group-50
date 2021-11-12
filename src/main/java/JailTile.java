@@ -9,10 +9,10 @@ public class JailTile extends SpecialTile{
             // released early.
         }
         else{
-        player.setInJail(true);
-        player.setJailDays(3);
-        System.out.println(player.getUsername() + ", you are in Jail! You will be released after " +
-                player.getJailDays() + " turns.");
+            player.setInJail(true);
+            player.setJailDays(3);
+            System.out.println(player.getUsername() + ", you are in Jail! You will be released after " +
+                    player.getJailDays() + " turns.");
         }
     }
 
