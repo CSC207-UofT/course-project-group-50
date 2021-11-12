@@ -77,8 +77,8 @@ public class Player {
         this.jailDays = jailDays;
     }
 
-    public void setInJail() {
-        this.inJail = true;
+    public void setInJail(boolean input) {
+        this.inJail = input;
     }
 
     public boolean isInJail() {
