@@ -2,10 +2,10 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class CmdLineUI {
+    public static Scanner scanner = new Scanner(System.in);
     public void runPlayerSetup(GameController controller) {
         int numPlayers;
         ArrayList<String> usernames = new ArrayList<>();
-        Scanner scanner = new Scanner(System.in);
 
         do {
             System.out.println("How many players do you want? Please pick a number from 2-4 (inclusive). ");
@@ -19,5 +19,6 @@ public class CmdLineUI {
             usernames.add(scanner.nextLine());
         }
         controller.runPlayerSetUp(usernames);
+
     }
 }
