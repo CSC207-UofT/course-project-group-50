@@ -7,7 +7,7 @@ public class CardDeck {
     public static final int GET_PAID = 2;
     public static final int PAY = 3;
 
-    ArrayList<Card> cards = new ArrayList<Card>();
+    ArrayList<Card> cards = new ArrayList<>();
 
     public CardDeck() {
         cards.add(new Card(MOVE_FORWARD, "Move 1 forward."));
@@ -18,11 +18,15 @@ public class CardDeck {
         shuffle();
     }
 
-    public void add (Card card) {
+    public void add(Card card) {
         cards.add(card);
     }
 
     public void shuffle() {
         Collections.shuffle(cards);
+    }
+
+    public Card draw() {
+        return cards.get(0);
     }
 }
