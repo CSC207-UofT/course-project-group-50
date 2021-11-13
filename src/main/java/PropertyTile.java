@@ -18,6 +18,10 @@ public class PropertyTile extends Tile implements Buyable{
         this.owner = null;
     }
 
+    public String getName() {
+        return this.name;
+    }
+
     public int getRent() {
         return this.rent;
     }
