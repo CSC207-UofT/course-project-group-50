@@ -81,6 +81,9 @@ public class Player {
         this.inJail = jailTime;
     }
 
+
+
+
     public boolean isInJail() {
         return this.inJail;
     }
