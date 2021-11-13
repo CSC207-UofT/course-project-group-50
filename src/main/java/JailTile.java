@@ -4,16 +4,15 @@ public class JailTile extends SpecialTile{
 
     public void interact(Player player){
         if (player.getJailDays() > 0 || player.isInJail()){
-
             playerAlreadyInJail(player);
             // Calls helper method which reduces the remaining days and asks the player if they want to pay to get
             // released early.
         }
         else{
-        player.setInJail(true);
-        player.setJailDays(3);
-        System.out.println(player.getUsername() + ", you are in Jail! You will be released after " +
-                player.getJailDays() + " turns.");
+            player.setInJail(true);
+            player.setJailDays(3);
+            System.out.println(player.getUsername() + ", you are in Jail! You will be released after " +
+                    player.getJailDays() + " turns.");
         }
     }
 
