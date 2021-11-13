@@ -29,7 +29,10 @@ public class PropertyManager {
             String property2;
             System.out.println("Please enter the name of the property you are willing to trade.");
             property2 = CmdLineUI.scanner.nextLine();
-            swap(player1, player2, property1, property2);
+            swap_properties(player1, player2, property1, property2);
+            // if the trade completes, both users receive $100 each
+            player1.addCash(100);
+            player2.addCash(100);
         } else {
             System.out.println("At least one of the players are not willing to trade, moving on to the next round.");
         }
@@ -43,7 +46,8 @@ public class PropertyManager {
         return Objects.equals(input, "Y");
     }
 
-    public void swap(Player player1, Player player2, String property1, String property2) {
+    // this method is only called if both users are willing to trade
+    public void swap_properties(Player player1, Player player2, String property1, String property2) {
         for (PropertyTile key : this.propertiesOwned.keySet()) {
             if (Objects.equals(key.getName(), property1)) {
                 this.propertiesOwned.replace(key, player1, player2);
