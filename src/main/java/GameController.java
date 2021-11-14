@@ -170,7 +170,7 @@ public class GameController implements Serializable {
         player.setBankrupt();
         propertyManager.resetProperties(player);
     }
-/*
+
     public void startTrade(Player player1){
         Player player2;
         System.out.println("Please enter the name of the player you wish to trade with.");
@@ -185,7 +185,7 @@ public class GameController implements Serializable {
         System.out.println("Invalid name entered.");
     }
 
-*/
+
 
 
 
