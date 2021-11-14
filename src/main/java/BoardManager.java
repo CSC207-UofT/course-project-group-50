@@ -1,9 +1,10 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class BoardManager {
+public class BoardManager implements Serializable {
 
     public static final int BOARD_SIZE = 24;
     private List<Player> players;

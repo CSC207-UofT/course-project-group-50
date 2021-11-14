@@ -1,13 +1,18 @@
+import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.IntStream;
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
 
-public class GameController {
-    private BoardManager boardManager;
-    private BankManager bankManager;
-    private PropertyManager propertyManager;
-    private long id;
+public class GameController implements Serializable {
+    private final BoardManager boardManager;
+    private final BankManager bankManager;
+    private final PropertyManager propertyManager;
+    private final long id;
     private final String filepath;
     private final int netWorthGoal;
     private final ArrayList<Player> players;
@@ -27,6 +32,16 @@ public class GameController {
         this.filepath = filepath;
         this.players = players;
         this.netWorthGoal = netWorthGoal;
+        this.boardManager = new BoardManager();
+        this.bankManager = new BankManager();
+        this.propertyManager = new PropertyManager();
+    }
+
+    public GameController() {
+        this.id = new Random().nextLong();
+        this.filepath = "";
+        this.players = new ArrayList<>();
+        this.netWorthGoal = 5000;
         this.boardManager = new BoardManager();
         this.bankManager = new BankManager();
         this.propertyManager = new PropertyManager();
@@ -88,6 +103,8 @@ public class GameController {
     public String getFilepath() {
         return this.filepath;
     }
+
+
 
 
 

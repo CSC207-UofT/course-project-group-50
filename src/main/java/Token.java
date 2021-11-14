@@ -1,4 +1,6 @@
-public class Token implements Movable{
+import java.io.Serializable;
+
+public class Token implements Movable, Serializable {
     private int location;
     private String colour;
     private boolean inJail;
