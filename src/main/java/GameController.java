@@ -1,6 +1,9 @@
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.IntStream;
+
 
 public class GameController {
     private BoardManager boardManager;
@@ -78,7 +81,8 @@ public class GameController {
     public void updateBankruptcy() {
         for(Player p: this.boardManager.getPlayers()) {
             if(p.getCash() < -500 || p.getNetWorth() == 0) {
-                p.setBankrupt(true);
+                p.setBankrupt();
+                propertyManager.resetProperties(p);
             }
         }
     }
@@ -87,6 +91,82 @@ public class GameController {
         return this.filepath;
     }
 
+    public void buyProperty(Player player){
+        PropertyTile property = getPropertyTile(player);
+        if(player.getCash() >= property.getPrice()){
+            propertyManager.buyProperty(player, property);
+            bankManager.deductCostOfProperty(player, property);
+        }else{
+            System.out.println(player.getUsername() + ", you do not have enough to buy this.");
+        }
+
+    }
+
+    public void sellProperty(Player player){
+        PropertyTile property = getPropertyTile(player);
+        propertyManager.sellProperty(player, property);
+        bankManager.addSellbackOfProperty(player, property);
+    }
+    public void sellProperty(Player player, PropertyTile property){
+        propertyManager.sellProperty(player, property);
+        bankManager.addSellbackOfProperty(player, property);
+    }
+
+    public void payRent(Player player1){
+        PropertyTile property = getPropertyTile(player1);
+        Player player2 = property.getOwner();
+        if(player1.getCash() >= property.getRent()){
+            bankManager.payRent(player1, player2, property);
+        }else{
+            // they will either have to sell or declare bankruptcy
+            System.out.println(player1.getUsername() + ", you do not have enough to pay.");
+            System.out.println("You can either sell a property or declare bankruptcy");
+            String input = CmdLineUI.scanner.nextLine();
+            if(input.equals("sell")){
+                System.out.println("Which property would you like to sell?");
+                String property_string = CmdLineUI.scanner.nextLine();
+                if (propertyManager.stringToPropertyTile(property_string) != null){
+                    PropertyTile sell_property = propertyManager.stringToPropertyTile(property_string);
+                    sellProperty(player1, sell_property);
+                }else{
+                    System.out.println("Invalid Input");
+                }
+                payRent(player1);
+
+            }
+            if(input.equals("bankrupt")){
+                bankManager.payRent(player1, player2, property);
+                bankruptPlayer(player1);
+            }else{
+                System.out.println("Invalid Input");
+                payRent(player1);
+            }
+        }
+    }
+
+    private PropertyTile getPropertyTile(Player player) {
+        int location = player.getToken().getLocation();
+        return (PropertyTile) boardManager.getBoardList().get(location);
+    }
+
+    public void bankruptPlayer(Player player){
+        player.setBankrupt();
+        propertyManager.resetProperties(player);
+    }
+
+    public void startTrade(Player player1){
+        Player player2;
+        System.out.println("Please enter the name of the player you wish to trade with.");
+        String player2_string = CmdLineUI.scanner.nextLine();
+        for(Player player: this.players){
+            if(player.getUsername().equals(player2_string)){
+                player2 = player;
+                propertyManager.tradeProperties(player1, player2);
+                break;
+            }
+        }
+        System.out.println("Invalid name entered.");
+    }
 
 
 }

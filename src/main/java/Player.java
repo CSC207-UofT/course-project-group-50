@@ -57,12 +57,31 @@ public class Player {
         return this.bankrupt;
     }
 
-    public void setBankrupt(boolean bankrupt) {
-        this.bankrupt = bankrupt;
+    public void setBankrupt() {
+        this.bankrupt = true;
+        this.netWorth = 0;
+        this.cash = 0;
+        this.token = null;
     }
 
     public int roll() {
         return (int)(Math.random()*6+1);
+    }
+  
+    public int getJailDays() {
+        return this.jailDays;
+    }
+
+    public void setJailDays(int jailDays) {
+        this.jailDays = jailDays;
+    }
+
+    public void setInJail(boolean input) {
+        this.inJail = input;
+    }
+
+    public boolean isInJail() {
+        return this.inJail;
     }
 
     public Token getToken() {
