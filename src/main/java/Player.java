@@ -4,17 +4,13 @@ public class Player {
     private int netWorth;
     private Token token;
     private boolean bankrupt;
-    private boolean inJail;
-    private int jailDays;
 
     public Player(String username) {
         this.username = username;
         this.cash = 1000;
         this.netWorth = 1000;
-        this.token = new Token();
+        this.token = new Token(this);
         this.bankrupt = false;
-        this.inJail = false;
-        this.jailDays = 0;
     }
 
     public String getUsername() {
@@ -71,7 +67,7 @@ public class Player {
     public int roll() {
         return (int)(Math.random()*6+1);
     }
-
+  
     public int getJailDays() {
         return this.jailDays;
     }
