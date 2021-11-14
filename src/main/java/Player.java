@@ -61,8 +61,11 @@ public class Player {
         return this.bankrupt;
     }
 
-    public void setBankrupt(boolean bankrupt) {
-        this.bankrupt = bankrupt;
+    public void setBankrupt() {
+        this.bankrupt = true;
+        this.netWorth = 0;
+        this.cash = 0;
+        this.token = null;
     }
 
     public int roll() {
@@ -80,9 +83,6 @@ public class Player {
     public void setInJail(boolean input) {
         this.inJail = input;
     }
-
-
-
 
     public boolean isInJail() {
         return this.inJail;

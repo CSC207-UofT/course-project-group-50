@@ -26,7 +26,7 @@ public class PropertyTile extends Tile implements Buyable{
         return this.rent;
     }
 
-    // we would call this when someone builds(upgrades) on a property or collects a set
+    // we would call this when someone builds(upgrades) on a property
     public void setRent(int new_rent) {
         this.rent = new_rent;
     }

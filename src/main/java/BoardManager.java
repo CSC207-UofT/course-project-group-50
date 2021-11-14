@@ -8,11 +8,11 @@ public class BoardManager {
     public static final int BOARD_SIZE = 24;
     private List<Player> players;
     private Map<Player, Integer> locations;
-    private Tile[] board;
+    private Board board;
 
     public BoardManager() {
         this.players = new ArrayList<>();
-        this.board = initializeBoard();
+        this.board = new Board();
     }
 
     public void addPlayer(String username) {
@@ -41,5 +41,9 @@ public class BoardManager {
             s += "\n";
         }
         return s;
+    }
+
+    public List<Tile> getBoardList(){
+        return this.board.tiles;
     }
 }
