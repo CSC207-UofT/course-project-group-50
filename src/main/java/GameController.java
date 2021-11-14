@@ -173,7 +173,7 @@ public class GameController implements Serializable {
         Player player2;
         System.out.println("Please enter the name of the player you wish to trade with.");
         String player2_string = CmdLineUI.scanner.nextLine();
-        for(Player player: this.players){
+        for(Player player: boardManager.getPlayers()){
             if(player.getUsername().equals(player2_string)){
                 player2 = player;
                 propertyManager.tradeProperties(player1, player2);

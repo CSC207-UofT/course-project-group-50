@@ -8,8 +8,6 @@ public class PropertyManager implements Serializable {
     private HashMap<PropertyTile, Player> propertiesOwned;
 
     public PropertyManager(){
-        // not sure if properties list is needed
-        List<PropertyTile> properties = Constants.properties;
         this.propertiesOwned = new HashMap<>();
     }
 
