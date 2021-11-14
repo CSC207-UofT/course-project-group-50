@@ -1,4 +1,6 @@
-public class BankManager {
+import java.io.Serializable;
+
+public class BankManager implements Serializable {
 
     public void payRent(Player renter, Player payee, PropertyTile property){
         int rent = property.getRent();

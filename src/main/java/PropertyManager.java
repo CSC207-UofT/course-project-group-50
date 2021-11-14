@@ -1,9 +1,10 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
-public class PropertyManager {
+public class PropertyManager implements Serializable {
     private HashMap<PropertyTile, Player> propertiesOwned;
 
     public PropertyManager(){
