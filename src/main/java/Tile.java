@@ -1,5 +1,5 @@
 public abstract class Tile {
 
-    public void interact() {}
+    public void interact(Token token) {}
 
 }

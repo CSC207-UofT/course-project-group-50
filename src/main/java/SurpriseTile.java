@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.util.*;
 
-public class SurpriseTile extends SpecialTile{
+public class SurpriseTile extends SpecialTile implements Serializable {
     public void interact(Player player) {
         CardDeck cardDeck = new CardDeck();
         Card card = cardDeck.draw();

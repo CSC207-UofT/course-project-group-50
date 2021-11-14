@@ -9,7 +9,7 @@ public class PropertyManager implements Serializable {
 
     public PropertyManager(){
         // not sure if properties list is needed
-        List<PropertyTile> properties = Constants.properties;
+        // List<PropertyTile> properties = Constants.properties;
         this.propertiesOwned = new HashMap<>();
     }
 

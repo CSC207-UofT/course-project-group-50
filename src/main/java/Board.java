@@ -1,7 +1,8 @@
+import java.io.Serializable;
 import java.util.List;
 import java.util.Arrays;
 
-public class Board {
+public class Board implements Serializable {
     public final List<Tile> tiles;
 
     public Board(){

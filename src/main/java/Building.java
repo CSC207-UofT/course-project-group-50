@@ -1,4 +1,6 @@
-public class Building {
+import java.io.Serializable;
+
+public class Building implements Serializable {
     private final float cost;
     private final float rentIncrease;
 

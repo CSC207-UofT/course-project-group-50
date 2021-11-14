@@ -1,2 +1,4 @@
-public class SpecialTile extends Tile{
+import java.io.Serializable;
+
+public class SpecialTile extends Tile implements Serializable {
     }

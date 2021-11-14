@@ -1,14 +1,8 @@
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
-import java.util.stream.IntStream;
-import java.io.FileOutputStream;
-import java.io.ObjectOutputStream;
-import java.util.Objects;
-import java.util.stream.IntStream;
 
 public class GameController implements Serializable {
     private final BoardManager boardManager;
@@ -18,6 +12,7 @@ public class GameController implements Serializable {
     private final String filepath;
     private final int netWorthGoal;
     private final ArrayList<String> usernames;
+    private ArrayList<Integer> order;
 
     public GameController(long id, String filepath, ArrayList<String> usernames) {
         this.id = id;
@@ -27,6 +22,7 @@ public class GameController implements Serializable {
         this.boardManager = new BoardManager();
         this.bankManager = new BankManager();
         this.propertyManager = new PropertyManager();
+        this.order = new ArrayList<Integer>();
     }
 
     public GameController(long id, String filepath, ArrayList<String> usernames, int netWorthGoal) {
@@ -37,16 +33,18 @@ public class GameController implements Serializable {
         this.boardManager = new BoardManager();
         this.bankManager = new BankManager();
         this.propertyManager = new PropertyManager();
+        this.order = new ArrayList<Integer>();
     }
 
     public GameController() {
         this.id = new Random().nextLong();
         this.filepath = "";
-        this.players = new ArrayList<>();
+        this.usernames = new ArrayList<>();
         this.netWorthGoal = 5000;
         this.boardManager = new BoardManager();
         this.bankManager = new BankManager();
         this.propertyManager = new PropertyManager();
+        this.order = new ArrayList<Integer>();
     }
 
     public void runPlayerSetUp(List<String> usernames){
@@ -54,26 +52,30 @@ public class GameController implements Serializable {
             boardManager.addPlayer(s);
         }
         System.out.println("\n PLAYER LIST");
-        // commented this out because i'm not sure what it is meant to do
-        // System.out.println(boardManager);
+        System.out.println(boardManager);
     }
 
     public void runGame() {
-        runPlayerSetUp(this.usernames);
-        List<Integer> order = generateOrder();
-
-        while(!isWinner()) {
-            for(int i : order) {
+        // this checks if the game instance is a new one or is loaded from a file. If it is loaded from a file then
+        // the GameController object will have a non-empty this.order array list from the previous game, and so the
+        // code will go straight into the game loop. If this.order is empty, then it's a new game, so the if block
+        // generates the order for the game.
+        if (this.order.size() == 0) {
+            this.order = generateOrder();}
+         while (!isWinner()) {
+            for (int i : this.order) {
                 Player currPlayer = this.boardManager.getPlayers().get(i);
                 int currRoll = currPlayer.roll();
+                System.out.println(currPlayer.getUsername() +  ", you just rolled a " + currRoll + "!");
                 currPlayer.getToken().move(currRoll);
+                // boardManager.getBoard().getTileAt(currPlayer.getToken().getLocation()).interact(currPlayer.getToken());
             }
             updateBankruptcy();
+            }
         }
-    }
 
-    public List<Integer> generateOrder() {
-        List<Integer> order = new ArrayList<>();
+    public ArrayList<Integer> generateOrder() {
+        ArrayList<Integer> order = new ArrayList<>();
         for(int i = 0; i < this.boardManager.numOfPlayers(); i++) {
             order.add(i);
         }
@@ -168,7 +170,7 @@ public class GameController implements Serializable {
         player.setBankrupt();
         propertyManager.resetProperties(player);
     }
-
+/*
     public void startTrade(Player player1){
         Player player2;
         System.out.println("Please enter the name of the player you wish to trade with.");
@@ -183,6 +185,7 @@ public class GameController implements Serializable {
         System.out.println("Invalid name entered.");
     }
 
+*/
 
 
 

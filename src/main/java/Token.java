@@ -21,11 +21,16 @@ public class Token implements Movable, Serializable {
     }
 
     public void move(int tilesToAdvance) {
+        BoardManager bm = new BoardManager();
         int a = this.location + tilesToAdvance;
         int b = BoardManager.BOARD_SIZE;
-        // Java behaves weird with negative numbers and mod so I needed to use this formula instead
-        // so that I always get a positive remainder
-        this.location = (a % b + b) % b;
+        if (a > BoardManager.BOARD_SIZE - 1) {
+            bm.getBoard().getTileAt(0).interact(this);
+            this.location = a - b;
+        }
+        else{
+            this.location = a;
+        }
     }
 
     public int getLocation() {

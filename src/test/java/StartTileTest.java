@@ -14,7 +14,7 @@ public class StartTileTest {
 
     @Test(timeout = 50)
     public void testInteract() {
-        testStartTile.interact(player1);
+        testStartTile.interact(player1.getToken());
         int expected = 1200;
         assertEquals(expected, player1.getCash());
     }
