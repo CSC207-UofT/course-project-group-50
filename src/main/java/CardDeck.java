@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.util.*;
 
-public class CardDeck {
+public class CardDeck implements Serializable {
 
     public static final int MOVE_FORWARD = 0;
     public static final int MOVE_BACKWARD = 1;

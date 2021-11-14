@@ -5,10 +5,10 @@ import java.util.Map;
 
 public class BoardManager implements Serializable {
 
-    public static final int BOARD_SIZE = 24;
+    public static final int BOARD_SIZE = 28;
     private List<Player> players;
     private Map<Player, Integer> locations;
-    private Board board;
+    private final Board board;
 
     public BoardManager() {
         this.players = new ArrayList<>();
@@ -35,12 +35,16 @@ public class BoardManager implements Serializable {
 
     @Override
     public String toString() {
-        String s = "";
+        StringBuilder s = new StringBuilder();
         for (Player p : players) {
-            s += p.toString();
-            s += "\n";
+            s.append(p.toString());
+            s.append("\n");
         }
-        return s;
+        return s.toString();
+    }
+
+    public Board getBoard(){
+        return this.board;
     }
 
     public List<Tile> getBoardList(){

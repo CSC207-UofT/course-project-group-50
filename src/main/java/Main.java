@@ -7,19 +7,19 @@ public class Main {
 
         GameController gc = new GameController();
         CmdLineUI ui = new CmdLineUI();
-        ui.startGame();
+        ui.startGame(gc);
     }
 
     public static void save(GameController game, String filename){
         try {
-            String name = System.getProperty("user.home") + "\\" + "Documents" + "\\" + filename + ".txt";
+            // opens the file and writes the object into it, then closes the file and prints.
             FileOutputStream fileOut =
-                    new FileOutputStream(name);
+                    new FileOutputStream(filename + ".txt");
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
             out.writeObject(game);
             out.close();
             fileOut.close();
-            System.out.println("The game has been saved to " + name);
+            System.out.println("The game has been saved to " + filename + ".txt in the game directory.");
         }
         catch (IOException exception){
             exception.printStackTrace();
@@ -27,14 +27,16 @@ public class Main {
     }
 
     public static GameController load(String filepath){
+        // initializes gc as null which can be returned if the code goes into the catch blocks.
         GameController gc = null;
         try {
-            String name = System.getProperty("user.home") + "\\" + "Documents" + "\\" + filepath + ".txt";
-            FileInputStream fileIn = new FileInputStream(name);
+            // opens the file and reads the object and allocates it to gc, then closes the file and returns gc.
+            FileInputStream fileIn = new FileInputStream(filepath + ".txt");
             ObjectInputStream in = new ObjectInputStream(fileIn);
             gc = (GameController) in.readObject();
             in.close();
             fileIn.close();
+
         } catch (IOException exception) {
             exception.printStackTrace();
     }

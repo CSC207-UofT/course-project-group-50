@@ -1,6 +1,6 @@
 import java.util.Objects;
 
-public class JailTile extends SpecialTile{
+public class JailTile extends SpecialTile {
 
     public void interact(Token token){
         if (token.getJailDays() > 0 && token.isInJail()){

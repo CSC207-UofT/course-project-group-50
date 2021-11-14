@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.lang.Math;
 
-public class PropertyTile extends Tile implements Buyable{
+public class PropertyTile extends Tile implements Buyable, Serializable {
     private final String name;
     private int price;
     private int rent;

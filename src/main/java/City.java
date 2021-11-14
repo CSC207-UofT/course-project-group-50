@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class City extends PropertyTile implements Buildable, Auctionable, Buyable{
+public class City extends PropertyTile implements Buildable, Auctionable, Buyable, Serializable {
     private final String colour;
     private ArrayList<Building> buildings;
 
