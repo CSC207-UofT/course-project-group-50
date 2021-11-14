@@ -36,6 +36,8 @@ public class PropertyManager implements Serializable {
             // if the trade completes, both users receive $100 each
             player1.addCash(100);
             player2.addCash(100);
+            player1.addNetWorth(100);
+            player2.addNetWorth(100);
         } else {
             System.out.println("At least one of the players are not willing to trade, moving on to the next round.");
         }
@@ -78,5 +80,15 @@ public class PropertyManager implements Serializable {
 
     public HashMap<PropertyTile, Player> getPropertiesOwned() {
         return this.propertiesOwned;
+    }
+    public PropertyTile stringToPropertyTile(String property_string){
+        PropertyTile return_property_tile = null;
+        for (PropertyTile key : this.propertiesOwned.keySet()){
+            if (Objects.equals(key.getName(), property_string)) {
+                return_property_tile = key;
+                break;
+            }
+        }
+        return return_property_tile;
     }
 }
