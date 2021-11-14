@@ -1,6 +1,6 @@
 public class PublicProperty extends PropertyTile{
 
-    public PublicProperty(String name, int rent, int price) {
-        super(name, rent, price);
+    public PublicProperty(String name, int price, int rent) {
+        super(name, price, rent);
     }
 }
