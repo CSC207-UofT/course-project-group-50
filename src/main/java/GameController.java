@@ -8,6 +8,7 @@ import java.util.stream.IntStream;
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
 
+
 public class GameController implements Serializable {
     private final BoardManager boardManager;
     private final BankManager bankManager;
@@ -15,22 +16,22 @@ public class GameController implements Serializable {
     private final long id;
     private final String filepath;
     private final int netWorthGoal;
-    private final ArrayList<Player> players;
+    private final ArrayList<String> usernames;
 
-    public GameController(long id, String filepath, ArrayList<Player> players) {
+    public GameController(long id, String filepath, ArrayList<String> usernames) {
         this.id = id;
         this.filepath = filepath;
-        this.players = players;
+        this.usernames = usernames;
         this.netWorthGoal = 5000;
         this.boardManager = new BoardManager();
         this.bankManager = new BankManager();
         this.propertyManager = new PropertyManager();
     }
 
-    public GameController(long id, String filepath, ArrayList<Player> players, int netWorthGoal) {
+    public GameController(long id, String filepath, ArrayList<String> usernames, int netWorthGoal) {
         this.id = id;
         this.filepath = filepath;
-        this.players = players;
+        this.usernames = usernames;
         this.netWorthGoal = netWorthGoal;
         this.boardManager = new BoardManager();
         this.bankManager = new BankManager();
@@ -52,13 +53,12 @@ public class GameController implements Serializable {
             boardManager.addPlayer(s);
         }
         System.out.println("\n PLAYER LIST");
-        System.out.println(boardManager);
+        // commented this out because i'm not sure what it is meant to do
+        // System.out.println(boardManager);
     }
 
     public void runGame() {
-        // not sure where we are getting the usernames from
-        List<String> usernames = new ArrayList<>();
-        runPlayerSetUp(usernames);
+        runPlayerSetUp(this.usernames);
         List<Integer> order = generateOrder();
 
         while(!isWinner()) {
@@ -83,7 +83,7 @@ public class GameController implements Serializable {
 
     public boolean isWinner() {
         for(Player p : this.boardManager.getPlayers()) {
-            if(p.getNetWorth() == this.netWorthGoal) {
+            if(p.getNetWorth() >= this.netWorthGoal) {
                 return true;
             }
         }

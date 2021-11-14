@@ -14,6 +14,7 @@ public class BankManager implements Serializable {
 
     public void deductCostOfProperty(Player buyer, PropertyTile property){
         buyer.subtractCash(property.getPrice());
+        buyer.subtractNetWorth(property.getPrice());
     }
 
     public void addSellbackOfProperty(Player seller, PropertyTile property){

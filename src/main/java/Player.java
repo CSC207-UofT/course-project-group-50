@@ -6,17 +6,13 @@ public class Player implements Serializable {
     private int netWorth;
     private Token token;
     private boolean bankrupt;
-    private boolean inJail;
-    private int jailDays;
 
     public Player(String username) {
         this.username = username;
         this.cash = 1000;
         this.netWorth = 1000;
-        this.token = new Token();
+        this.token = new Token(this);
         this.bankrupt = false;
-        this.inJail = false;
-        this.jailDays = 0;
     }
 
     public String getUsername() {
@@ -69,25 +65,6 @@ public class Player implements Serializable {
 
     public int roll() {
         return (int)(Math.random()*6+1);
-    }
-
-    public int getJailDays() {
-        return this.jailDays;
-    }
-
-    public void setJailDays(int jailDays) {
-        this.jailDays = jailDays;
-    }
-
-    public void setInJail(boolean input) {
-        this.inJail = input;
-    }
-
-
-
-
-    public boolean isInJail() {
-        return this.inJail;
     }
 
     public Token getToken() {

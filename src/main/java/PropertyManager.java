@@ -1,4 +1,5 @@
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
@@ -17,6 +18,7 @@ public class PropertyManager implements Serializable {
         property.setOwner(buyer);
     }
 
+    // we don't need the seller argument here guys
     public void sellProperty(Player seller, PropertyTile property){
         propertiesOwned.remove(property);
         property.setOwner(null);
@@ -63,10 +65,18 @@ public class PropertyManager implements Serializable {
 
     // since this is used when player is bankrupt we do not update money
     public void resetProperties(Player owner){
+        List<PropertyTile> propertiesToSell = new ArrayList<>();
         for(PropertyTile property: propertiesOwned.keySet()){
-            if(owner == property.getOwner()){
-                sellProperty(owner, property);
+            if(owner.equals(property.getOwner())){
+                propertiesToSell.add(property);
             }
         }
+        for(PropertyTile property : propertiesToSell) {
+            sellProperty(owner, property);
+        }
+    }
+
+    public HashMap<PropertyTile, Player> getPropertiesOwned() {
+        return this.propertiesOwned;
     }
 }
