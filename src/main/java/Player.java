@@ -68,7 +68,7 @@ public class Player {
         return (int)(Math.random()*6+1);
     }
   
-    public int getJailDays() {
+/*    public int getJailDays() {
         return this.jailDays;
     }
 
@@ -82,7 +82,7 @@ public class Player {
 
     public boolean isInJail() {
         return this.inJail;
-    }
+    }*/
 
     public Token getToken() {
         return this.token;
