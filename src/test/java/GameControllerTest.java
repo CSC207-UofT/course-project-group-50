@@ -1,3 +1,4 @@
+import controllers.GameController;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.assertTrue;
@@ -17,8 +18,8 @@ public class GameControllerTest {
     public void setUp() {
         gameId = new Random().nextLong();
         players = new ArrayList<>();
-        players.add("Player 1");
-        players.add("Player 2");
+        players.add("entities.Player 1");
+        players.add("entities.Player 2");
         players.add("Player3");
         testGameController = new GameController(gameId, "path", players);
         testGameController.runPlayerSetUp(players);

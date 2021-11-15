@@ -1,3 +1,5 @@
+import entities.JailTile;
+import entities.Player;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
@@ -12,8 +14,8 @@ public class JailTileTest {
     @Before
     public void setUp() {
         testJailTile = new JailTile();
-        player1 = new Player("Player 1");
-        player2 = new Player("Player 2");
+        player1 = new Player("entities.Player 1");
+        player2 = new Player("entities.Player 2");
         player2.getToken().setInJail(true);
         player2.getToken().setJailDays(0);
     }

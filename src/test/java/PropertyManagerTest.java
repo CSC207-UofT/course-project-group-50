@@ -1,5 +1,8 @@
+import entities.Player;
+import entities.PropertyTile;
 import org.junit.Before;
 import org.junit.Test;
+import usecases.PropertyManager;
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
@@ -13,8 +16,8 @@ public class PropertyManagerTest {
 
     @Before
     public void setUp() {
-        player1 = new Player("Player 1");
-        player2 = new Player("Player 2");
+        player1 = new Player("entities.Player 1");
+        player2 = new Player("entities.Player 2");
         propertyManager = new PropertyManager();
         property1 = new PropertyTile("Property 1", 0, 0);
         property2 = new PropertyTile("Property 2", 0, 0);

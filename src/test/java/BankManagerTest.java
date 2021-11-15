@@ -1,5 +1,8 @@
+import entities.Player;
+import entities.PropertyTile;
 import org.junit.Before;
 import org.junit.Test;
+import usecases.BankManager;
 
 import static org.junit.Assert.assertEquals;
 
@@ -12,8 +15,8 @@ public class BankManagerTest {
     @Before
     public void setUp() {
         testBankManager = new BankManager();
-        player1 = new Player("Player 1");
-        player2 = new Player("Player 2");
+        player1 = new Player("entities.Player 1");
+        player2 = new Player("entities.Player 2");
         property1 = new PropertyTile("Property 1", 50, 10);
     }
 

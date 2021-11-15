@@ -1,3 +1,5 @@
+import entities.Building;
+import entities.City;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -13,9 +15,9 @@ public class CityTest {
 
     @Before
     public void setUp() {
-        testCity = new City("Test City", 0, 0, "Red");
-        testCitySameColour = new City("Test City 2", 0, 0, "Red");
-        testCityDifferentColour = new City("Test City 3", 0, 0, "Blue");
+        testCity = new City("Test entities.City", 0, 0, "Red");
+        testCitySameColour = new City("Test entities.City 2", 0, 0, "Red");
+        testCityDifferentColour = new City("Test entities.City 3", 0, 0, "Blue");
         building1 = new Building(0, 0);
     }
 

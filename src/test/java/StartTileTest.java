@@ -1,3 +1,5 @@
+import entities.Player;
+import entities.StartTile;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
@@ -9,7 +11,7 @@ public class StartTileTest {
     @Before
     public void setUp() {
         testStartTile = new StartTile();
-        player1 = new Player("Player 1");
+        player1 = new Player("entities.Player 1");
     }
 
     @Test(timeout = 50)

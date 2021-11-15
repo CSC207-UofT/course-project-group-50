@@ -1,3 +1,5 @@
+import entities.Card;
+import entities.CardDeck;
 import org.junit.Before;
 import org.junit.Test;
 
