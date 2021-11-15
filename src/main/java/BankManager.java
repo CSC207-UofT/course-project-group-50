@@ -26,4 +26,9 @@ public class BankManager implements Serializable {
     public void calculateNetWorth(){
         // TODO decide if we need this as it will be updated with everything that affects it
     }
+
+    public void passStart(Player player){
+        player.addCash(200);
+        player.addNetWorth(200);
+    }
 }
