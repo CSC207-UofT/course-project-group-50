@@ -7,7 +7,7 @@ import java.util.Scanner;
 public class CmdLineUI {
     public static Scanner scanner = new Scanner(System.in);
 
-    public void startGame(GameController gc){
+    public void startGame(GameController gc) throws InterruptedException {
         // starts the game and gives the user three options to choose from.
         System.out.println("Welcome to Monopoly!");
         System.out.println("This is a fun and interactive 2-4 player game. " +
@@ -49,7 +49,7 @@ public class CmdLineUI {
     }
 
 
-    private void loadHelper(GameController gc) {
+    private void loadHelper(GameController gc) throws InterruptedException {
         String filename = null;
         int item = 0;
         do{

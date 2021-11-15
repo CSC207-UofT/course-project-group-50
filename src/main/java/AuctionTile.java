@@ -2,7 +2,8 @@ import java.io.Serializable;
 
 public class AuctionTile extends SpecialTile implements Serializable {
 
-    public void interact(Player player1, Player player2, PropertyManager propertymanager) {
-        propertymanager.tradeProperties(player1, player2);
+    // TODO: This method is not being used currently. We need to decide if we want this class or not.
+    public void interact(Player player1, Player player2, PropertyManager propertyManager, BankManager bankManager) {
+        propertyManager.tradeProperties(player1, player2, bankManager);
     }
 }

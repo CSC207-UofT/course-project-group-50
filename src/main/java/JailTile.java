@@ -9,7 +9,7 @@ public class JailTile extends SpecialTile {
             // released early.
         } else if (token.getJailDays() == 0 && token.isInJail()) {
             System.out.println("Congratulations " + token.getPlayer().getUsername() +
-                    ", you have been let out of jail!");
+                    ", you have been let out of jail! You still cannot roll this turn, however.");
             token.setInJail(false);
         }
         else{
@@ -25,10 +25,9 @@ public class JailTile extends SpecialTile {
         System.out.println(token.getPlayer().getUsername() + ", you are still in Jail! You can pay $50 to be released.");
         String input;
         do{
-            System.out.println("Would you like to pay $50 to get out of the jail early? Enter Y for yes and N for no.");
+            System.out.println("Would you like to pay $50 to get out of the jail early? Enter Y / N.");
             input = CmdLineUI.scanner.nextLine();
-        } while (!Objects.equals(input, "Y") && !Objects.equals(input, "N"));
-
+        } while (!input.equalsIgnoreCase("Y") && !input.equalsIgnoreCase("N"));
         responseHandler(token, input);
         // Calls helper method which deals with the response of the user and prints information respectively.
     }
@@ -38,12 +37,12 @@ public class JailTile extends SpecialTile {
         if (Objects.equals(input, "Y")){
             player.addCash(-50);
             System.out.println("Congratulations " + player.getUsername() + ", you have been let out of jail!" +
-                    "We thank you for the payment.");
+                    " We thank you for the payment.");
             token.setJailDays(0);
             token.setInJail(false);
         }
         else{
-            System.out.println("You will remain in Jail for " + token.getJailDays() + " more turns!");
+            System.out.println("You will remain in Jail for " + token.getJailDays() + " more turn(s)!");
         }
     }
 

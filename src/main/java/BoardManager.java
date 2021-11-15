@@ -1,7 +1,6 @@
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 public class BoardManager implements Serializable {
@@ -29,18 +28,25 @@ public class BoardManager implements Serializable {
         Player currPlayer = this.players.get(i);
         Token currToken = currPlayer.getToken();
         int prevLoc = currToken.getLocation();
-        int currRoll = currPlayer.roll();
-        // fix this
-        System.out.println(currPlayer.getUsername() +  ", you just rolled a " + currRoll + "!");
+        // TODO: Somehow make it so these use cases aren't printing things directly to users
+        System.out.print("\n");
+        // this is necessary so that the player does not roll if they are in jail
+        int currRoll = 0;
+        if(!currToken.isInJail()) {
+            currRoll = currPlayer.roll();
+            System.out.println(currPlayer.getUsername() +  ", you just rolled a " + currRoll + "!");
+        }
         currToken.move(currRoll);
         // If we pass start, give the player $200
         if(prevLoc + currRoll > 28) {
             this.bankManager.passStart(currPlayer);
+            System.out.println(currPlayer.getUsername() +  ", you were given $200 for passing Start!");
         }
         Tile tokenTile = this.board.getTileAt(currToken.getLocation());
         // if we land on start tile
         if(tokenTile instanceof StartTile) {
             this.bankManager.passStart(currPlayer);
+            System.out.println(currPlayer.getUsername() +  ", you were given $200 for landing on Start!");
         } else if(tokenTile instanceof City) {
             tileIsCity((City) tokenTile, currPlayer);
         } else if (tokenTile instanceof PublicProperty) {
@@ -55,7 +61,18 @@ public class BoardManager implements Serializable {
     }
 
     public void tileIsCity(City city, Player player) {
-        if(city.isOwned()) {
+        if(city.isOwned() && city.getOwner().equals(player)) {
+            System.out.println("Would you like to build on your property: " + city.getName() + "? Please enter" +
+                    " Y / N.");
+            String input = "";
+            while(!(input.equalsIgnoreCase("Y") || input.equalsIgnoreCase("N"))) {
+                System.out.println("Please enter Y / N");
+                input = CmdLineUI.scanner.nextLine();
+            }
+            if(input.equalsIgnoreCase("Y")) {
+                System.out.println("Unfortunately, this feature has not yet been implemented.");
+            } // no else case because input must be "N" or "n" so we can just go to the next move
+        } else if(city.isOwned()) {
             payRent(player, city);
         } else {
             System.out.println("Would you like to buy " + city.getName() + "?");
@@ -65,7 +82,12 @@ public class BoardManager implements Serializable {
                 input = CmdLineUI.scanner.nextLine();
             }
             if(input.equalsIgnoreCase("Y")) {
-                buyProperty(player, city);
+                boolean propertyBought = buyProperty(player, city);
+                if(propertyBought) {
+                    System.out.println("You just bought " + city.getName() + "!");
+                } else {
+                    System.out.println(player.getUsername() + ", you do not have enough to buy this.");
+                }
             }
             // no else case because input must be "N" or "n" so we can just go to the next move
         }
@@ -105,41 +127,52 @@ public class BoardManager implements Serializable {
     public void payRent(Player player1, PropertyTile property){
         Player player2 = property.getOwner();
         if(player1.getCash() >= property.getRent()){
-            bankManager.payRent(player1, player2, property);
+            // renter is player 2 (could be null), payee is player 1
+            bankManager.payRent(player2, player1, property);
+            if(property instanceof City) {
+                System.out.println(player1.getUsername() + ", you just paid " + property.getRent() + " to "
+                        + player2.getUsername());
+            } else {
+                System.out.println(player1.getUsername() + ", you just paid " + property.getRent() + " to the city!");
+            }
         }else{
             // they will either have to sell or declare bankruptcy
             System.out.println(player1.getUsername() + ", you do not have enough to pay.");
             System.out.println("You can either sell a property or declare bankruptcy");
-            String input = CmdLineUI.scanner.nextLine();
-            if(input.equals("sell")){
-                System.out.println("Which property would you like to sell?");
-                String property_string = CmdLineUI.scanner.nextLine();
-                if (propertyManager.stringToPropertyTile(property_string) != null){
-                    PropertyTile sell_property = propertyManager.stringToPropertyTile(property_string);
-                    sellProperty(player1, sell_property);
-                }else{
-                    System.out.println("Invalid Input");
-                }
-                payRent(player1, property);
+            String input = "";
+            while (!(input.equals("sell") || input.equals("bankrupt"))){
+                System.out.println("Please enter sell or bankrupt");
+                input = CmdLineUI.scanner.nextLine();
             }
-            if(input.equals("bankrupt")){
+            // make sure they own at least one property to sell
+            if(input.equals("sell") && propertyManager.propertiesOwnedByPlayer(player1).size() != 0){
+                sellRentHelper(player1, property);
+            }else { // input must be "bankrupt"
                 bankManager.payRent(player1, player2, property);
                 bankruptPlayer(player1);
-            }else{
-                System.out.println("Invalid Input");
-                payRent(player1, property);
             }
         }
     }
 
-    public void buyProperty(Player player, City property){
+    public boolean buyProperty(Player player, City property){
         if(player.getCash() >= property.getPrice()){
             propertyManager.buyProperty(player, property);
             bankManager.deductCostOfProperty(player, property);
-        }else{
-            System.out.println(player.getUsername() + ", you do not have enough to buy this.");
+            return true;
         }
+        return false;
+    }
 
+    private void sellRentHelper(Player player1, PropertyTile property) {
+        String property_string = "";
+        while (propertyManager.stringToPropertyTile(property_string) == null){
+            System.out.println(propertyManager.propertiesOwnedByPlayer(player1));
+            System.out.println("Which property would you like to sell?");
+            property_string = CmdLineUI.scanner.nextLine();
+        }
+        PropertyTile sell_property = propertyManager.stringToPropertyTile(property_string);
+        sellProperty(player1, sell_property);
+        payRent(player1, property);
     }
 
     public void sellProperty(Player player){
@@ -169,11 +202,12 @@ public class BoardManager implements Serializable {
         for(Player player: this.players){
             if(player.getUsername().equals(player2_string)){
                 player2 = player;
-                propertyManager.tradeProperties(player1, player2);
-                break;
+                propertyManager.tradeProperties(player1, player2, this.bankManager);
+                return;
             }
         }
         System.out.println("Invalid name entered.");
+        tileIsAuctionTile(player1);
     }
 
 

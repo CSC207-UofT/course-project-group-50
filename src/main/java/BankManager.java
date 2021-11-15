@@ -8,8 +8,11 @@ public class BankManager implements Serializable {
         payee.subtractCash(rent);
         payee.subtractNetWorth(rent);
 
-        renter.addCash(rent);
-        renter.addNetWorth(rent);
+        // if the property is a public property, renter would be null, so we need this check
+        if(property instanceof City) {
+            renter.addCash(rent);
+            renter.addNetWorth(rent);
+        }
     }
 
     public void deductCostOfProperty(Player buyer, PropertyTile property){
@@ -23,12 +26,15 @@ public class BankManager implements Serializable {
         seller.subtractNetWorth(property.getPrice() - property.getSalePrice());
     }
 
-    public void passStart(Player player) {
-
-    }
-
     public void calculateNetWorth(){
         // TODO decide if we need this as it will be updated with everything that affects it
+    }
+
+    public void updateCashPropertySwap(Player player1, Player player2) {
+        player1.addCash(100);
+        player2.addCash(100);
+        player1.addNetWorth(100);
+        player2.addNetWorth(100);
     }
 
     public void passStart(Player player){
