@@ -14,7 +14,12 @@ public class BoardManager implements Serializable {
 
     public BoardManager(BankManager bankManager, PropertyManager propertyManager) {
         this.players = new ArrayList<>();
-        this.board = new Board();
+
+        Director director = new Director();
+        BoardBuilder builder = new BoardBuilder();
+        director.makeRegularBoard(builder);
+        this.board = builder.getProduct();
+
         this.bankManager = bankManager;
         this.propertyManager = propertyManager;
     }
