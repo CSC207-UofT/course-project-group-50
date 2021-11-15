@@ -71,10 +71,10 @@ public class BoardManager implements Serializable {
         }
     }
 
-    public Tile[] initializeBoard() {
+/*    public Tile[] initializeBoard() {
         // create array of tiles
         return new Tile[BOARD_SIZE];
-    }
+    }*/
     
     public List<Player> getPlayers() {
         return this.players;
@@ -94,13 +94,13 @@ public class BoardManager implements Serializable {
         return s.toString();
     }
 
-    public Board getBoard(){
+/*    public Board getBoard(){
         return this.board;
     }
 
     public List<Tile> getBoardList(){
         return this.board.tiles;
-    }
+    }*/
 
     public void payRent(Player player1, PropertyTile property){
         Player player2 = property.getOwner();
@@ -110,26 +110,31 @@ public class BoardManager implements Serializable {
             // they will either have to sell or declare bankruptcy
             System.out.println(player1.getUsername() + ", you do not have enough to pay.");
             System.out.println("You can either sell a property or declare bankruptcy");
-            String input = CmdLineUI.scanner.nextLine();
-            if(input.equals("sell")){
-                System.out.println("Which property would you like to sell?");
-                String property_string = CmdLineUI.scanner.nextLine();
-                if (propertyManager.stringToPropertyTile(property_string) != null){
-                    PropertyTile sell_property = propertyManager.stringToPropertyTile(property_string);
-                    sellProperty(player1, sell_property);
-                }else{
-                    System.out.println("Invalid Input");
-                }
-                payRent(player1, property);
+            String input = "";
+            while (!(input.equals("sell") || input.equals("bankrupt"))){
+                System.out.println("Please enter sell or bankrupt");
+                input = CmdLineUI.scanner.nextLine();
             }
-            if(input.equals("bankrupt")){
+            // make sure they own at least one property to sell
+            if(input.equals("sell") && propertyManager.propertiesOwnedByPlayer(player1).size() != 0){
+                sellRentHelper(player1, property);
+            }else{ // input must be "bankrupt"
                 bankManager.payRent(player1, player2, property);
                 bankruptPlayer(player1);
-            }else{
-                System.out.println("Invalid Input");
-                payRent(player1, property);
             }
         }
+    }
+
+    private void sellRentHelper(Player player1, PropertyTile property) {
+        String property_string = "";
+        while (propertyManager.stringToPropertyTile(property_string) == null){
+            System.out.println(propertyManager.propertiesOwnedByPlayer(player1));
+            System.out.println("Which property would you like to sell?");
+            property_string = CmdLineUI.scanner.nextLine();
+        }
+        PropertyTile sell_property = propertyManager.stringToPropertyTile(property_string);
+        sellProperty(player1, sell_property);
+        payRent(player1, property);
     }
 
     public void buyProperty(Player player, City property){
@@ -142,20 +147,15 @@ public class BoardManager implements Serializable {
 
     }
 
-    public void sellProperty(Player player){
-        PropertyTile property = getPropertyTile(player);
-        propertyManager.sellProperty(player, property);
-        bankManager.addSellbackOfProperty(player, property);
-    }
     public void sellProperty(Player player, PropertyTile property){
         propertyManager.sellProperty(player, property);
         bankManager.addSellbackOfProperty(player, property);
     }
 
-    private PropertyTile getPropertyTile(Player player) {
+/*    private PropertyTile getPropertyTile(Player player) {
         int location = player.getToken().getLocation();
         return (PropertyTile) this.getBoardList().get(location);
-    }
+    }*/
 
     public void bankruptPlayer(Player player){
         player.setBankrupt();
@@ -170,10 +170,11 @@ public class BoardManager implements Serializable {
             if(player.getUsername().equals(player2_string)){
                 player2 = player;
                 propertyManager.tradeProperties(player1, player2);
-                break;
+                return;
             }
         }
         System.out.println("Invalid name entered.");
+        tileIsAuctionTile(player1);
     }
 
 
