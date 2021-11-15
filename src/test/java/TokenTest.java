@@ -51,14 +51,14 @@ public class TokenTest {
     @Test(timeout = 50)
     public void testMovePosMod() {
         testToken.move(55);
-        int expected = 7;
+        int expected = 27;
         assertEquals(expected, testToken.getLocation());
     }
 
     @Test(timeout = 50)
     public void testMoveNegMod() {
         testToken.move(-3);
-        int expected = 21;
+        int expected = 25;
         assertEquals(expected, testToken.getLocation());
     }
 }

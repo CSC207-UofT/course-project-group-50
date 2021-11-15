@@ -17,10 +17,14 @@ public class BankManager implements Serializable {
         buyer.subtractNetWorth(property.getPrice());
     }
 
-    public void addSellbackOfProperty(Player seller, PropertyTile property){
+    public void addSellbackOfProperty(Player seller, PropertyTile property) {
         seller.addCash(property.getSalePrice());
         // net worth goes down the loss the seller incurs
         seller.subtractNetWorth(property.getPrice() - property.getSalePrice());
+    }
+
+    public void passStart(Player player) {
+
     }
 
     public void calculateNetWorth(){
