@@ -132,13 +132,4 @@ public class PropertyManager implements Serializable {
         return return_property_tile;
     }
 
-    public List<String> propertiesOwnedByPlayer(Player player){
-        ArrayList<String> owned = new ArrayList<>();
-        for(PropertyTile property: this.propertiesOwned.keySet()){
-            if(property.getOwner() == player){
-                owned.add(property.getName());
-            }
-        }
-        return owned;
-    }
 }
