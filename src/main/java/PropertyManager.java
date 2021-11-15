@@ -1,8 +1,5 @@
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class PropertyManager implements Serializable {
     private HashMap<PropertyTile, Player> propertiesOwned;
@@ -123,6 +120,7 @@ public class PropertyManager implements Serializable {
     public HashMap<PropertyTile, Player> getPropertiesOwned() {
         return this.propertiesOwned;
     }
+
     public PropertyTile stringToPropertyTile(String property_string){
         PropertyTile return_property_tile = null;
         for (PropertyTile key : this.propertiesOwned.keySet()){
@@ -132,5 +130,15 @@ public class PropertyManager implements Serializable {
             }
         }
         return return_property_tile;
+    }
+
+    public List<String> propertiesOwnedByPlayer(Player player){
+        ArrayList<String> owned = new ArrayList<>();
+        for(PropertyTile property: this.propertiesOwned.keySet()){
+            if(property.getOwner() == player){
+                owned.add(property.getName());
+            }
+        }
+        return owned;
     }
 }

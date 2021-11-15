@@ -209,6 +209,4 @@ public class BoardManager implements Serializable {
         System.out.println("Invalid name entered.");
         tileIsAuctionTile(player1);
     }
-
-
 }
