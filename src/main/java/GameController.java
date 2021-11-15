@@ -19,10 +19,10 @@ public class GameController implements Serializable {
         this.filepath = filepath;
         this.usernames = usernames;
         this.netWorthGoal = 5000;
-        this.boardManager = new BoardManager();
         this.bankManager = new BankManager();
         this.propertyManager = new PropertyManager();
-        this.order = new ArrayList<Integer>();
+        this.boardManager = new BoardManager(this.bankManager, this.propertyManager);
+        this.order = new ArrayList<>();
     }
 
     public GameController(long id, String filepath, ArrayList<String> usernames, int netWorthGoal) {
@@ -30,10 +30,10 @@ public class GameController implements Serializable {
         this.filepath = filepath;
         this.usernames = usernames;
         this.netWorthGoal = netWorthGoal;
-        this.boardManager = new BoardManager();
         this.bankManager = new BankManager();
         this.propertyManager = new PropertyManager();
-        this.order = new ArrayList<Integer>();
+        this.boardManager = new BoardManager(this.bankManager, this.propertyManager);
+        this.order = new ArrayList<>();
     }
 
     public GameController() {
@@ -41,18 +41,17 @@ public class GameController implements Serializable {
         this.filepath = "";
         this.usernames = new ArrayList<>();
         this.netWorthGoal = 5000;
-        this.boardManager = new BoardManager();
         this.bankManager = new BankManager();
         this.propertyManager = new PropertyManager();
-        this.order = new ArrayList<Integer>();
+        this.boardManager = new BoardManager(this.bankManager, this.propertyManager);
+        this.order = new ArrayList<>();
     }
 
     public void runPlayerSetUp(List<String> usernames){
         for(String s : usernames) {
             boardManager.addPlayer(s);
         }
-        System.out.println("\n PLAYER LIST");
-        System.out.println(boardManager);
+        // System.out.println("\n PLAYER LIST");
     }
 
     public void runGame() {
@@ -64,11 +63,7 @@ public class GameController implements Serializable {
             this.order = generateOrder();}
          while (!isWinner()) {
             for (int i : this.order) {
-                Player currPlayer = this.boardManager.getPlayers().get(i);
-                int currRoll = currPlayer.roll();
-                System.out.println(currPlayer.getUsername() +  ", you just rolled a " + currRoll + "!");
-                currPlayer.getToken().move(currRoll);
-                // boardManager.getBoard().getTileAt(currPlayer.getToken().getLocation()).interact(currPlayer.getToken());
+                this.boardManager.runTurn(i);
             }
             updateBankruptcy();
             }
@@ -108,82 +103,6 @@ public class GameController implements Serializable {
         return this.filepath;
     }
 
-    public void buyProperty(Player player){
-        PropertyTile property = getPropertyTile(player);
-        if(player.getCash() >= property.getPrice()){
-            propertyManager.buyProperty(player, property);
-            bankManager.deductCostOfProperty(player, property);
-        }else{
-            System.out.println(player.getUsername() + ", you do not have enough to buy this.");
-        }
-
-    }
-
-    public void sellProperty(Player player){
-        PropertyTile property = getPropertyTile(player);
-        propertyManager.sellProperty(player, property);
-        bankManager.addSellbackOfProperty(player, property);
-    }
-    public void sellProperty(Player player, PropertyTile property){
-        propertyManager.sellProperty(player, property);
-        bankManager.addSellbackOfProperty(player, property);
-    }
-
-    public void payRent(Player player1){
-        PropertyTile property = getPropertyTile(player1);
-        Player player2 = property.getOwner();
-        if(player1.getCash() >= property.getRent()){
-            bankManager.payRent(player1, player2, property);
-        }else{
-            // they will either have to sell or declare bankruptcy
-            System.out.println(player1.getUsername() + ", you do not have enough to pay.");
-            System.out.println("You can either sell a property or declare bankruptcy");
-            String input = CmdLineUI.scanner.nextLine();
-            if(input.equals("sell")){
-                System.out.println("Which property would you like to sell?");
-                String property_string = CmdLineUI.scanner.nextLine();
-                if (propertyManager.stringToPropertyTile(property_string) != null){
-                    PropertyTile sell_property = propertyManager.stringToPropertyTile(property_string);
-                    sellProperty(player1, sell_property);
-                }else{
-                    System.out.println("Invalid Input");
-                }
-                payRent(player1);
-
-            }
-            if(input.equals("bankrupt")){
-                bankManager.payRent(player1, player2, property);
-                bankruptPlayer(player1);
-            }else{
-                System.out.println("Invalid Input");
-                payRent(player1);
-            }
-        }
-    }
-
-    private PropertyTile getPropertyTile(Player player) {
-        int location = player.getToken().getLocation();
-        return (PropertyTile) boardManager.getBoardList().get(location);
-    }
-
-    public void bankruptPlayer(Player player){
-        player.setBankrupt();
-        propertyManager.resetProperties(player);
-    }
-
-    public void startTrade(Player player1){
-        Player player2;
-        System.out.println("Please enter the name of the player you wish to trade with.");
-        String player2_string = CmdLineUI.scanner.nextLine();
-        for(Player player: boardManager.getPlayers()){
-            if(player.getUsername().equals(player2_string)){
-                player2 = player;
-                propertyManager.tradeProperties(player1, player2);
-                break;
-            }
-        }
-        System.out.println("Invalid name entered.");
-    }
 
 
 
