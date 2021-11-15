@@ -19,20 +19,63 @@ public class PropertyManager implements Serializable {
         property.setOwner(null);
     }
 
-    public void tradeProperties(Player player1, Player player2) {
-        if (is_trading(player1) && is_trading(player2)) {
-            String property1;
-            System.out.println("Please enter the name of the property you are willing to trade.");
-            property1 = CmdLineUI.scanner.nextLine();
-            String property2;
-            System.out.println("Please enter the name of the property you are willing to trade.");
-            property2 = CmdLineUI.scanner.nextLine();
-            swap_properties(player1, player2, property1, property2);
+    public List<String> propertiesOwnedByPlayer(Player player){
+        ArrayList<String> owned = new ArrayList<>();
+        for(PropertyTile property: this.propertiesOwned.keySet()){
+            if(property.getOwner() == player){
+                owned.add(property.getName());
+            }
+        }
+        return owned;
+    }
+
+    public void tradeProperties(Player player1, Player player2, BankManager bankManager) {
+        // only need to ask the second player if they want to trade, because BoardManager
+        // already asks the first player. We may want to consider just asking every player
+        // in BoardManager instead of splitting it up like this.
+        if (is_trading(player2)) {
+            String propertyOneString;
+            // TODO: Don't let a player trade if they have no properties
+            System.out.println(player1.getUsername() + ", please enter the name of the property " +
+                    "you are willing to trade, or enter C to cancel.");
+            propertyOneString = CmdLineUI.scanner.nextLine();
+            if (propertyOneString.equalsIgnoreCase("C")) {
+                return;
+            }
+            PropertyTile propertyOne = stringToPropertyTile(propertyOneString);
+            while(propertyOne == null || !propertiesOwned.get(propertyOne).equals(player1)) {
+                System.out.println("Invalid input. Please enter the name of the property you are willing" +
+                        " to trade, or enter C to cancel.");
+                propertyOneString = CmdLineUI.scanner.nextLine();
+                if(propertyOneString.equalsIgnoreCase("C")) {
+                    return;
+                }
+                propertyOne = stringToPropertyTile(propertyOneString);
+            }
+
+            String propertyTwoString;
+
+            System.out.println(player2.getUsername() + ", please enter the name of the property " +
+                    "you are willing to trade, or enter C to cancel.");
+            propertyTwoString = CmdLineUI.scanner.nextLine();
+            if (propertyTwoString.equalsIgnoreCase("C")) {
+                return;
+            }
+            PropertyTile propertyTwo = stringToPropertyTile(propertyTwoString);
+            while(propertyTwo == null || !propertiesOwned.get(propertyTwo).equals(player2)) {
+                System.out.println("Invalid input. Please enter the name of the property you are willing" +
+                        " to trade, or enter C to cancel.");
+                propertyTwoString = CmdLineUI.scanner.nextLine();
+                if(propertyTwoString.equalsIgnoreCase("C")) {
+                    return;
+                }
+                propertyTwo = stringToPropertyTile(propertyTwoString);
+            }
+
+            swap_properties(player1, player2, propertyOneString, propertyTwoString);
             // if the trade completes, both users receive $100 each
-            player1.addCash(100);
-            player2.addCash(100);
-            player1.addNetWorth(100);
-            player2.addNetWorth(100);
+            bankManager.updateCashPropertySwap(player1, player2);
+            System.out.println("Congratulations! By trading properties, you both receive $100!");
         } else {
             System.out.println("At least one of the players are not willing to trade, moving on to the next round.");
         }
@@ -41,9 +84,9 @@ public class PropertyManager implements Serializable {
     public boolean is_trading(Player player) {
         String input;
         System.out.println(player.getUsername() + ", would you like to trade one of your properties?" +
-                " Enter Y for yes and N for no.");
+                " Enter Y / N.");
         input = CmdLineUI.scanner.nextLine();
-        return Objects.equals(input, "Y");
+        return input.equalsIgnoreCase("Y");
     }
 
     // this method is only called if both users are willing to trade
@@ -58,6 +101,7 @@ public class PropertyManager implements Serializable {
                 key.setOwner(player1);
             }
         }
+        System.out.println("Properties successfully traded!");
     }
 
     // since this is used when player is bankrupt we do not update money

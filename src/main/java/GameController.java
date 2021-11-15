@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 public class GameController implements Serializable {
     private final BoardManager boardManager;
@@ -54,20 +55,38 @@ public class GameController implements Serializable {
         // System.out.println("\n PLAYER LIST");
     }
 
-    public void runGame() {
+    public void runGame() throws InterruptedException {
         // this checks if the game instance is a new one or is loaded from a file. If it is loaded from a file then
         // the GameController object will have a non-empty this.order array list from the previous game, and so the
         // code will go straight into the game loop. If this.order is empty, then it's a new game, so the if block
         // generates the order for the game.
         if (this.order.size() == 0) {
-            this.order = generateOrder();}
+            this.order = generateOrder();
+            System.out.println("The playing order is:");
+            for(int i : this.order) {
+                System.out.println(this.boardManager.getPlayers().get(i).getUsername());
+            }
+            System.out.println("Let the game begin! \n");
+            TimeUnit.SECONDS.sleep(2);
+        }
+        // TODO: handle what happens if all players go bankrupt but there are no winners
          while (!isWinner()) {
             for (int i : this.order) {
-                this.boardManager.runTurn(i);
+                if(!this.boardManager.getPlayers().get(i).isBankrupt()) {
+                    this.boardManager.runTurn(i);
+                    TimeUnit.SECONDS.sleep(2);
+                }
             }
             updateBankruptcy();
-            }
-        }
+            printCurrentStatistics();
+         }
+         List<Player> winners = getWinners();
+         System.out.println("Game over! The winner(s) are: ");
+         for(Player player : winners) {
+             System.out.println(player.getUsername());
+         }
+        System.out.println("Thanks for playing!");
+    }
 
     public ArrayList<Integer> generateOrder() {
         ArrayList<Integer> order = new ArrayList<>();
@@ -88,8 +107,16 @@ public class GameController implements Serializable {
         return false;
     }
 
-    // there may be a more efficient way to do this but im unsure how our game loop
-    // will go so i'm just leaving it here
+    public List<Player> getWinners() {
+        List<Player> winners = new ArrayList<>();
+        for(Player p : this.boardManager.getPlayers()) {
+            if(p.getNetWorth() >= this.netWorthGoal) {
+                winners.add(p);
+            }
+        }
+        return winners;
+    }
+
     public void updateBankruptcy() {
         for(Player p: this.boardManager.getPlayers()) {
             if(p.getCash() < -500 || p.getNetWorth() == 0) {
@@ -97,6 +124,18 @@ public class GameController implements Serializable {
                 propertyManager.resetProperties(p);
             }
         }
+    }
+
+    public void printCurrentStatistics() throws InterruptedException {
+        System.out.println("The statistics for this round are: ");
+        for(int i: this.order) {
+            Player player = this.boardManager.getPlayers().get(i);
+            int cash = player.getCash();
+            int netWorth = player.getNetWorth();
+            System.out.println(player.getUsername() + ": Cash = " + cash + ", Net Worth = " + netWorth);
+        }
+        System.out.print("\n");
+        TimeUnit.SECONDS.sleep(4);
     }
 
     public String getFilepath() {
