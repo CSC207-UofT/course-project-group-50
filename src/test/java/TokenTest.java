@@ -1,3 +1,5 @@
+import entities.Player;
+import entities.Token;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
@@ -8,7 +10,7 @@ public class TokenTest {
 
     @Before
     public void setUp() {
-        testToken = new Token("Red", new Player("Player 1"));
+        testToken = new Token("Red", new Player("entities.Player 1"));
     }
 
     @Test(timeout = 50)

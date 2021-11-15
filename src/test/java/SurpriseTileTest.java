@@ -1,3 +1,5 @@
+import entities.Player;
+import entities.SurpriseTile;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.assertTrue;
@@ -9,7 +11,7 @@ public class SurpriseTileTest {
     @Before
     public void setUp() {
         testSurpriseTile = new SurpriseTile();
-        player1 = new Player("Player 1");
+        player1 = new Player("entities.Player 1");
     }
 
     @Test(timeout = 50)

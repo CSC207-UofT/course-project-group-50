@@ -1,3 +1,4 @@
+import entities.Player;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -41,6 +42,6 @@ public class PlayerTest {
 
     @Test(timeout = 50)
     public void TestToString() {
-        assertEquals("Player test_player – Cash: $1000, Net Worth: $1000", test_player.toString());
+        assertEquals("entities.Player test_player – Cash: $1000, Net Worth: $1000", test_player.toString());
     }
 }

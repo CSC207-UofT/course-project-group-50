@@ -19,30 +19,30 @@ properties (cities and public properties) until the game ends.
 
 **User Interface**: `CMDLineUI` takes in inputs from the user.
 
-**Controller**: `GameController` controls the game state by responding to the user inputs and performs business
+**Controller**: `controllers.GameController` controls the game state by responding to the user inputs and performs business
 operations by passing it to use case interactor.
 
-**Use Case Interactors**: `PropertyManager`, `MoneyManager`, `BoardManager`, and `AuctionManager` takes input from
-the controller and access entities such as `Tile`, `Board`, `Player`, etc.
+**Use Case Interactors**: `usecases.PropertyManager`, `MoneyManager`, `usecases.BoardManager`, and `AuctionManager` takes input from
+the controller and access entities such as `entities.Tile`, `entities.Board`, `entities.Player`, etc.
 
-**Entities**: `Tile`, `Board`, `Player`, and many more classes act as the entities where they represent the domain of
+**Entities**: `entities.Tile`, `entities.Board`, `entities.Player`, and many more classes act as the entities where they represent the domain of
 our game.
 
 ## Scenario Walkthrough
-When the program is run, the command line (`CmdLineUI`) prompts the user to input the numbers of players in the game
+When the program is run, the command line (`ui.CmdLineUI`) prompts the user to input the numbers of players in the game
 (between 2 to 4 inclusive). Next, it asks the user to enter the usernames of each player.
-Then the `GameController` starts and runs the game. At the beginning of a game, the `GameController` works with the
-`BoardManager` to initialize the players (`Player` objects) and put the players in the starting locations.
+Then the `controllers.GameController` starts and runs the game. At the beginning of a game, the `controllers.GameController` works with the
+`usecases.BoardManager` to initialize the players (`entities.Player` objects) and put the players in the starting locations.
 Once this is set up, a string containing the `name`, `cash`, and `netWorth` of each player
-(the respective attributes of the `Player` objects) is displayed.
+(the respective attributes of the `entities.Player` objects) is displayed.
 
 ## Skeleton Program
-For this program, we implemented `CmdLineUI` (framework), `GameController` (controller), `BoardManager`(use case interactor),
-`Player` and `Token` (both entities). In Main.java, we create an instance of our `GameController` and our `CmdLineUI`.
-We call `CmdLineUI`’s **runPlayerSetup()** to prompt the user for the total number of players and the usernames of each player
-and to call the controller’s **runPlayerSetup()** method. The `GameController` stores an instance of `BoardManager`, whose
-**addPlayers()** method is called to construct a new `Player` with each username. Then, we print a string representation of
-the controller’s `BoardManager` from the *runPlayerSetup()** method, which contains a list of the players as described in the
+For this program, we implemented `ui.CmdLineUI` (framework), `controllers.GameController` (controller), `usecases.BoardManager`(use case interactor),
+`entities.Player` and `entities.Token` (both entities). In main.Main.java, we create an instance of our `controllers.GameController` and our `ui.CmdLineUI`.
+We call `ui.CmdLineUI`’s **runPlayerSetup()** to prompt the user for the total number of players and the usernames of each player
+and to call the controller’s **runPlayerSetup()** method. The `controllers.GameController` stores an instance of `usecases.BoardManager`, whose
+**addPlayers()** method is called to construct a new `entities.Player` with each username. Then, we print a string representation of
+the controller’s `usecases.BoardManager` from the *runPlayerSetup()** method, which contains a list of the players as described in the
 walkthrough.
 
 - ### Skeleton Program Output
@@ -67,7 +67,7 @@ describing our specification. At first, we had no idea how to start these off bu
 created and identified as **Controller**, **Use Case**, **Entities**, etc. Everyone had participated in an enthusiastic manner and contributed
 many ideas.
 - We have different use cases handling different needs of the program
-(such as `PropertyManager`, `BoardManager`, `AuctionManager`, and `MoneyManager`) and they all have low coupling and high
+(such as `usecases.PropertyManager`, `usecases.BoardManager`, `AuctionManager`, and `MoneyManager`) and they all have low coupling and high
 cohesion, which is desired.
 - Clear separation of classes into entities, use cases, controllers, and UI according to the dependency rule and the
 principles of clean architecture.
