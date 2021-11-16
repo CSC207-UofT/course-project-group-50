@@ -81,8 +81,7 @@ to fix it, talk about that too!)**
   interaction is`GameController`. Lastly, we have the **UI** (Frameworks and Drivers) as the outermost core of the 
   program which is responsible for communicating with the user and delegating work to the `GameController`. In our 
   project, the **UI** responsible for this is the `CMDLineUI`. These are all the layers, from the innermost being the entities
-  to the outermost being the UI, that work together to ensure that our project runs smoothly! <br/>
-<br/>
+  to the outermost being the UI, that work together to ensure that our project runs smoothly! <br/><br/>
   - When it comes to adhering to Clean Architecture, we have made sure that the flow of control flows from the outermost
   layer (`CMDLineUI`) to the innermost layer (**entities**). We made sure that we did not have any inner layer accessing or 
   communicating with any outer layers except when returning an output. Layers are only allowed to access/talk to its own
