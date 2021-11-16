@@ -85,7 +85,7 @@ public class BoardManager implements Serializable {
         } else if(city.isOwned()) {
             payRent(player, city);
         } else {
-            System.out.println("Would you like to buy " + city.getName() + "for " + city.getPrice() + "?");
+            System.out.println("Would you like to buy " + city.getName() + " for " + city.getPrice() + "?");
             String input = "";
             while(!(input.equalsIgnoreCase("Y") || input.equalsIgnoreCase("N"))) {
                 System.out.println("Please enter Y / N");
