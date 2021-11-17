@@ -152,7 +152,7 @@ We were trying our best throughout the implementation of the program to stay con
   phase.
 
 
-### Packaging Startegies
+### Packaging Strategies
 
 We considered packaging the program in a couple ways, the most basic of which we got to in Phase 1, but we 
   plan to spend more time planning and brainstorming better ways to package which we will implement for Phase 2.
@@ -172,8 +172,8 @@ We considered packaging the program in a couple ways, the most basic of which we
   existing code isn’t nearly complex enough for the “***large buckets of code***” that often arise in packaging by layer to 
   become a serious problem.
 
+###Design Pattern
 
-###Desgin Pattern
   - **<u>Builder</u>** – We implemented this design pattern to construct the game `Board` from various `Tile` types 
   (`City`, `PublicProperty`, `SpecialTile`), since the **Builder** pattern is well-suited to the constructing complex objects 
   by piecing together simpler elements with the same construction process. In the future, if we decide to implement a 
