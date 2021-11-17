@@ -172,7 +172,7 @@ We considered packaging the program in a couple ways, the most basic of which we
   existing code isn’t nearly complex enough for the “***large buckets of code***” that often arise in packaging by layer to 
   become a serious problem.
 
-###Design Pattern
+### Design Pattern
 
   - **<u>Builder</u>** – We implemented this design pattern to construct the game `Board` from various `Tile` types 
   (`City`, `PublicProperty`, `SpecialTile`), since the **Builder** pattern is well-suited to the constructing complex objects 
