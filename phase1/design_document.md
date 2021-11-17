@@ -117,7 +117,7 @@ Although there are a few instances where we notice a violation of the Clean Arch
     fixing this by the end of Phase 2.
 
 
-###SOLID design principles
+### SOLID design principles
 
 We were trying our best throughout the implementation of the program to stay consistent with the **SOLID** principles, 
   and we will highlight some situations in which all the principles are present. I will also highlight some rule breaks 
