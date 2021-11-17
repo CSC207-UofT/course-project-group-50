@@ -65,46 +65,61 @@ conversation.
 
 ## <span style="color:Aquamarine">Design Questions
 
-- A description of any major  design decisions your group has made (along with brief explanations of why you made them).
+### Design Decisions
+
+Our first major decision we made was how to save the ongoing game. Initially for `CMDLineUI`, we instantiated a 
+`GameController` within our `startGame()` method. We realized that while this may run our game, there was no way to load
+a saved game from the game filepath. Now the `startGame()` method has a parameter ***gc*** that takes in `GameController`
+object, which allows us to load games freely; however, the problem didn't end there.
+
+A bug occurred while saving a game. `NotSerializableException` was thrown while saving and loading the game. We realized
+after quick search on the javadoc:
+    
+    Serializability of a class is enabled by the class implementing the java.io.Serializable interface. Classes that do 
+    not implement this interface will not have any of their state serialized or deserialized. All subtypes of a serializable
+    class are themselves serializable.
+
+`GameController` had serializable implementation, but the objects which the `GameController` was using did not. Therefore,
+we implemented serializable implementation to all classes that needed it and the bug was resolved.
+
+### Clean Architecture
+
+Our project, <span style="color:yellow">**Monopoly**</span>, adheres to Clean Architecture as it incorporates the different layers that the architecture 
+    deems necessary. First, we will have an overview of the Clean Architecture in our project. Our project consists of 
+    multiple **entities** (Enterprise Business Rules), including but not limited to `Player`, `Tile`, `Token`, `Board`, and so 
+    on, that are at the core of the program and contain the necessary information. Then we have our use cases (Application
+    Business Rules) that interact with those entities to ensure the game runs smoothly. These **use cases** include 
+    `BankManager`, `BoardManager`, and `PropertyManager`. Next, we have **Controllers** (Interface Adapters) that interact
+    with the **use cases** to access or manipulate **entities**. The **controller** in our project responsible for the 
+    interaction is`GameController`. Lastly, we have the **UI** (Frameworks and Drivers) as the outermost core of the 
+    program which is responsible for communicating with the user and delegating work to the `GameController`. In our 
+    project, the **UI** responsible for this is the `CMDLineUI`. These are all the layers, from the innermost being the entities
+    to the outermost being the UI, that work together to ensure that our project runs smoothly!
+
+When it comes to adhering to Clean Architecture, we have made sure that the flow of control flows from the outermost
+    layer (`CMDLineUI`) to the innermost layer (**entities**). We made sure that we did not have any inner layer accessing or 
+    communicating with any outer layers except when returning an output. Layers are only allowed to access/talk to its own
+    layer, and the layers inside it. For example, we made sure that any entities, for instance `Player`, did not 
+    communicate/used any of the use cases; instead, we rethought the design and structure and moved such operations from 
+    `Player` to a use case since use cases are able to communicate with each other. We also made sure that in the flow of 
+    control from outside to inside, no layers were being skipped; layers were only allowed to communicate to the inner 
+    layer directly connected to it. For example, when the `GameController` runs the game, instead of dealing with all the 
+    `Player`s and turns itself, it delegates the work to a use case to ensure that no layers are being skipped in the flow. 
+    Like in this example, if the `GameController` dealt with all the `Player`s and the turns itself, then it would be 
+    **communicating directly** with the `Player` entity and skipping over use cases which is a violation of Clean Architecture. 
+    This ensures that the principles of Clean Architecture are adhered to, which ultimately leads to a more elegant and 
+    clean program.
+
+Although there are a few instances where we notice a violation of the Clean Architecture, we have a use case 
+    `BoardManager` which communicates with the user directly (skipping controllers and UI) to output/input when dealing with
+    different `Tile`s. This includes requiring an input asking the player if they want to buy a property, requiring an input
+    asking the player who they want to trade with, and so on. We are unsure how to fix this as of now, but we plan on 
+    fixing this by the end of Phase 2.
 
 
-- **A brief description of how your project adheres to Clean Architecture (if you notice a violation and aren't sure how 
-to fix it, talk about that too!)**
+###SOLID design principles
 
-  - Our project, <span style="color:yellow">**Monopoly**</span>, adheres to Clean Architecture as it incorporates the different layers that the architecture 
-  deems necessary. First, we will have an overview of the Clean Architecture in our project. Our project consists of 
-  multiple **entities** (Enterprise Business Rules), including but not limited to `Player`, `Tile`, `Token`, `Board`, and so 
-  on, that are at the core of the program and contain the necessary information. Then we have our use cases (Application
-  Business Rules) that interact with those entities to ensure the game runs smoothly. These **use cases** include 
-  `BankManager`, `BoardManager`, and `PropertyManager`. Next, we have **Controllers** (Interface Adapters) that interact
-  with the **use cases** to access or manipulate **entities**. The **controller** in our project responsible for the 
-  interaction is`GameController`. Lastly, we have the **UI** (Frameworks and Drivers) as the outermost core of the 
-  program which is responsible for communicating with the user and delegating work to the `GameController`. In our 
-  project, the **UI** responsible for this is the `CMDLineUI`. These are all the layers, from the innermost being the entities
-  to the outermost being the UI, that work together to ensure that our project runs smoothly! <br/><br/>
-  - When it comes to adhering to Clean Architecture, we have made sure that the flow of control flows from the outermost
-  layer (`CMDLineUI`) to the innermost layer (**entities**). We made sure that we did not have any inner layer accessing or 
-  communicating with any outer layers except when returning an output. Layers are only allowed to access/talk to its own
-  layer, and the layers inside it. For example, we made sure that any entities, for instance `Player`, did not 
-  communicate/used any of the use cases; instead, we rethought the design and structure and moved such operations from 
-  `Player` to a use case since use cases are able to communicate with each other. We also made sure that in the flow of 
-  control from outside to inside, no layers were being skipped; layers were only allowed to communicate to the inner 
-  layer directly connected to it. For example, when the `GameController` runs the game, instead of dealing with all the 
-  `Player`s and turns itself, it delegates the work to a use case to ensure that no layers are being skipped in the flow. 
-  Like in this example, if the `GameController` dealt with all the `Player`s and the turns itself, then it would be 
-  **communicating directly** with the `Player` entity and skipping over use cases which is a violation of Clean Architecture. 
-  This ensures that the principles of Clean Architecture are adhered to, which ultimately leads to a more elegant and 
-  clean program.<br/><br/>
-  Although there are a few instances where we notice a violation of the Clean Architecture, we have a use case 
-  `BoardManager` which communicates with the user directly (skipping controllers and UI) to output/input when dealing with
-  different `Tile`s. This includes requiring an input asking the player if they want to buy a property, requiring an input
-  asking the player who they want to trade with, and so on. We are unsure how to fix this as of now, but we plan on 
-  fixing this by the end of Phase 2.
-
-
-- **A brief description of how your project is consistent with the SOLID design principles (if you notice a violation and 
-aren't sure how to fix it, talk about that too!)**
-  - We were trying our best throughout the implementation of the program to stay consistent with the **SOLID** principles, 
+We were trying our best throughout the implementation of the program to stay consistent with the **SOLID** principles, 
   and we will highlight some situations in which all the principles are present. I will also highlight some rule breaks 
   and why we are not sure how to fix them. Through the entities to the use cases, all files have been monitored so that 
   each method only has one job. For any methods that we noticed that were getting outside the scope of one job, we used the 
@@ -137,9 +152,9 @@ aren't sure how to fix it, talk about that too!)**
   phase.
 
 
-- **A brief description of which packaging strategies you considered, which you decided to use, and why. 
-(see slide 7 from the packages slides)**
-  - We considered packaging the program in a couple ways, the most basic of which we got to in Phase 1, but we 
+### Packaging Startegies
+
+We considered packaging the program in a couple ways, the most basic of which we got to in Phase 1, but we 
   plan to spend more time planning and brainstorming better ways to package which we will implement for Phase 2.
   The one we ended up implementing was organizing based on Clean Architecture by creating a separate folder for each 
   leve. This way, it is streamlined with dependencies. Another strategy we considered was by organizing by use cases; for 
@@ -148,7 +163,8 @@ aren't sure how to fix it, talk about that too!)**
   accessed by `GameController` which is an **Interface Adapter**. The main reason we didn’t spend more time planning and 
   implementing a better strategy so far is the time constraint; for the sake of the scope of the project, we decided it would be 
   better to devote our time into trying to have the best functioning program we could. This left us with a quite basic 
-  packaging structure that is functional and is not final. <br/><br/>
+  packaging structure that is functional and is not final.
+
   We considered packaging by feature since it’s both simple and intuitive, a clear connection to the business 
   domain, but unfortunately we don’t have enough features implemented yet for this strategy to be ideal. We also 
   considered packaging by component, but we felt that  packaging by layer better met our needs, at least for now. 
@@ -157,7 +173,7 @@ aren't sure how to fix it, talk about that too!)**
   become a serious problem.
 
 
-- **A summary of any design patterns your group has implemented (or plans to implement)**
+###Desgin Pattern
   - **<u>Builder</u>** – We implemented this design pattern to construct the game `Board` from various `Tile` types 
   (`City`, `PublicProperty`, `SpecialTile`), since the **Builder** pattern is well-suited to the constructing complex objects 
   by piecing together simpler elements with the same construction process. In the future, if we decide to implement a 
@@ -174,3 +190,21 @@ aren't sure how to fix it, talk about that too!)**
   create a `Factory` class, `BuildingFactory`, that contains a factory method to determine which of the buildings should be 
   instantiated (based on whether the Player can afford the building, and whether the player has indicated that they want
   to buy that particular building). This method will then create and return an instance of that specific `Building` class. 
+
+### Progress Report
+
+Parth: Worked on Serialization of the `GameController` object that allows the game to be saved and loaded, worked on 
+`CMDLineUI`, `Board`, `GameController`, `JailTile`, and `StartTile` among other classes. Plan on cleaning up the code 
+and adding necessary features and bug fixes for Phase 2.
+
+Jacqueline: Worked on `City` and `Building` classes. Implemented Builder design pattern (including `Director` and `BoardBuilder`
+classes,` Builder` interface, and modifications to `Board` and `BoardManager`). Refactored and organized packaging by layer. 
+Going forward, I will continue flagging/correcting violations of Clean Architecture, implementing relevant design 
+patterns (ie. Simple Factory).
+
+Samraj: Implemented `PropertyManage`, `BankManager`, `PropertyTile`, and helped with `GameController`, `BoardManager` and smaller
+other methods across various classes. Plan on working on GUI as well as cleaning up the code and adding features for 
+phase 2.
+
+Steve: Implemented `SurpriseTile`, `Card` and `CardDeck` in the entities layer. Plan on adding additional features to
+`SurpriseTile`, GUI, and cleaning up the code.
