@@ -208,3 +208,6 @@ phase 2.
 
 Steve: Implemented `SurpriseTile`, `Card` and `CardDeck` in the entities layer. Plan on adding additional features to
 `SurpriseTile`, GUI, and cleaning up the code.
+
+Danny: Implemented `AuctionTile` in the entities layer and expanded `PropertyManager` in the use-cases. Plan on
+assisting implementing the GUI as well as cleaning up the code.
