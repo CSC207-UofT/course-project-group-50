@@ -61,7 +61,7 @@ game board. The player can take another turn **if they roll a 6**.
 Any properties owned by that `Player` become available for the remaining players to buy if they land on that property.
 
 Time permitting, add-on features might include a leaderboard to rank players across multiple games or a chat for in-game
-conversation. 
+conversation.
 
 ## <span style="color:Aquamarine">Design Questions
 
@@ -208,3 +208,6 @@ phase 2.
 
 Steve: Implemented `SurpriseTile`, `Card` and `CardDeck` in the entities layer. Plan on adding additional features to
 `SurpriseTile`, GUI, and cleaning up the code.
+
+Danny: Implemented `AuctionTile` in the entities layer and expanded `PropertyManager` in the use-cases. Plan on 
+assisting implementing the GUI as well as cleaning up the code.
