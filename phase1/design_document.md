@@ -211,3 +211,7 @@ Steve: Implemented `SurpriseTile`, `Card` and `CardDeck` in the entities layer. 
 
 Danny: Implemented `AuctionTile` in the entities layer and expanded `PropertyManager` in the use-cases. Plan on
 assisting implementing the GUI as well as cleaning up the code.
+    
+Anis: Implemented `Player` and `Token` entities. Worked on the main game loop in `GameController` and the main method that
+it interacts with in `BoardManager`. Did a lot of debugging and cleaning up of code. Plan on working on the GUI, cleaning up
+the code so it adheres to Clean Architecture more, and testing for bugs more extensively.
