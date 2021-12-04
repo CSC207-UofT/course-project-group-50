@@ -24,7 +24,7 @@ public class GameController implements Serializable, UseCaseOutputBoundary {
     private ArrayList<Integer> order;
     private final UI ui;
 
-    public GameController(UI ui) {
+    public GameController(UI ui, ArrayList<Integer> order) {
         this.ui = ui;
         this.id = new Random().nextLong();
         this.filepath = "";
@@ -33,7 +33,7 @@ public class GameController implements Serializable, UseCaseOutputBoundary {
         this.bankManager = new BankManager();
         this.propertyManager = new PropertyManager();
         this.boardManager = new BoardManager(this.bankManager, this.propertyManager, this);
-        this.order = new ArrayList<>();
+        this.order = order;
     }
 
     public void runPlayerSetUp(List<String> usernames){
@@ -43,22 +43,15 @@ public class GameController implements Serializable, UseCaseOutputBoundary {
     }
 
     public void runGame() throws InterruptedException {
-        // this checks if the game instance is a new one or is loaded from a file. If it is loaded from a file then
-        // the controllers.GameController object will have a non-empty this.order array list from the previous game,
-        // and so the code will go straight into the game loop. If this.order is empty, then it's a new game, so the
-        // if block generates the order for the game.
-        if (this.order.size() == 0) {
-            this.order = generateOrder();
-            this.ui.printMessage("The playing order is:");
-            for(int i : this.order) {
-                this.ui.printMessage(this.boardManager.getPlayers().get(i).getUsername());
-            }
-            this.ui.printMessage("Let the game begin! \n");
-            TimeUnit.SECONDS.sleep(2);
+        this.ui.printMessage("The playing order is:");
+        for(int i : this.order) {
+            this.ui.printMessage(this.boardManager.getPlayers().get(i).getUsername());
         }
+        this.ui.printMessage("Let the game begin! \n");
+        TimeUnit.SECONDS.sleep(2);
         // TODO: handle what happens if all players go bankrupt but there are no winners
         // TODO: Remove all instances of boardManager.getPlayers() because cannot access entities in this class
-         while (!isWinner()) {
+         while (isWinner() == null | !allBankrupt()) {
             for (int i : this.order) {
                 // TODO: Delegate out to helper because this method is large already
                 if(!this.boardManager.getPlayers().get(i).isBankrupt()) {
@@ -69,55 +62,32 @@ public class GameController implements Serializable, UseCaseOutputBoundary {
                     TimeUnit.SECONDS.sleep(2);
                 }
             }
-            updateBankruptcy();
             printCurrentStatistics();
          }
-         List<Player> winners = getWinners();
-         this.ui.printMessage("Game over! The winner(s) are: ");
+         Player winner = isWinner();
+         this.ui.printMessage("Game over! The winner is: ");
          // TODO: Can't access player here
-         for(Player player : winners) {
-             this.ui.printMessage(player.getUsername());
-         }
-        this.ui.printMessage("Thanks for playing!");
+         this.ui.printMessage(winner.getUsername());
+         this.ui.printMessage("Thanks for playing!");
     }
 
-    // TODO: Move to GameSetUp?
-    public ArrayList<Integer> generateOrder() {
-        ArrayList<Integer> order = new ArrayList<>();
-        for(int i = 0; i < this.boardManager.numOfPlayers(); i++) {
-            order.add(i);
-        }
-
-        Collections.shuffle(order);
-        return order;
-    }
-
-    public boolean isWinner() {
+    public Player isWinner() {
         for(Player p : this.boardManager.getPlayers()) {
             if(p.getNetWorth() >= this.netWorthGoal) {
-                return true;
+                return p;
             }
         }
-        return false;
+        return null;
     }
 
-    public List<Player> getWinners() {
-        List<Player> winners = new ArrayList<>();
-        for(Player p : this.boardManager.getPlayers()) {
-            if(p.getNetWorth() >= this.netWorthGoal) {
-                winners.add(p);
+    public boolean allBankrupt(){
+        int num_non_bankrupt = this.order.size();
+        for(Player player: this.boardManager.getPlayers()){
+            if(player.isBankrupt()){
+                num_non_bankrupt += 1;
             }
         }
-        return winners;
-    }
-
-    public void updateBankruptcy() {
-        for(Player p: this.boardManager.getPlayers()) {
-            if(p.getCash() < -500 || p.getNetWorth() == 0) {
-                p.setBankrupt();
-                propertyManager.resetProperties(p);
-            }
-        }
+        return num_non_bankrupt >= this.order.size() - 1;
     }
 
     public void printCurrentStatistics() throws InterruptedException {

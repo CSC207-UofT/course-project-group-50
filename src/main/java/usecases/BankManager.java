@@ -33,10 +33,6 @@ public class BankManager implements Serializable {
         seller.subtractNetWorth(property.getPrice() - property.getSalePrice());
     }
 
-    public void calculateNetWorth(){
-        // TODO decide if we need this as it will be updated with everything that affects it
-    }
-
     public void updateCashPropertySwap(Player player1, Player player2) {
         player1.addCash(100);
         player2.addCash(100);
@@ -47,5 +43,15 @@ public class BankManager implements Serializable {
     public void passStart(Player player){
         player.addCash(200);
         player.addNetWorth(200);
+    }
+
+    public void addMoney(Player player, int amount){
+        player.addCash(amount);
+        player.addNetWorth(amount);
+    }
+
+    public void subtractMoney(Player player, int amount){
+        player.subtractCash(amount);
+        player.subtractNetWorth(amount);
     }
 }

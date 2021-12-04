@@ -18,6 +18,7 @@ public class SurpriseTile extends SpecialTile implements Serializable {
         } else if(card.getAction() == 3) {
             outBound.cardThree(token.getPlayer());
         }
+        outBound.notifyUser(card.getMessage());
     }
 
 }

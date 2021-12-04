@@ -1,5 +1,7 @@
 package controllers;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 // takes all the user input and initializes the game controller
@@ -14,8 +16,10 @@ public class GameSetUp {
 
         // This branch executes if the user wishes to start a game
         if (input.equals("S")) {
-            gc = new GameController(ui);
+
             List<String> usernames = ui.getPlayerNames();
+            ArrayList<Integer> order = generateOrder(usernames.size());
+            gc = new GameController(ui, order);
             gc.runPlayerSetUp(usernames);
         }
         // This branch executes if a user wishes to load an existing game
@@ -36,5 +40,15 @@ public class GameSetUp {
         } catch(InterruptedException e) {
             ui.printMessage("Game loop interrupted");
         }
+    }
+
+    public ArrayList<Integer> generateOrder(int num_players) {
+        ArrayList<Integer> order = new ArrayList<>();
+        for(int i = 0; i < num_players; i++) {
+            order.add(i);
+        }
+
+        Collections.shuffle(order);
+        return order;
     }
 }

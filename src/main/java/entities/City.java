@@ -28,13 +28,13 @@ public class City extends PropertyTile implements Buildable, Auctionable, Buyabl
             String response = outBound.getResponse("Would you like to build on your property: " +
                     this.getName() + "? Please enter Y / N.", acceptedResponses);
             if(response.equalsIgnoreCase("Y")) {
-                outBound.notifyUser("Unfortunately, this feature has not yet been implemented.");
+                outBound.upgradeProperty(player, this);
             } // no else case because response must be "N" or "n" so we can just go to the next move
         } else if(this.isOwned()) {
             outBound.payRent(player, this);
         } else {
             String response = outBound.getResponse("Would you like to buy " + this.getName() +
-                    " for " + this.getPrice() + "?", acceptedResponses);
+                    " for " + this.getPrice() + "? Please enter Y / N.", acceptedResponses);
             if(response.equalsIgnoreCase("Y")) {
                 boolean propertyBought = outBound.buyProperty(player, this);
                 if(propertyBought) {
@@ -46,8 +46,6 @@ public class City extends PropertyTile implements Buildable, Auctionable, Buyabl
             // no else case because input must be "N" or "n" so we can just go to the next move
         }
     }
-
-
 
     public String getColour() {return this.colour;}
 

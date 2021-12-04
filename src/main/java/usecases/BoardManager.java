@@ -78,35 +78,8 @@ public class BoardManager implements Serializable {
             this.outBound.notifyUser(currPlayer.getUsername() +  ", you were given $200 for passing Start!");
         }
         Tile tokenTile = this.board.getTileAt(currToken.getLocation());
-        TileManager tileManager = new TileManager(outBound, this);
+        TileManager tileManager = new TileManager(outBound, this, bankManager, propertyManager);
         tokenTile.interact(currToken, tileManager);
-    }
-
-    public void tileIsCity(City city, Player player) {
-        List<String> acceptedResponses = new ArrayList<>();
-        acceptedResponses.add("y");
-        acceptedResponses.add("n");
-        if(city.isOwned() && city.getOwner().equals(player)) {
-            String response = this.outBound.getResponse("Would you like to build on your property: " +
-                    city.getName() + "? Please enter Y / N.", acceptedResponses);
-            if(response.equalsIgnoreCase("Y")) {
-                this.outBound.notifyUser("Unfortunately, this feature has not yet been implemented.");
-            } // no else case because response must be "N" or "n" so we can just go to the next move
-        } else if(city.isOwned()) {
-            payRent(player, city);
-        } else {
-            String response = this.outBound.getResponse("Would you like to buy " + city.getName() +
-                    " for " + city.getPrice() + "?", acceptedResponses);
-            if(response.equalsIgnoreCase("Y")) {
-                boolean propertyBought = buyProperty(player, city);
-                if(propertyBought) {
-                    this.outBound.notifyUser("You just bought " + city.getName() + "!");
-                } else {
-                    this.outBound.notifyUser(player.getUsername() + ", you do not have enough to buy this.");
-                }
-            }
-            // no else case because input must be "N" or "n" so we can just go to the next move
-        }
     }
     
     public List<Player> getPlayers() {
@@ -131,89 +104,13 @@ public class BoardManager implements Serializable {
         return this.board.tiles;
     }
 
-    public void payRent(Player player1, PropertyTile property){
-        Player player2 = property.getOwner();
-        if(player1.getCash() >= property.getRent()){
-            // renter is player 2 (could be null), payee is player 1
-            bankManager.payRent(player2, player1, property);
-            if(property instanceof City) {
-                this.outBound.notifyUser(player1.getUsername() + ", you just paid " + property.getRent() + " to "
-                        + player2.getUsername());
-            } else {
-                this.outBound.notifyUser(player1.getUsername() + ", you just paid " + property.getRent() +
-                        " to the city!");
-            }
-        }else{
-            // they will either have to sell or declare bankruptcy
-            List<String> acceptedResponses = new ArrayList<>();
-            acceptedResponses.add("sell");
-            acceptedResponses.add("bankrupt");
-
-            this.outBound.notifyUser(player1.getUsername() + ", you do not have enough to pay.");
-            this.outBound.notifyUser("You can either sell a property or declare bankruptcy.");
-            String response = this.outBound.getResponse("Please enter either \"sell\" or \"bankrupt\"",
-                    acceptedResponses);
-            // make sure they own at least one property to sell
-            if(response.equals("sell") && propertyManager.propertiesOwnedByPlayer(player1).size() != 0){
-                sellRentHelper(player1, property);
-            }else { // input must be "bankrupt"
-                bankManager.payRent(player1, player2, property);
-                bankruptPlayer(player1);
+    public Player stringToPlayer(String player_string){
+        for(Player player: this.getPlayers()){
+            if(player.getUsername().equals(player_string)){
+                return player;
             }
         }
+        return null;
     }
 
-    public boolean buyProperty(Player player, City property){
-        if(player.getCash() >= property.getPrice()){
-            propertyManager.buyProperty(player, property);
-            bankManager.deductCostOfProperty(player, property);
-            return true;
-        }
-        return false;
-    }
-
-    private void sellRentHelper(Player player1, PropertyTile property) {
-        String propertyString = this.outBound.getAnyResponse("Which property would you like to sell?");
-        // TODO: Check if property is valid?
-        PropertyTile propToSell = propertyManager.stringToPropertyTile(propertyString);
-        sellProperty(player1, propToSell);
-        payRent(player1, property);
-    }
-
-    public void sellProperty(Player player){
-        PropertyTile property = getPropertyTile(player);
-        propertyManager.sellProperty(player, property);
-        bankManager.addSellbackOfProperty(player, property);
-    }
-    public void sellProperty(Player player, PropertyTile property){
-        propertyManager.sellProperty(player, property);
-        bankManager.addSellbackOfProperty(player, property);
-    }
-
-    private PropertyTile getPropertyTile(Player player) {
-        int location = player.getToken().getLocation();
-        return (PropertyTile) this.getBoardList().get(location);
-    }
-
-    public void bankruptPlayer(Player player){
-        player.setBankrupt();
-        propertyManager.resetProperties(player);
-    }
-
-    public void tileIsAuctionTile(Player player1){
-        // TODO: Does this code work?
-        Player player2;
-        String player2String = this.outBound.getAnyResponse("Please enter the name of the player you " +
-                "wish to trade with.");
-
-        for(Player player: this.players){
-            if(player.getUsername().equals(player2String)){
-                player2 = player;
-                propertyManager.tradeProperties(player1, player2, this.bankManager);
-                return;
-            }
-        }
-        this.outBound.notifyUser("Invalid name entered.");
-        tileIsAuctionTile(player1);
-    }
 }
