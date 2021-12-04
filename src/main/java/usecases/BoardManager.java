@@ -1,7 +1,7 @@
 package usecases;
 
 import entities.*;
-import ui.CmdLineUI; // TODO: remove ui from use case
+import details.CmdLineUI; // TODO: remove ui from use case
 
 import java.io.Serializable;
 import java.util.ArrayList;

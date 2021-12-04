@@ -1,16 +1,16 @@
 package main;
 
 import controllers.GameController;
-import ui.CmdLineUI;
+import controllers.GameSetUp;
+import details.CmdLineUI;
 
 import java.io.*;
 
 public class Main {
     public static void main(String[] args) throws InterruptedException {
-
-        GameController gc = new GameController();
+        GameSetUp gameSetUp = new GameSetUp();
         CmdLineUI ui = new CmdLineUI();
-        ui.startGame(gc);
+        gameSetUp.setUpGame(ui);
     }
 
     public static void save(GameController game, String filename){
