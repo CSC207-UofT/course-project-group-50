@@ -6,6 +6,7 @@ import interfaces.Buyable;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 public class City extends PropertyTile implements Buildable, Auctionable, Buyable, Serializable {
     private final String colour;
@@ -17,6 +18,36 @@ public class City extends PropertyTile implements Buildable, Auctionable, Buyabl
         this.colour = colour;
         this.buildings = new ArrayList<>();
     }
+
+    public void interact(Token token, TileOutputBoundary outBound) {
+        Player player = token.getPlayer();
+        List<String> acceptedResponses = new ArrayList<>();
+        acceptedResponses.add("y");
+        acceptedResponses.add("n");
+        if(this.isOwned() && this.getOwner().equals(player)) {
+            String response = outBound.getResponse("Would you like to build on your property: " +
+                    this.getName() + "? Please enter Y / N.", acceptedResponses);
+            if(response.equalsIgnoreCase("Y")) {
+                outBound.notifyUser("Unfortunately, this feature has not yet been implemented.");
+            } // no else case because response must be "N" or "n" so we can just go to the next move
+        } else if(this.isOwned()) {
+            outBound.payRent(player, this);
+        } else {
+            String response = outBound.getResponse("Would you like to buy " + this.getName() +
+                    " for " + this.getPrice() + "?", acceptedResponses);
+            if(response.equalsIgnoreCase("Y")) {
+                boolean propertyBought = outBound.buyProperty(player, this);
+                if(propertyBought) {
+                    outBound.notifyUser("You just bought " + this.getName() + "!");
+                } else {
+                    outBound.notifyUser(player.getUsername() + ", you do not have enough to buy this.");
+                }
+            }
+            // no else case because input must be "N" or "n" so we can just go to the next move
+        }
+    }
+
+
 
     public String getColour() {return this.colour;}
 
