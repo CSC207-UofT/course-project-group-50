@@ -1,6 +1,6 @@
 package entities;
 
-import ui.CmdLineUI; // TODO: remove ui from entity
+import details.CmdLineUI; // TODO: remove ui from entity
 
 import java.util.Objects;
 

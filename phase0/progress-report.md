@@ -29,7 +29,7 @@ the controller and access entities such as `entities.Tile`, `entities.Board`, `e
 our game.
 
 ## Scenario Walkthrough
-When the program is run, the command line (`ui.CmdLineUI`) prompts the user to input the numbers of players in the game
+When the program is run, the command line (`details.CmdLineUI`) prompts the user to input the numbers of players in the game
 (between 2 to 4 inclusive). Next, it asks the user to enter the usernames of each player.
 Then the `controllers.GameController` starts and runs the game. At the beginning of a game, the `controllers.GameController` works with the
 `usecases.BoardManager` to initialize the players (`entities.Player` objects) and put the players in the starting locations.
@@ -37,9 +37,9 @@ Once this is set up, a string containing the `name`, `cash`, and `netWorth` of e
 (the respective attributes of the `entities.Player` objects) is displayed.
 
 ## Skeleton Program
-For this program, we implemented `ui.CmdLineUI` (framework), `controllers.GameController` (controller), `usecases.BoardManager`(use case interactor),
-`entities.Player` and `entities.Token` (both entities). In main.Main.java, we create an instance of our `controllers.GameController` and our `ui.CmdLineUI`.
-We call `ui.CmdLineUI`’s **runPlayerSetup()** to prompt the user for the total number of players and the usernames of each player
+For this program, we implemented `details.CmdLineUI` (framework), `controllers.GameController` (controller), `usecases.BoardManager`(use case interactor),
+`entities.Player` and `entities.Token` (both entities). In main.Main.java, we create an instance of our `controllers.GameController` and our `details.CmdLineUI`.
+We call `details.CmdLineUI`’s **runPlayerSetup()** to prompt the user for the total number of players and the usernames of each player
 and to call the controller’s **runPlayerSetup()** method. The `controllers.GameController` stores an instance of `usecases.BoardManager`, whose
 **addPlayers()** method is called to construct a new `entities.Player` with each username. Then, we print a string representation of
 the controller’s `usecases.BoardManager` from the *runPlayerSetup()** method, which contains a list of the players as described in the

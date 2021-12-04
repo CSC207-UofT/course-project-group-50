@@ -22,28 +22,14 @@ public class GameController implements Serializable {
     private final ArrayList<String> usernames;
     private ArrayList<Integer> order;
 
-    public GameController(long id, String filepath, ArrayList<String> usernames) {
-        this.id = id;
-        this.filepath = filepath;
-        this.usernames = usernames;
-        this.netWorthGoal = 5000;
-        this.bankManager = new BankManager();
-        this.propertyManager = new PropertyManager();
-        this.boardManager = new BoardManager(this.bankManager, this.propertyManager);
-        this.order = new ArrayList<>();
+    public interface UI {
+        String getStartInfo();
+        List<String> getPlayerNames();
+        GameController loadGame();
+        // void runPlayerSetup(GameController gc);
+        // void quitGame(GameController gc);
     }
-
-    public GameController(long id, String filepath, ArrayList<String> usernames, int netWorthGoal) {
-        this.id = id;
-        this.filepath = filepath;
-        this.usernames = usernames;
-        this.netWorthGoal = netWorthGoal;
-        this.bankManager = new BankManager();
-        this.propertyManager = new PropertyManager();
-        this.boardManager = new BoardManager(this.bankManager, this.propertyManager);
-        this.order = new ArrayList<>();
-    }
-
+    // TODO: Need to catch InterruptedException somewhere
     public GameController() {
         this.id = new Random().nextLong();
         this.filepath = "";
@@ -59,7 +45,6 @@ public class GameController implements Serializable {
         for(String s : usernames) {
             boardManager.addPlayer(s);
         }
-        // System.out.println("\n PLAYER LIST");
     }
 
     public void runGame() throws InterruptedException {
