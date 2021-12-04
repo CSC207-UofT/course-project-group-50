@@ -1,16 +1,16 @@
 package details;
 
 import controllers.GameController;
-import controllers.GameSetUp;
 import main.Main;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Scanner;
 
-public class CmdLineUI implements GameSetUp.UI {
+public class CmdLineUI implements controllers.UI {
     public static Scanner scanner = new Scanner(System.in);
 
     public String getStartInfo() {
@@ -66,8 +66,36 @@ public class CmdLineUI implements GameSetUp.UI {
         while(item != 1);
         // added item as a dummy variable which only gets value assigned to 1 when the filename given by the user
         // is correct, unless the code goes to the catch block and item continues to have value 0
-        GameController gc = Main.load(filename);
-        return gc;
+        return Main.load(filename);
+    }
+
+    public void printMessage(String message) {
+        System.out.println(message);
+    }
+
+    public String getAnyInput(String message) {
+        System.out.println(message);
+        return scanner.nextLine();
+    }
+
+    public String getInput(String message, List<String> acceptedResponses) {
+        List<String> messages = new ArrayList<>();
+        messages.add(message);
+        return getInput(messages, acceptedResponses);
+    }
+
+    public String getInput(List<String> messages, List<String> acceptedResponses) {
+        String input;
+        do{
+            // Display all messages to the user
+            for(String m : messages) {
+                System.out.println(m);
+            }
+            // Get the users input
+            input = scanner.nextLine();
+        // by the preconditions of this method, each element of acceptedResponses is lowercase
+        } while(!acceptedResponses.contains(input.toLowerCase()));
+        return input;
     }
 
     // TODO: Method is currently never used, but it will be soon, but it will need to be modified.

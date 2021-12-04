@@ -6,8 +6,9 @@ import details.CmdLineUI;
 
 import java.io.*;
 
+
 public class Main {
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) {
         GameSetUp gameSetUp = new GameSetUp();
         CmdLineUI ui = new CmdLineUI();
         gameSetUp.setUpGame(ui);
