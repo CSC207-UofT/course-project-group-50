@@ -13,9 +13,9 @@ public class BoardManager implements Serializable {
     private final Board board;
     private final BankManager bankManager;
     private final PropertyManager propertyManager;
-    private final BoardOutputBoundary outBound;
+    private final UseCaseOutputBoundary outBound;
 
-    public BoardManager(BankManager bankManager, PropertyManager propertyManager, BoardOutputBoundary outBound) {
+    public BoardManager(BankManager bankManager, PropertyManager propertyManager, UseCaseOutputBoundary outBound) {
         this.players = new ArrayList<>();
 
         Director director = new Director();
@@ -78,21 +78,8 @@ public class BoardManager implements Serializable {
             this.outBound.notifyUser(currPlayer.getUsername() +  ", you were given $200 for passing Start!");
         }
         Tile tokenTile = this.board.getTileAt(currToken.getLocation());
-        // if we land on start tile
-        if(tokenTile instanceof StartTile) {
-            this.bankManager.passStart(currPlayer);
-            this.outBound.notifyUser(currPlayer.getUsername() +  ", you were given $200 for passing Start!");
-        } else if(tokenTile instanceof City) {
-            tileIsCity((City) tokenTile, currPlayer);
-        } else if (tokenTile instanceof PublicProperty) {
-            payRent(currPlayer, (PublicProperty) tokenTile);
-        } else if (tokenTile instanceof SurpriseTile){
-            ((SurpriseTile) tokenTile).interact(currPlayer);
-        } else if (tokenTile instanceof JailTile){
-            tokenTile.interact(currToken);
-        } else {
-            tileIsAuctionTile(currPlayer);
-        }
+        TileManager tileManager = new TileManager(outBound, this);
+        tokenTile.interact(currToken, tileManager);
     }
 
     public void tileIsCity(City city, Player player) {

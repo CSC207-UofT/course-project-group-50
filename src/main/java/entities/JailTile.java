@@ -1,52 +1,55 @@
 package entities;
 
-import details.CmdLineUI; // TODO: remove ui from entity
-
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class JailTile extends SpecialTile {
 
-    public void interact(Token token){
+    @Override
+    public void interact(Token token, TileOutputBoundary outBound) {
         if (token.getJailDays() > 0 && token.isInJail()){
-            tokenAlreadyInJail(token);
+            tokenAlreadyInJail(token, outBound);
             // Calls helper method which reduces the remaining days and asks the player if they want to pay to get
             // released early.
         } else if (token.getJailDays() == 0 && token.isInJail()) {
-            System.out.println("Congratulations " + token.getPlayer().getUsername() +
+            outBound.notifyUser("Congratulations " + token.getPlayer().getUsername() +
                     ", you have been let out of jail! You still cannot roll this turn, however.");
             token.setInJail(false);
         }
         else{
             token.setInJail(true);
             token.setJailDays(3);
-            System.out.println(token.getPlayer().getUsername() + ", you are in Jail! You will be released after " +
+            outBound.notifyUser(token.getPlayer().getUsername() + ", you are in Jail! You will be released after " +
                     token.getJailDays() + " turns.");
         }
     }
 
-    private void tokenAlreadyInJail(Token token) {
+    private void tokenAlreadyInJail(Token token, TileOutputBoundary outBound) {
         token.setJailDays(token.getJailDays()-1);
-        System.out.println(token.getPlayer().getUsername() + ", you are still in Jail! You can pay $50 to be released.");
-        String input;
-        do{
-            System.out.println("Would you like to pay $50 to get out of the jail early? Enter Y / N.");
-            input = CmdLineUI.scanner.nextLine();
-        } while (!input.equalsIgnoreCase("Y") && !input.equalsIgnoreCase("N"));
-        responseHandler(token, input);
+        List<String> acceptedResponses = new ArrayList<>();
+        acceptedResponses.add("y");
+        acceptedResponses.add("n");
+
+        outBound.notifyUser(token.getPlayer().getUsername() +
+                ", you are still in Jail! You can pay $50 to be released.");
+        String input = outBound.getResponse("Would you like to pay $50 to get out of the jail early? " +
+                        "Enter Y / N.", acceptedResponses);
         // Calls helper method which deals with the response of the user and prints information respectively.
+        responseHandler(token, input, outBound);
     }
 
-    private void responseHandler(Token token, String input) {
+    private void responseHandler(Token token, String input, TileOutputBoundary outBound) {
         Player player = token.getPlayer();
-        if (Objects.equals(input, "Y")){
+        if (input.equalsIgnoreCase("Y")){
             player.addCash(-50);
-            System.out.println("Congratulations " + player.getUsername() + ", you have been let out of jail!" +
+            outBound.notifyUser("Congratulations " + player.getUsername() + ", you have been let out of jail!" +
                     " We thank you for the payment.");
             token.setJailDays(0);
             token.setInJail(false);
         }
         else{
-            System.out.println("You will remain in Jail for " + token.getJailDays() + " more turn(s)!");
+           outBound.notifyUser("You will remain in Jail for " + token.getJailDays() + " more turn(s)!");
         }
     }
 

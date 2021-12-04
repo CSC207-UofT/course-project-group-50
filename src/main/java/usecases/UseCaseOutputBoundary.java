@@ -2,7 +2,7 @@ package usecases;
 
 import java.util.List;
 
-public interface BoardOutputBoundary {
+public interface UseCaseOutputBoundary {
 
     /**
      * Return a response in the form of a String from the user

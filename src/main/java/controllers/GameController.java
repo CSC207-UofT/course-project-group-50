@@ -3,7 +3,7 @@ package controllers;
 import entities.Player;
 import usecases.BankManager;
 import usecases.BoardManager;
-import usecases.BoardOutputBoundary;
+import usecases.UseCaseOutputBoundary;
 import usecases.PropertyManager;
 
 import java.io.Serializable;
@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
-public class GameController implements Serializable, BoardOutputBoundary {
+public class GameController implements Serializable, UseCaseOutputBoundary {
     private final BoardManager boardManager;
     private final BankManager bankManager;
     private final PropertyManager propertyManager;

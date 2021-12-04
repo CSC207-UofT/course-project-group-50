@@ -68,4 +68,7 @@ public class PropertyTile extends Tile implements Buyable, Serializable {
         return this.owner;
     }
 
+    public void interact(Token token, TileOutputBoundary outBound) {
+
+    }
 }
