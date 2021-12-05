@@ -1,5 +1,6 @@
 package interfaceadapters;
 
+import entities.Board;
 import entities.Player;
 import usecases.BankManager;
 import usecases.BoardManager;
@@ -23,8 +24,9 @@ public class GameController implements Serializable, UseCaseOutputBoundary {
     private final ArrayList<String> usernames;
     private ArrayList<Integer> order;
     private final UI ui;
+    private Presenter presenter;
 
-    public GameController(UI ui, ArrayList<Integer> order) {
+    public GameController(UI ui, ArrayList<Integer> order, Presenter presenter) {
         this.ui = ui;
         this.id = new Random().nextLong();
         this.filepath = "";
@@ -34,6 +36,7 @@ public class GameController implements Serializable, UseCaseOutputBoundary {
         this.propertyManager = new PropertyManager();
         this.boardManager = new BoardManager(this.bankManager, this.propertyManager, this);
         this.order = order;
+        this.presenter = presenter;
     }
 
     public void runPlayerSetUp(List<String> usernames) {
@@ -51,15 +54,29 @@ public class GameController implements Serializable, UseCaseOutputBoundary {
         TimeUnit.SECONDS.sleep(2);
         // TODO: handle what happens if all players go bankrupt but there are no winners
         // TODO: Remove all instances of boardManager.getPlayers() because cannot access entities in this class
-        while (isWinner() == null | !allBankrupt()) {
+         while (isWinner() == null | !allBankrupt()) {
+            // j is a variable that keeps track of which token should move for the GameBoardPanel to use
+            // cannot simply use i in the for loop because i comes from order, which is randomized
+            int j = 1;
             for (int i : this.order) {
                 // TODO: Delegate out to helper because this method is large already
                 if (!this.boardManager.getPlayers().get(i).isBankrupt()) {
                     // For formatting
                     this.ui.printMessage("\n");
-                    this.boardManager.runTurn(i);
-
+                    // Roll for the player
+                    Integer[] rollAndLoc = this.boardManager.roll(i);
+                    // Update Game Board and move player's token to new tile
+                    int currRoll = rollAndLoc[0];
+                    int a = currRoll + rollAndLoc[1];
+                    int b = BoardManager.BOARD_SIZE;
+                    int newLoc = (a % b + b) % b;
+                    this.presenter.boardPanel.updateBoard(j, newLoc);
+                    // Make player's token interact with tile
+                    this.boardManager.moveAndInteract(i, currRoll);
+                    //TODO: If player lands on special tile and moves forward/backward, the gui does not
+                    //TODO: update
                     TimeUnit.SECONDS.sleep(2);
+                    j++;
                 }
             }
             printCurrentStatistics();
@@ -80,14 +97,14 @@ public class GameController implements Serializable, UseCaseOutputBoundary {
         return null;
     }
 
-    public boolean allBankrupt() {
-        int num_non_bankrupt = this.order.size();
-        for (Player player : this.boardManager.getPlayers()) {
-            if (player.isBankrupt()) {
-                num_non_bankrupt += 1;
+    public boolean allBankrupt(){
+        int numNonBankrupt = this.order.size();
+        for(Player player: this.boardManager.getPlayers()){
+            if(player.isBankrupt()){
+                numNonBankrupt += 1;
             }
         }
-        return num_non_bankrupt >= this.order.size() - 1;
+        return numNonBankrupt >= this.order.size() - 1;
     }
 
     public void printCurrentStatistics() throws InterruptedException {

@@ -2,6 +2,8 @@ package interfaceadapters;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class GameBoardPanel extends JPanel {
     private static final int TOKEN_DIAMETER = 10;
@@ -9,20 +11,42 @@ public class GameBoardPanel extends JPanel {
     private static final int TOKEN_2_OFFSET = -15;
     private static final int TOKEN_3_OFFSET = 5;
     private static final int TOKEN_4_OFFSET = 25;
+    private final int numOfPlayers;
+    private Map<Integer, Integer[]> tokenBoardLocs;
 
-    public GameBoardPanel() {
+    public GameBoardPanel(int numOfPlayers) {
+        this.numOfPlayers = numOfPlayers;
         setBackground(Color.white);
+        this.tokenBoardLocs = initializeTokenBoardLocs(numOfPlayers);
     }
 
     /**
-     * Draw the Simplified Monopoly Board
+     * Draw the initial state of the Simplified Monopoly Board
      */
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         drawGridLines(g);
         drawTileNames(g);
-        createTokens(g,2);
+        drawTokens(g);
+    }
+
+    /**
+     * Update the Game Board when a Token moves
+     * @param i Index corresponding to the token that should be moved
+     * @param tile Tile number that the token should be drawn on
+     * Preconditions: - 0 <= tile <= 23
+     *                - 1 <= i <= 4
+     */
+    public void updateBoard(int i, int tile) {
+        // Get the updated coordinates corresponding to the tile that the token is now on and update
+        // tokeBoardLocs to reflect this change
+        Integer[] newTileCoords = GameBoardConstants.NUM_TO_LOC.get(tile);
+        this.tokenBoardLocs.replace(i, newTileCoords);
+
+        // Repaint the board
+        revalidate();
+        repaint();
     }
 
     /**
@@ -93,16 +117,57 @@ public class GameBoardPanel extends JPanel {
     }
 
     /**
-     * Draw tokens at start position on game board
-     *
+     * Draw tokens at their current positions on game board
      * Preconditions: - 2 <= i <= 4
      */
-    public void createTokens(Graphics g, int i) {
-        g.setColor(Color.red);
-        g.fillOval(GameBoardConstants.START_X, GameBoardConstants.START_Y + TOKEN_1_OFFSET, TOKEN_DIAMETER, TOKEN_DIAMETER);
-        g.fillOval(GameBoardConstants.START_X, GameBoardConstants.START_Y + TOKEN_2_OFFSET , TOKEN_DIAMETER, TOKEN_DIAMETER);
-        g.fillOval(GameBoardConstants.START_X, GameBoardConstants.START_Y + TOKEN_3_OFFSET, TOKEN_DIAMETER, TOKEN_DIAMETER);
-        g.fillOval(GameBoardConstants.START_X, GameBoardConstants.START_Y + TOKEN_4_OFFSET , TOKEN_DIAMETER, TOKEN_DIAMETER);
+    private void drawTokens(Graphics g) {
+        for(int i = 1; i <= this.numOfPlayers; i++) {
+            // Draw token corresponding to index i on its correct tile
+            drawToken(g, i, this.tokenBoardLocs.get(i));
+        }
+    }
+
+
+    /**
+     * Draw the corresponding token on the screen. Helper method for drawTokens.
+     * @param g Graphics object used to do the drawing
+     * @param i Index corresponding to the token that should be drawn
+     * @param tileCoords Coordinates of the tile that the token should be drawn on
+     * Preconditions: - 0 <= tile <= 23
+     *                - 1 <= i <= 4
+     */
+    private void drawToken(Graphics g, int i, Integer[] tileCoords) {
+        int x = tileCoords[0];
+        int y = tileCoords[1];
+
+        switch (i) {
+            case 1: g.setColor(Color.red);
+                g.fillOval(x, y + TOKEN_1_OFFSET, TOKEN_DIAMETER, TOKEN_DIAMETER);
+                break;
+            case 2:
+                g.setColor(Color.blue);
+                g.fillOval(x, y + TOKEN_2_OFFSET, TOKEN_DIAMETER, TOKEN_DIAMETER);
+                break;
+            case 3:
+                g.setColor(Color.green);
+                g.fillOval(x, y + TOKEN_3_OFFSET, TOKEN_DIAMETER, TOKEN_DIAMETER);
+                break;
+            case 4:
+                g.setColor(Color.orange);
+                g.fillOval(x, y + TOKEN_4_OFFSET, TOKEN_DIAMETER, TOKEN_DIAMETER);
+        }
+    }
+
+    /**
+     * Initialize the locations of each token at the beginning of the game
+     */
+    private HashMap<Integer, Integer[]> initializeTokenBoardLocs(int numOfPlayers) {
+        HashMap<Integer, Integer[]> tokenBoardLocs = new HashMap<>();
+        for(int i = 1; i <= numOfPlayers; i++) {
+            // Put each token on the start tile at the beginning of the game
+            tokenBoardLocs.put(i, new Integer[]{GameBoardConstants.START_X, GameBoardConstants.START_Y});
+        }
+        return tokenBoardLocs;
     }
 
 }
