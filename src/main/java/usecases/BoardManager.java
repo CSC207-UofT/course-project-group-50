@@ -78,7 +78,7 @@ public class BoardManager implements Serializable {
             this.outBound.notifyUser(currPlayer.getUsername() +  ", you were given $200 for passing Start!");
         }
         Tile tokenTile = this.board.getTileAt(currToken.getLocation());
-        TileManager tileManager = new TileManager(outBound, this, bankManager, propertyManager);
+        TileManagerFacade tileManager = new TileManagerFacade(outBound, this, bankManager, propertyManager);
         tokenTile.interact(currToken, tileManager);
     }
     
@@ -104,9 +104,9 @@ public class BoardManager implements Serializable {
         return this.board.tiles;
     }
 
-    public Player stringToPlayer(String player_string){
+    public Player stringToPlayer(String playerString){
         for(Player player: this.getPlayers()){
-            if(player.getUsername().equals(player_string)){
+            if(player.getUsername().equals(playerString)){
                 return player;
             }
         }
