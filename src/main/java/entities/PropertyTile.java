@@ -1,7 +1,5 @@
 package entities;
 
-import interfaces.Buyable;
-
 import java.io.Serializable;
 import java.lang.Math;
 
