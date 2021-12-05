@@ -15,6 +15,10 @@ public class Director {
             1. change the interface for entities.City, so that the entities.BoardBuilder manages the colour blocks separately
             2. perhaps expanding to a GameBuilder, managing player setup, token setup, etc */
 
+    /**
+     * Directs builder to create a regular Monopoly board, ie. the default themes and cities
+     * @param builder the Builder object that will assemble the board
+     */
     public void makeRegularBoard(BoardBuilder builder) {
         builder.reset();
         builder.createTiles(Arrays.asList(
