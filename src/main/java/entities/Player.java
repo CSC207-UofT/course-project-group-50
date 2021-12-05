@@ -9,11 +9,11 @@ public class Player implements Serializable {
     private Token token;
     private boolean bankrupt;
 
-    public Player(String username) {
+    public Player(String username, ConstantsOutputBoundary constOutBound) {
         this.username = username;
         this.cash = 1000;
         this.netWorth = 1000;
-        this.token = new Token(this);
+        this.token = new Token(this, constOutBound);
         this.bankrupt = false;
     }
 

@@ -20,8 +20,8 @@ public class GameSetUp {
             List<String> usernames = ui.getPlayerNames();
             ArrayList<Integer> order = generateOrder(usernames.size());
             Presenter presenter = new Presenter(usernames.size());
-            gc = new GameController(ui, order, presenter);
-            gc.runPlayerSetUp(usernames);
+            gc = new GameController(ui, order, presenter, usernames);
+            gc.runPlayerSetUp();
         }
         // This branch executes if a user wishes to load an existing game
         else if(input.equals("LOAD")) {
