@@ -11,10 +11,19 @@ public class Board implements Serializable {
         this.tiles = new ArrayList<>();
     }
 
+    /**
+     * Return the tile at the given index
+     * @param index The index for the required tile
+     * @return Tile at the requested index
+     */
     public Tile getTileAt(int index){
         return this.tiles.get(index);
     }
 
+    /**
+     * Set the tiles of the Board
+     * @param tiles List of tiles that the tiles on the board need to be set to
+     */
     public void setTiles(List<Tile> tiles) {this.tiles = tiles;}
 
 }

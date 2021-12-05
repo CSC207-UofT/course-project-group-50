@@ -9,6 +9,7 @@ import usecases.PropertyManager;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
@@ -38,15 +39,15 @@ public class GameController implements Serializable, UseCaseOutputBoundary {
         this.presenter = presenter;
     }
 
-    public void runPlayerSetUp(List<String> usernames){
-        for(String s : usernames) {
+    public void runPlayerSetUp(List<String> usernames) {
+        for (String s : usernames) {
             boardManager.addPlayer(s);
         }
     }
 
     public void runGame() throws InterruptedException {
         this.ui.printMessage("The playing order is:");
-        for(int i : this.order) {
+        for (int i : this.order) {
             this.ui.printMessage(this.boardManager.getPlayers().get(i).getUsername());
         }
         this.ui.printMessage("Let the game begin! \n");
@@ -59,7 +60,7 @@ public class GameController implements Serializable, UseCaseOutputBoundary {
             int j = 1;
             for (int i : this.order) {
                 // TODO: Delegate out to helper because this method is large already
-                if(!this.boardManager.getPlayers().get(i).isBankrupt()) {
+                if (!this.boardManager.getPlayers().get(i).isBankrupt()) {
                     // For formatting
                     this.ui.printMessage("\n");
                     // Roll for the player
@@ -79,17 +80,17 @@ public class GameController implements Serializable, UseCaseOutputBoundary {
                 }
             }
             printCurrentStatistics();
-         }
-         Player winner = isWinner();
-         this.ui.printMessage("Game over! The winner is: ");
-         // TODO: Can't access player here
-         this.ui.printMessage(winner.getUsername());
-         this.ui.printMessage("Thanks for playing!");
+        }
+        Player winner = isWinner();
+        this.ui.printMessage("Game over! The winner is: ");
+        // TODO: Can't access player here
+        this.ui.printMessage(winner.getUsername());
+        this.ui.printMessage("Thanks for playing!");
     }
 
     public Player isWinner() {
-        for(Player p : this.boardManager.getPlayers()) {
-            if(p.getNetWorth() >= this.netWorthGoal) {
+        for (Player p : this.boardManager.getPlayers()) {
+            if (p.getNetWorth() >= this.netWorthGoal) {
                 return p;
             }
         }
@@ -108,7 +109,7 @@ public class GameController implements Serializable, UseCaseOutputBoundary {
 
     public void printCurrentStatistics() throws InterruptedException {
         ui.printMessage("The statistics for this round are: ");
-        for(int i: this.order) {
+        for (int i : this.order) {
             Player player = this.boardManager.getPlayers().get(i);
             int cash = player.getCash();
             int netWorth = player.getNetWorth();
@@ -134,7 +135,4 @@ public class GameController implements Serializable, UseCaseOutputBoundary {
         return this.ui.getInput(messages, acceptedResponses);
     }
 
-    public String getFilepath() {
-        return this.filepath;
-    }
 }
