@@ -1,4 +1,4 @@
-package controllers;
+package interfaceadapters;
 
 import entities.Player;
 import usecases.BankManager;
@@ -8,7 +8,6 @@ import usecases.PropertyManager;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;

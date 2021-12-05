@@ -1,16 +1,15 @@
 package details;
 
-import controllers.GameController;
+import interfaceadapters.GameController;
 import main.Main;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Scanner;
 
-public class CmdLineUI implements controllers.UI {
+public class CmdLineUI implements interfaceadapters.UI {
     public static Scanner scanner = new Scanner(System.in);
 
     public String getStartInfo() {
