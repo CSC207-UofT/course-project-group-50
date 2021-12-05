@@ -1,7 +1,5 @@
 package controllers;
 
-import details.CmdLineUI;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -45,6 +43,11 @@ public class GameSetUp {
         }
     }
 
+    /**
+     * Save the game object to a file in the game directory
+     * @param game The GameController object that is being saved
+     * @param filename Name of the file where the object is to be written
+     */
     public static void save(GameController game, String filename){
         try {
             // opens the file and writes the object into it, then closes the file and prints.
@@ -61,6 +64,11 @@ public class GameSetUp {
         }
     }
 
+    /**
+     * Load the game object from a file in the game directory
+     * @param filepath Name of the file as it appears in the game directory without the extension
+     * @return The GameController object that has been retrieved
+     */
     public static GameController load(String filepath){
         // initializes gc as null which can be returned if the code goes into the catch blocks.
         GameController gc = null;
@@ -81,6 +89,12 @@ public class GameSetUp {
         }
         return gc;
     }
+
+    /**
+     * Generate the order in which the players roll
+     * @param num_players The number of players in the game
+     * @return ArrayList containing integers which represent the player number from the setup
+     */
 
     public ArrayList<Integer> generateOrder(int num_players) {
         ArrayList<Integer> order = new ArrayList<>();

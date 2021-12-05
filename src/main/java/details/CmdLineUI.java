@@ -11,6 +11,10 @@ import java.util.*;
 public class CmdLineUI implements controllers.UI, Serializable {
     public static Scanner scanner = new Scanner(System.in);
 
+    /**
+     * Start the game and give the user various options at the menu like start, load, and quit
+     * @return Input from the user
+     */
     public String getStartInfo() {
         // starts the game and gives the user three options to choose from.
         System.out.println("Welcome to Monopoly!");
@@ -29,6 +33,10 @@ public class CmdLineUI implements controllers.UI, Serializable {
         return input;
     }
 
+    /**
+     * Interact with the user to get the number of players and the usernames
+     * @return List containing the usernames of the players
+     */
     public List<String> getPlayerNames() {
         int numPlayers;
         List<String> usernames = new ArrayList<>();
@@ -50,6 +58,7 @@ public class CmdLineUI implements controllers.UI, Serializable {
     public void printMessage(String message) {
         System.out.println(message);
     }
+
 
     public String getAnyInput(String message) {
         System.out.println(message);
@@ -76,6 +85,9 @@ public class CmdLineUI implements controllers.UI, Serializable {
         return input;
     }
 
+    /**
+     * Interact with user for the filename of the previously saved game, and pass it to the load method
+     */
     public GameController loadGame() {
         String filename = null;
         int item = 0;
@@ -96,9 +108,13 @@ public class CmdLineUI implements controllers.UI, Serializable {
         return GameSetUp.load(filename);
     }
 
-
+    /**
+     * Quit the game and save if the user wants to
+     * @param gc The GameController object that can be saved if the user wants
+     */
     public void quitGame(GameController gc) {
         String input;
+        // If gc is null, then the user is quitting before the game starts, so there is nothing to save
         if (gc != null) {
             do {
                 System.out.println("Would you like to save the game? Enter Y or N:");
