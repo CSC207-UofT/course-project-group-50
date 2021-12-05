@@ -5,6 +5,7 @@ import entities.Player;
 import entities.PropertyTile;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class BankManager implements Serializable {
 
@@ -19,6 +20,40 @@ public class BankManager implements Serializable {
             renter.addCash(rent);
             renter.addNetWorth(rent);
         }
+    }
+
+    /**
+     * Determine whether any player's net worth is greater than or equal to a certain value
+     * @param players The players whose net worths we are checking
+     * @param netWorth The net worth goal we wish to compare to
+     * @return Whether any player's net worth is greater than or equal to netWorth
+     */
+    public boolean anyNetworthGreater(List<Player> players, int netWorth) {
+        for(Player p : players) {
+            if(p.getNetWorth() >= netWorth) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Determine if a player is bankrupt
+     * @param player The player whose bankruptcy status is checked
+     * @return Return whether player is bankrupt
+     */
+    public boolean checkBankruptcy(Player player) {
+        return player.getNetWorth() <= 0 || player.getCash() <= -500;
+    }
+
+    /**
+     * Determine whether the player's net worth is greater than or equal to a certain value
+     * @param player The player whose net worths we are checking
+     * @param netWorth The net worth goal we wish to compare to
+     * @return Whether the given player's net worth is greater than or equal to netWorth
+     */
+    public boolean netWorthGreater(Player player, int netWorth) {
+        return player.getNetWorth() >= netWorth;
     }
 
     public void deductCostOfProperty(Player buyer, PropertyTile property){

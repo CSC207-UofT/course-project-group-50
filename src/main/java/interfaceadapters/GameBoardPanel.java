@@ -92,7 +92,7 @@ public class GameBoardPanel extends JPanel {
         g.setFont(new Font("default", Font.BOLD, 12));
         g.drawString("Start", GameBoardConstants.START_X, GameBoardConstants.START_Y);
         g.drawString("Rio", GameBoardConstants.RIO_X, GameBoardConstants.RIO_Y);
-        g.drawString("Delhi", GameBoardConstants.DEHLI_X - 5, GameBoardConstants.DELHI_Y);
+        g.drawString("Delhi", GameBoardConstants.DELHI_X - 5, GameBoardConstants.DELHI_Y);
         g.drawString("Harbour", GameBoardConstants.HARBOUR_X - 10, GameBoardConstants.HARBOUR_Y);
         g.drawString("Cairo", GameBoardConstants.CAIRO_X - 5, GameBoardConstants.CAIRO_Y);
         g.drawString("Madrid", GameBoardConstants.MADRID_X - 7, GameBoardConstants.MADRID_Y);
