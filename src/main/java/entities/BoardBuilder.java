@@ -1,9 +1,5 @@
 package entities;
 
-import entities.Board;
-import entities.Tile;
-import interfaces.Builder;
-
 import java.util.List;
 
 public class BoardBuilder implements Builder {

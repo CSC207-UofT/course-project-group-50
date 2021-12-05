@@ -1,9 +1,5 @@
 package entities;
 
-import interfaces.Auctionable;
-import interfaces.Buildable;
-import interfaces.Buyable;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;

@@ -1,6 +1,5 @@
 package entities;
 
-import interfaces.Movable;
 import usecases.BoardManager;
 
 import java.io.Serializable;
