@@ -1,14 +1,16 @@
 package details;
 
 import controllers.GameController;
-import controllers.GameSetUp;
+import main.Main;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.Scanner;
 
-public class CmdLineUI implements controllers.UI, Serializable {
+public class CmdLineUI implements controllers.UI {
     public static Scanner scanner = new Scanner(System.in);
 
     public String getStartInfo() {
@@ -47,6 +49,26 @@ public class CmdLineUI implements controllers.UI, Serializable {
         return usernames;
     }
 
+    public GameController loadGame() {
+        String filename = null;
+        int item = 0;
+        do{
+            try{
+                System.out.println("Please enter the name of the file as it appears in the game directory:");
+                filename = scanner.nextLine();
+                new FileInputStream(filename + ".txt");
+                item = 1;
+            }
+            catch (IOException exception){
+                exception.printStackTrace();
+            }
+        }
+        while(item != 1);
+        // added item as a dummy variable which only gets value assigned to 1 when the filename given by the user
+        // is correct, unless the code goes to the catch block and item continues to have value 0
+        return Main.load(filename);
+    }
+
     public void printMessage(String message) {
         System.out.println(message);
     }
@@ -76,41 +98,21 @@ public class CmdLineUI implements controllers.UI, Serializable {
         return input;
     }
 
-    public GameController loadGame() {
-        String filename = null;
-        int item = 0;
-        do{
-            try{
-                System.out.println("Please enter the name of the file as it appears in the game directory:");
-                filename = scanner.nextLine();
-                new FileInputStream(filename + ".txt");
-                item = 1;
-            }
-            catch (IOException exception){
-                exception.printStackTrace();
-            }
-        }
-        while(item != 1);
-        // added item as a dummy variable which only gets value assigned to 1 when the filename given by the user
-        // is correct, unless the code goes to the catch block and item continues to have value 0
-        return GameSetUp.load(filename);
-    }
-
-
-    public void quitGame(GameController gc) {
-        String input;
-        if (gc != null) {
-            do {
-                System.out.println("Would you like to save the game? Enter Y or N:");
-                input = scanner.nextLine();
-            }
-            while (!Objects.equals(input, "Y") && !Objects.equals(input, "N"));
-            if (input.equals("Y")) {
-                System.out.println("Please enter the filename you would like to save the game as:");
-                input = scanner.nextLine();
-                GameSetUp.save(gc, input);
-            }
-        } System.out.println("You have successfully quit the game!");
-    }
-
+    // TODO: Method is currently never used, but it will be soon, but it will need to be modified.
+//    public void quitGame(GameController gc) {
+//        String input;
+//        if (gc != null) {
+//            do {
+//                System.out.println("Would you like to save the game? Enter Y or N:");
+//                input = scanner.nextLine();
+//            }
+//            while (!Objects.equals(input, "Y") && !Objects.equals(input, "N"));
+//            if (input.equals("Y")) {
+//                System.out.println("Please enter the filename you would like to save the game as:");
+//                input = scanner.nextLine();
+//                Main.save(gc, input);
+//            }
+//        } System.out.println("You have successfully quit the game!");
+//    }
+//
 }

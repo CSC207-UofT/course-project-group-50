@@ -7,7 +7,6 @@ public interface UI {
     String getStartInfo();
     List<String> getPlayerNames();
     GameController loadGame();
-    void quitGame(GameController gc);
     void printMessage(String message);
 
 
