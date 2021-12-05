@@ -8,7 +8,7 @@ import java.util.List;
 
 public class BoardManager implements Serializable {
 
-    public static final int BOARD_SIZE = 28;
+    public static final int BOARD_SIZE = 24;
     private final List<Player> players;
     private final Board board;
     private final BankManager bankManager;
@@ -34,20 +34,12 @@ public class BoardManager implements Serializable {
     }
 
     /**
-     * Run a turn for the player whose turn it is
-     * @param i Index representing the player whose turn it is
-     */
-    public void runTurn(int i) {
-        int currRoll = roll(i);
-        moveAndInteract(i, currRoll);
-    }
-
-    /**
      * Roll for player whose turn it is
      * @param i Index representing the player whose turn it is
-     * @return The value that this player rolled
+     * @return An array containing the value that this player rolled and the current location of the player's token
+     * (before they rolled)
      */
-    private int roll(int i) {
+    public Integer[] roll(int i) {
         Player currPlayer = this.players.get(i);
         Token currToken = currPlayer.getToken();
         // TODO: Process player being in jail better
@@ -57,7 +49,7 @@ public class BoardManager implements Serializable {
             currRoll = currPlayer.roll();
         }
         this.outBound.notifyUser(currPlayer.getUsername() +  ", you just rolled a " + currRoll + "!");
-        return currRoll;
+        return new Integer[]{currRoll, currToken.getLocation()};
     }
 
     /**
@@ -66,7 +58,7 @@ public class BoardManager implements Serializable {
      * @param i Index representing the player whose turn it is
      * @param currRoll The value that the player rolled
      */
-    private void moveAndInteract(int i, int currRoll) {
+    public void moveAndInteract(int i, int currRoll) {
         Player currPlayer = this.players.get(i);
         Token currToken = currPlayer.getToken();
         int prevLoc = currToken.getLocation();
