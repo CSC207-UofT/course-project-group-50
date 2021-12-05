@@ -21,6 +21,8 @@ public class Presenter extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         boardPanel = new GameBoardPanel(numOfPlayers);
         setContentPane(boardPanel);
+        ImageIcon image = new ImageIcon("./images/monopoly.png");
+        setIconImage(image.getImage());
     }
 
 }
