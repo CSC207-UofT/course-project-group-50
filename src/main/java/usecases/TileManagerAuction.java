@@ -48,7 +48,7 @@ public class TileManagerAuction {
         String player2String = this.outBound.getAnyResponse("If you would like to trade, please enter the name " +
                 "of the player you wish to trade with or type N.");
         if (player2String.equalsIgnoreCase("N")) {
-            outBound.notifyUser(player1.getUsername() + "You chose not to attempt a trade.");
+            outBound.notifyUser(player1.getUsername() + ", you chose not to attempt a trade.");
         } else {
             // input is player name not sure if valid
             Player player2 = boardManager.stringToPlayer(player2String);
