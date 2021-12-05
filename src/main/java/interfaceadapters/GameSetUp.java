@@ -1,4 +1,4 @@
-package controllers;
+package interfaceadapters;
 
 import java.util.ArrayList;
 import java.util.Collections;

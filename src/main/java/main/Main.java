@@ -1,7 +1,7 @@
 package main;
 
-import controllers.GameController;
-import controllers.GameSetUp;
+import interfaceadapters.GameController;
+import interfaceadapters.GameSetUp;
 import details.CmdLineUI;
 
 import java.io.*;
