@@ -46,17 +46,34 @@ public class TileManagerAuction {
 
     private Player auctionPlayerHelper(Player player1) {
         String player2String = this.outBound.getAnyResponse("If you would like to trade, please enter the name " +
-                "of the player you wish to trade with or type N.");
+                "of the player you wish to trade with or type N to skip.");
         if (player2String.equalsIgnoreCase("N")) {
             outBound.notifyUser(player1.getUsername() + ", you chose not to attempt a trade.");
         } else {
             // input is player name not sure if valid
             Player player2 = boardManager.getPlayerFromUsername(player2String);
-            if (player2 == null | propertyManager.propertiesOwnedByPlayer(player1).size() == 0 |
-                    propertyManager.propertiesOwnedByPlayer(player2).size() == 0) {
+
+            // Start again if the name entered is invalid
+            if (player2 == null) {
                 this.outBound.notifyUser("Invalid name entered.");
                 auctionPlayerHelper(player1);
-            } else {
+            }
+            // Start again if the player trading does not have any properties
+            else if (propertyManager.propertiesOwnedByPlayer(player1).size() == 0) {
+                this.outBound.notifyUser("You do not own any properties to trade with!");
+                auctionPlayerHelper(player1);
+            }
+            // Start again if the selected player does not have any properties
+            else if (propertyManager.propertiesOwnedByPlayer(player2).size() == 0) {
+                this.outBound.notifyUser(player2String + " does not own any properties to trade with!");
+                auctionPlayerHelper(player1);
+            }
+            // Start again if the name entered is the trader
+            else if (player1.getUsername().equals(player2.getUsername())) {
+                this.outBound.notifyUser("You cannot choose yourself!");
+                auctionPlayerHelper(player1);
+            }
+            else {
                 return player2;
             }
         }
