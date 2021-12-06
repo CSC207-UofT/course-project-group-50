@@ -28,9 +28,6 @@ public class JailTileTest {
 
     @Before
     public void setUp() {
-        GameController testGameController = new GameSetup().testGameController();
-        BoardManager testBoardManager = new GameSetup().testBoardManager();
-        TileManagerFacade testTileManagerFacade = new GameSetup().testTileManagerFacade();
         testJailTile = new JailTile();
         player2.getToken().setInJail(true);
         player2.getToken().setJailDays(0);

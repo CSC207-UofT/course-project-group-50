@@ -1,10 +1,5 @@
 package details;
 
-import interfaceadapters.GameController;
-import interfaceadapters.GameSetUp;
-
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.*;
 
@@ -43,14 +38,19 @@ public class CmdLineUI implements interfaceadapters.UI, Serializable {
         // Set a default number here so IntelliJ doesn't give warning saying this variable may not
         // be initialized
         int numPlayers;
+        String input;
         List<String> usernames = new ArrayList<>();
 
-        do {
-            System.out.println("How many players do you want? Please pick a number from 2-4 (inclusive). ");
-            // TODO: implement try/catch for data sanitation here.
-            // For now, we assume the user enters an int as they should.
-            numPlayers = Integer.parseInt(scanner.nextLine());
-        } while(numPlayers < 2 || numPlayers > 4);
+        System.out.println("How many players do you want? Please pick a number from 2-4 (inclusive).");
+        while(true) {
+            input = scanner.nextLine();
+            // \d+ is the regex for any integer
+            if (input.matches("\\d+") && Integer.parseInt(input) >= 2 && Integer.parseInt(input) <= 4) {
+                break;
+            }
+            System.out.println("Invalid input. Please pick a number from 2-4 (inclusive).");
+        }
+        numPlayers = Integer.parseInt(input);
 
         for (int i = 1; i <= numPlayers; i++) {
             System.out.println("Input the username for Player " + i + ". ");

@@ -1,5 +1,6 @@
 package interfaceadapters;
 
+import entities.Board;
 import usecases.BankManager;
 import usecases.BoardManager;
 import usecases.UseCaseOutputBoundary;
@@ -60,12 +61,10 @@ public class GameController implements Serializable, UseCaseOutputBoundary {
                     runTurn(i, guiTokenIndex);
                     guiTokenIndex++;
                 }
+                // Checks if the game is running or not, if not then the game loop ends
+                if(!isRunning) {return;}
             }
             boardManager.printCurrentStatistics(order);
-
-            // Checks if the game is running or not, if not then the game loop ends
-            if (!isRunning){return;}
-
         }
         // If we reach this point in the code, someone has won the game
         boardManager.processWinner(netWorthGoal);
@@ -116,6 +115,10 @@ public class GameController implements Serializable, UseCaseOutputBoundary {
     public Presenter getPresenter() {
         return presenter;
     }
+
+    public BoardManager getBoardManager(){return boardManager;}
+
+    public ArrayList<Integer> getOrder(){return order;}
 
     public void setRunning(boolean running) {
         this.isRunning = running;

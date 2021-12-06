@@ -12,23 +12,29 @@ public class GameSetup {
     private GameController gc;
     private BoardManager boardManager;
 
-    public void GameSetUp(){
+    public GameSetup(){
         this.gc = testGameController();
-        this.boardManager = testBoardManager();
+        this.boardManager = gc.getBoardManager();
     }
 
-    public GameController testGameController() {
+    private GameController testGameController() {
         CmdLineUI ui = new CmdLineUI();
         ArrayList<Integer> order = new ArrayList<>(Arrays.asList(1, 2));
         Presenter presenter = new Presenter(order.size(), null);
         Player player1 = new Player("player1", new ConstantsInputBoundary());
         Player player2 = new Player("player2", new ConstantsInputBoundary());
         List<String> usernames = new ArrayList<>(Arrays.asList(player1.getUsername(), player2.getUsername()));
-        return new GameController(ui, order, presenter, usernames);
+        GameController testGameController = new GameController(ui, order, presenter, usernames);
+        testGameController.runPlayerSetUp();
+        return testGameController;
     }
 
-    public BoardManager testBoardManager(){
-        return new BoardManager(new BankManager(), new PropertyManager(), gc);
+    public GameController getGameController(){
+        return this.gc;
+    }
+
+    public BoardManager getBoardManager(){
+        return gc.getBoardManager();
     }
 
     public TileManagerFacade testTileManagerFacade(){

@@ -8,8 +8,6 @@ public class City extends PropertyTile implements Buildable, Auctionable, Buyabl
     private final String colour;
     private ArrayList<Building> buildings;
 
-    // TODO: update the entities.Board class to use this constructor for entities.City
-
     /**
      * Creates a new City Tile.
      * @param name The name of this city.

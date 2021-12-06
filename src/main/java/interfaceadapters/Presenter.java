@@ -37,6 +37,8 @@ public class Presenter extends JFrame implements ActionListener, Serializable {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("Quit Game")){
+            // dispose of the thread
+            dispose();
             this.gameSetUp.quitGame(this.gameSetUp.getGc());
         }
     }
