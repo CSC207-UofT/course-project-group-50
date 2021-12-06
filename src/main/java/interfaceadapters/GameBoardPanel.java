@@ -2,6 +2,8 @@ package interfaceadapters;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Line2D;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,6 +31,7 @@ public class GameBoardPanel extends JPanel {
         drawGridLines(g);
         drawTileNames(g);
         drawTokens(g);
+        drawArrowHead((Graphics2D) g);
     }
 
     /**
@@ -116,6 +119,26 @@ public class GameBoardPanel extends JPanel {
         g.drawString("New York",  GameBoardConstants.NEW_YORK_X - 12, GameBoardConstants.NEW_YORK_Y);
     }
 
+    private void drawArrowHead(Graphics2D g2) {
+        AffineTransform tx = new AffineTransform();
+        Line2D.Double line = new Line2D.Double(GameBoardConstants.START_X+760, GameBoardConstants.START_Y+600
+                ,GameBoardConstants.START_X+670,GameBoardConstants.START_Y+600);
+        Polygon arrowHead = new Polygon();
+        arrowHead.addPoint(10,10);
+        arrowHead.addPoint(-10,-10);
+        arrowHead.addPoint(10,-10);
+
+        tx.setToIdentity();
+        double angle = Math.atan2(line.y2-line.y1, line.x2-line.x1);
+        tx.translate(line.x2, line.y2);
+        tx.rotate(angle-Math.PI/2d*3.5);
+
+        Graphics2D g = (Graphics2D) g2.create();
+        g.setTransform(tx);
+        g.setColor(Color.BLACK);
+        g.fill(arrowHead);
+        g.dispose();
+    }
     /**
      * Draw tokens at their current positions on game board
      * Preconditions: - 2 <= i <= 4
