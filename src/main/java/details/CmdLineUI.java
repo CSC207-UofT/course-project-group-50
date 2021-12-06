@@ -38,6 +38,8 @@ public class CmdLineUI implements interfaceadapters.UI, Serializable {
      * @return List containing the usernames of the players
      */
     public List<String> getPlayerNames() {
+        // Set a default number here so IntelliJ doesn't give warning saying this variable may not
+        // be initialized
         int numPlayers;
         List<String> usernames = new ArrayList<>();
 

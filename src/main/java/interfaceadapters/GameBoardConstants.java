@@ -18,7 +18,7 @@ public class GameBoardConstants {
     protected static final int RIO_X = 6 * Presenter.WIDTH / 7 - XPADDING;
     protected static final int RIO_Y = Presenter.HEIGHT - Presenter.HEIGHT / 7 + YPADDING;
 
-    protected static final int DEHLI_X = 5 * Presenter.WIDTH / 7 - XPADDING;
+    protected static final int DELHI_X = 5 * Presenter.WIDTH / 7 - XPADDING;
     protected static final int DELHI_Y = Presenter.HEIGHT - Presenter.HEIGHT / 7 + YPADDING;
 
     protected static final int HARBOUR_X = 4 * Presenter.WIDTH / 7 - XPADDING;
@@ -90,7 +90,7 @@ public class GameBoardConstants {
     static {
         NUM_TO_LOC.put(0, new Integer[]{START_X, START_Y});
         NUM_TO_LOC.put(1, new Integer[]{RIO_X, RIO_Y});
-        NUM_TO_LOC.put(2, new Integer[]{DEHLI_X, DELHI_Y});
+        NUM_TO_LOC.put(2, new Integer[]{DELHI_X, DELHI_Y});
         NUM_TO_LOC.put(3, new Integer[]{HARBOUR_X, HARBOUR_Y});
         NUM_TO_LOC.put(4, new Integer[]{CAIRO_X, CAIRO_Y});
         NUM_TO_LOC.put(5, new Integer[]{MADRID_X, MADRID_Y});
