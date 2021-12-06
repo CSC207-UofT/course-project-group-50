@@ -1,5 +1,6 @@
 package interfaceadapters;
 
+import entities.Board;
 import usecases.BankManager;
 import usecases.BoardManager;
 import usecases.UseCaseOutputBoundary;
@@ -116,6 +117,10 @@ public class GameController implements Serializable, UseCaseOutputBoundary {
     public Presenter getPresenter() {
         return presenter;
     }
+
+    public BoardManager getBoardManager(){return boardManager;}
+
+    public ArrayList<Integer> getOrder(){return order;}
 
     public void setRunning(boolean running) {
         this.isRunning = running;
