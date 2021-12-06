@@ -20,7 +20,7 @@ public class GameSetup {
     public GameController testGameController() {
         CmdLineUI ui = new CmdLineUI();
         ArrayList<Integer> order = new ArrayList<>(Arrays.asList(1, 2));
-        Presenter presenter = new Presenter(order.size());
+        Presenter presenter = new Presenter(order.size(), null);
         Player player1 = new Player("player1", new ConstantsInputBoundary());
         Player player2 = new Player("player2", new ConstantsInputBoundary());
         List<String> usernames = new ArrayList<>(Arrays.asList(player1.getUsername(), player2.getUsername()));
