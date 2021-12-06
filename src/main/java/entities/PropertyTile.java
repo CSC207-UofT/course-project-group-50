@@ -1,7 +1,5 @@
 package entities;
 
-import interfaces.Buyable;
-
 import java.io.Serializable;
 import java.lang.Math;
 
@@ -9,7 +7,6 @@ public class PropertyTile extends Tile implements Buyable, Serializable {
     private final String name;
     private int price;
     private int rent;
-    private final int sale_price; // 80% of price
     private boolean owned;
     private Player owner;
 
@@ -18,7 +15,6 @@ public class PropertyTile extends Tile implements Buyable, Serializable {
         this.name = name;
         this.price = price;
         this.rent = rent;
-        this.sale_price = (int) Math.round(price * 0.8);
         this.owned = false;
         this.owner = null;
     }
@@ -46,7 +42,7 @@ public class PropertyTile extends Tile implements Buyable, Serializable {
     }
 
     public int getSalePrice() {
-        return this.sale_price;
+        return (int) Math.round(price * 0.8);
     }
 
     public boolean isOwned(){
@@ -68,4 +64,7 @@ public class PropertyTile extends Tile implements Buyable, Serializable {
         return this.owner;
     }
 
+    public void interact(Token token, TileOutputBoundary outBound) {
+
+    }
 }

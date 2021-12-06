@@ -54,7 +54,7 @@ public class PropertyManagerTest {
     public void testSwapProperties() {
         propertyManager.buyProperty(player1, property1);
         propertyManager.buyProperty(player2, property2);
-        propertyManager.swap_properties(player1, player2, "Property 1", "Property 2");
+        propertyManager.swap_properties(property1, property2);
         assertTrue(propertyManager.getPropertiesOwned().get(property1) == player2 &&
                 propertyManager.getPropertiesOwned().get(property2) == player1);
     }

@@ -61,7 +61,7 @@ game board. The player can take another turn **if they roll a 6**.
 Any properties owned by that `Player` become available for the remaining players to buy if they land on that property.
 
 Time permitting, add-on features might include a leaderboard to rank players across multiple games or a chat for in-game
-conversation.
+conversation. 
 
 ## <span style="color:Aquamarine">Design Questions
 
@@ -117,7 +117,7 @@ Although there are a few instances where we notice a violation of the Clean Arch
     fixing this by the end of Phase 2.
 
 
-###SOLID design principles
+### SOLID design principles
 
 We were trying our best throughout the implementation of the program to stay consistent with the **SOLID** principles, 
   and we will highlight some situations in which all the principles are present. I will also highlight some rule breaks 
@@ -152,7 +152,7 @@ We were trying our best throughout the implementation of the program to stay con
   phase.
 
 
-### Packaging Startegies
+### Packaging Strategies
 
 We considered packaging the program in a couple ways, the most basic of which we got to in Phase 1, but we 
   plan to spend more time planning and brainstorming better ways to package which we will implement for Phase 2.
@@ -172,8 +172,8 @@ We considered packaging the program in a couple ways, the most basic of which we
   existing code isn’t nearly complex enough for the “***large buckets of code***” that often arise in packaging by layer to 
   become a serious problem.
 
+### Design Pattern
 
-###Desgin Pattern
   - **<u>Builder</u>** – We implemented this design pattern to construct the game `Board` from various `Tile` types 
   (`City`, `PublicProperty`, `SpecialTile`), since the **Builder** pattern is well-suited to the constructing complex objects 
   by piecing together simpler elements with the same construction process. In the future, if we decide to implement a 
@@ -209,5 +209,9 @@ phase 2.
 Steve: Implemented `SurpriseTile`, `Card` and `CardDeck` in the entities layer. Plan on adding additional features to
 `SurpriseTile`, GUI, and cleaning up the code.
 
-Danny: Implemented `AuctionTile` in the entities layer and expanded `PropertyManager` in the use-cases. Plan on 
+Danny: Implemented `AuctionTile` in the entities layer and expanded `PropertyManager` in the use-cases. Plan on
 assisting implementing the GUI as well as cleaning up the code.
+    
+Anis: Implemented `Player` and `Token` entities. Worked on the main game loop in `GameController` and the main method that
+it interacts with in `BoardManager`. Did a lot of debugging and cleaning up of code. Plan on working on the GUI, cleaning up
+the code so it adheres to Clean Architecture more, and testing for bugs more extensively.

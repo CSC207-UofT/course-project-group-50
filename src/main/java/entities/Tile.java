@@ -2,6 +2,6 @@ package entities;
 
 public abstract class Tile {
 
-    public void interact(Token token) {}
+    public abstract void interact(Token token, TileOutputBoundary outBound);
 
 }

@@ -1,6 +1,4 @@
-package interfaces;
-
-import entities.Building;
+package entities;
 
 public interface Buildable {
 
