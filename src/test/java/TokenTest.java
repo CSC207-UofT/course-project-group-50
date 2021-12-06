@@ -12,13 +12,7 @@ public class TokenTest {
 
     @Before
     public void setUp() {
-        testToken = new Token("Red", new Player("entities.Player 1", new ConstantsInputBoundary()));
-    }
-
-    @Test(timeout = 50)
-    public void testGetColour() {
-        String expected = "Red";
-        assertEquals(expected, testToken.getColour());
+        testToken = new Token(new Player("entities.Player 1", new ConstantsInputBoundary()), new ConstantsInputBoundary());
     }
 
     @Test(timeout = 50)
@@ -55,14 +49,14 @@ public class TokenTest {
     @Test(timeout = 50)
     public void testMovePosMod() {
         testToken.move(55);
-        int expected = 27;
+        int expected = 7;
         assertEquals(expected, testToken.getLocation());
     }
 
     @Test(timeout = 50)
     public void testMoveNegMod() {
         testToken.move(-3);
-        int expected = 25;
+        int expected = 21;
         assertEquals(expected, testToken.getLocation());
     }
 }
