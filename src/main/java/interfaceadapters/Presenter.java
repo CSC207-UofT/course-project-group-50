@@ -1,16 +1,21 @@
 package interfaceadapters;
 
-import javax.swing.*;
 
-public class Presenter extends JFrame {
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.Serializable;
+
+public class Presenter extends JFrame implements ActionListener, Serializable {
 
     protected static final int WIDTH = 700;
     protected static final int HEIGHT = 700;
     private static final int HEIGHT_OFFSET = 40;
     private static final int WIDTH_OFFSET = 18;
     protected GameBoardPanel boardPanel;
+    private final GameSetUp gameSetUp;
 
-    public Presenter(int numOfPlayers) {
+    public Presenter(int numOfPlayers, GameSetUp gameSetUp) {
         setTitle("Simplified Monopoly");
         // Height + HEIGHT_OFFSET fixes rendering issues where JFrame doesn't show its entire dimensions
         // Same with WIDTH + WIDTH_OFFSET
@@ -18,11 +23,21 @@ public class Presenter extends JFrame {
         setVisible(true);
         setResizable(false);
         // TODO: Exit on close won't work with serialization because it will end the application
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         boardPanel = new GameBoardPanel(numOfPlayers);
+        JButton quit = new JButton("Quit Game");
         setContentPane(boardPanel);
+        getContentPane().add(quit);
         ImageIcon image = new ImageIcon("./images/monopoly.png");
         setIconImage(image.getImage());
+        this.gameSetUp = gameSetUp;
+        quit.addActionListener(this);
     }
 
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getActionCommand().equals("Quit Game")){
+            this.gameSetUp.quitGame(this.gameSetUp.getGc());
+        }
+    }
 }
