@@ -131,7 +131,7 @@ public class BoardManager implements Serializable {
 
     /**
      * Print the current statistics of the game
-     * @order The list of integers corresponding to the order that the statistics will be printed in.
+     * @param order The list of integers corresponding to the order that the statistics will be printed in.
      * @throws InterruptedException If the current thread is interrupted
      */
     public void printCurrentStatistics(List<Integer> order) throws InterruptedException {
