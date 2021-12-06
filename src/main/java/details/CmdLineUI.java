@@ -22,6 +22,8 @@ public class CmdLineUI implements interfaceadapters.UI, Serializable {
                 "The last one standing or the first player to reach the net worth goal wins the game " +
                 "and takes home the trophy!");
         System.out.println("Let the fun begin!");
+        System.out.println("Note that you can only quit the game in between of rounds to ensure that the loaded game" +
+                " starts from the next round.");
         String input;
         do{
             System.out.println("Enter S to start the game, load to load an existing game, and Q to quit.");
