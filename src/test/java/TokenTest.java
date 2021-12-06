@@ -2,6 +2,8 @@ import entities.Player;
 import entities.Token;
 import org.junit.Before;
 import org.junit.Test;
+import usecases.ConstantsInputBoundary;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
@@ -10,7 +12,7 @@ public class TokenTest {
 
     @Before
     public void setUp() {
-        testToken = new Token("Red", new Player("entities.Player 1"));
+        testToken = new Token("Red", new Player("entities.Player 1", new ConstantsInputBoundary()));
     }
 
     @Test(timeout = 50)

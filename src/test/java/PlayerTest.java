@@ -1,6 +1,7 @@
 import entities.Player;
 import org.junit.Before;
 import org.junit.Test;
+import usecases.ConstantsInputBoundary;
 
 import static org.junit.Assert.assertEquals;
 
@@ -9,7 +10,7 @@ public class PlayerTest {
 
     @Before
     public void setUp(){
-        test_player = new Player("test_player");
+        test_player = new Player("test_player", new ConstantsInputBoundary());
     }
 
     @Test(timeout = 50)
