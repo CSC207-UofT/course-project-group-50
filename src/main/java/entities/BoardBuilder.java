@@ -16,7 +16,8 @@ public class BoardBuilder implements Builder {
         this.board = new Board();
     }
 
-    /** Arranges tiles to form the board.
+    /**
+     * Arranges tiles to form the board.
      * @param tiles The tiles that will be arranged to form the Board
      */
     public void createTiles(List<Tile> tiles) {
@@ -25,7 +26,7 @@ public class BoardBuilder implements Builder {
 
     /**
      * Returns the newly assembled Board object and prepares for next build request.
-      * @return The newly assembled Board.
+     * @return The newly assembled Board.
      */
     public Board getProduct() {
         Board product = this.board;
