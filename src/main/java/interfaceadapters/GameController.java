@@ -62,9 +62,10 @@ public class GameController implements Serializable, UseCaseOutputBoundary {
                 }
             }
             boardManager.printCurrentStatistics(order);
-            if (!isRunning){
-                return;
-            }
+
+            // Checks if the game is running or not, if not then the game loop ends
+            if (!isRunning){return;}
+
         }
         // If we reach this point in the code, someone has won the game
         boardManager.processWinner(netWorthGoal);
