@@ -2,6 +2,7 @@ import entities.Player;
 import entities.PropertyTile;
 import org.junit.Before;
 import org.junit.Test;
+import usecases.ConstantsInputBoundary;
 
 import static org.junit.Assert.*;
 
@@ -12,7 +13,7 @@ public class PropertyTileTest {
     @Before
     public void setUp(){
         test_property = new PropertyTile("samraj's house", 200, 20);
-        test_player = new Player("samrooj");
+        test_player = new Player("samrooj", new ConstantsInputBoundary());
     }
 
     @Test(timeout = 50)

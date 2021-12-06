@@ -56,18 +56,30 @@ public class BankManager implements Serializable {
         return player.getNetWorth() >= netWorth;
     }
 
+    /**
+     * Deduct the cost of a property, used when a property is bought
+     * @param buyer The player who is buying property
+     * @param property The PropertyTile being bought
+     */
     public void deductCostOfProperty(Player buyer, PropertyTile property){
         buyer.subtractCash(property.getPrice());
-        // buyer.subtractNetWorth(property.getPrice());
-        // no net worth subtraction as asset of property equal to cost in cash
     }
 
+    /**
+     * Add sellback of property, we subtract the loss they occur from Net Worth
+     * @param seller The player who is selling property
+     * @param property The PropertyTile being bought
+     */
     public void addSellbackOfProperty(Player seller, PropertyTile property) {
         seller.addCash(property.getSalePrice());
-        // net worth goes down the loss the seller incurs
         seller.subtractNetWorth(property.getPrice() - property.getSalePrice());
     }
 
+    /**
+     * When a trade is completed both players a rewarded 100 dollars
+     * @param player1 player trading
+     * @param player2 player trading
+     */
     public void updateCashPropertySwap(Player player1, Player player2) {
         player1.addCash(100);
         player2.addCash(100);
@@ -75,16 +87,30 @@ public class BankManager implements Serializable {
         player2.addNetWorth(100);
     }
 
+    /**
+     * When a player passes go they receive 200 dollars
+     * @param player player that passed start
+     */
     public void passStart(Player player){
         player.addCash(200);
         player.addNetWorth(200);
     }
 
+    /**
+     * Adds an inputted amount to a player
+     * @param player player money is being added to
+     * @param amount amount to be added
+     */
     public void addMoney(Player player, int amount){
         player.addCash(amount);
         player.addNetWorth(amount);
     }
 
+    /**
+     * Subtract an inputted amount from a player
+     * @param player player money is being added to
+     * @param amount amount to be subtracted
+     */
     public void subtractMoney(Player player, int amount){
         player.subtractCash(amount);
         player.subtractNetWorth(amount);
