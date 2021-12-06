@@ -1,5 +1,6 @@
 package interfaceadapters;
 
+import java.awt.*;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -11,7 +12,7 @@ public class GameSetUp {
      * Sets up and runs a game of Simplified Monopoly
      * @param ui The user interface to be used
      */
-    public void setUpGame(UI ui) {
+    public void setUpGame(UI ui) throws IOException {
         String input = ui.getStartInfo().toUpperCase();
         GameController gc = null;
 
@@ -19,7 +20,7 @@ public class GameSetUp {
         if (input.equals("S")) {
             List<String> usernames = ui.getPlayerNames();
             ArrayList<Integer> order = generateOrder(usernames.size());
-            Presenter presenter = new Presenter(usernames.size());
+            Presenter presenter = new Presenter();
             gc = new GameController(ui, order, presenter, usernames);
             gc.runPlayerSetUp();
         }

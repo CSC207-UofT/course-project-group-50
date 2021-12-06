@@ -15,16 +15,16 @@ public class CityTest {
 
     @Before
     public void setUp() {
-        testCity = new City("Test entities.City", 0, 0, "Red");
-        testCitySameColour = new City("Test entities.City 2", 0, 0, "Red");
-        testCityDifferentColour = new City("Test entities.City 3", 0, 0, "Blue");
+        testCity = new City("Test entities.City", 0, 0, 1);
+        testCitySameColour = new City("Test entities.City 2", 0, 0, 1);
+        testCityDifferentColour = new City("Test entities.City 3", 0, 0, 2);
         building1 = new Building(0, 0);
     }
 
     @Test(timeout = 50)
     public void testGetColour() {
-        String expected = "Red";
-        assertEquals(expected, testCity.getColour());
+        int expected = 1;
+        assertEquals(expected, testCity.getBlock());
     }
 
     @Test(timeout = 50)

@@ -5,6 +5,7 @@ import usecases.BoardManager;
 import usecases.UseCaseOutputBoundary;
 import usecases.PropertyManager;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +22,7 @@ public class GameController implements Serializable, UseCaseOutputBoundary {
     private final UI ui;
     private Presenter presenter;
 
-    public GameController(UI ui, ArrayList<Integer> order, Presenter presenter, List<String> usernames) {
+    public GameController(UI ui, ArrayList<Integer> order, Presenter presenter, List<String> usernames) throws IOException {
         this.ui = ui;
         this.filepath = "";
         this.usernames = usernames;
@@ -76,7 +77,7 @@ public class GameController implements Serializable, UseCaseOutputBoundary {
         // Roll for the player
         int newLoc = boardManager.rollAndMove(i);
         // Update Game Board and move player's token to new tile
-        presenter.boardPanel.updateBoard(guiTokenIndex, newLoc);
+        //presenter.boardPanel.updateBoard(guiTokenIndex, newLoc);
         // Make player's token interact with tile
         boardManager.interactWithTile(i);
         //TODO: If player lands on special tile and moves forward/backward, the gui does not update

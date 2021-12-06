@@ -1,23 +1,27 @@
 package usecases;
 
+import datatransfer.PlayerData;
+import datatransfer.TileData;
 import entities.*;
 import exceptions.NoWinnerException;
+import interfaceadapters.Presenter;
 
+import java.io.IOException;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 public class BoardManager implements Serializable {
-
+    // TODO: Isn't the BOARD_SIZE really 28?
     public static final int BOARD_SIZE = 24;
     private final List<Player> players;
     private final Board board;
     private final BankManager bankManager;
     private final PropertyManager propertyManager;
     private final UseCaseOutputBoundary outBound;
+    private final GameOutputBoundary gameOutput;
 
-    public BoardManager(BankManager bankManager, PropertyManager propertyManager, UseCaseOutputBoundary outBound) {
+    public BoardManager(BankManager bankManager, PropertyManager propertyManager, UseCaseOutputBoundary outBound) throws IOException {
         this.players = new ArrayList<>();
         Director director = new Director();
         BoardBuilder builder = new BoardBuilder();
@@ -26,6 +30,8 @@ public class BoardManager implements Serializable {
         this.bankManager = bankManager;
         this.propertyManager = propertyManager;
         this.outBound = outBound;
+        this.gameOutput = new Presenter();
+        printBoard();
     }
 
     public void addPlayer(String username) {
@@ -56,6 +62,7 @@ public class BoardManager implements Serializable {
             this.bankManager.passStart(currPlayer);
             this.outBound.notifyUser(currPlayer.getUsername() +  ", you were given $200 for passing Start!");
         }
+        printBoard();
         return currToken.getLocation();
     }
 
@@ -71,6 +78,7 @@ public class BoardManager implements Serializable {
         Tile tokenTile = this.board.getTileAt(currToken.getLocation());
         TileManagerFacade tileManager = new TileManagerFacade(outBound, this, bankManager, propertyManager);
         tokenTile.interact(currToken, tileManager);
+        printBoard();
     }
 
     /**
@@ -142,6 +150,7 @@ public class BoardManager implements Serializable {
             int cash = player.getCash();
             int netWorth = player.getNetWorth();
             outBound.notifyUser(player.getUsername() + ": Cash = " + cash + ", Net Worth = " + netWorth);
+            printBoard();
         }
         outBound.notifyUser("\n");
         TimeUnit.SECONDS.sleep(4);
@@ -180,6 +189,28 @@ public class BoardManager implements Serializable {
         outBound.notifyUser("Game over! The winner is: ");
         outBound.notifyUser(player.getUsername());
         outBound.notifyUser("Thanks for playing!");
+    }
+
+    private void printBoard(){
+        Map<String, TileData> boardData = this.board.getBoardDataTransferObj();
+        Map<Integer, PlayerData> playerData = this.getPlayerDataTransferObj();
+        this.gameOutput.update(boardData, playerData);
+    }
+
+    private Map<Integer, PlayerData> getPlayerDataTransferObj(){
+        Map<Integer, PlayerData> playerData = new HashMap<>();
+        PlayerData dataTrnsfrObj;
+
+        for(int i = 0; i < this.players.size(); i++) {
+            String name = this.players.get(i).getUsername();
+            int number = i + 1;
+            int cash = this.players.get(i).getCash();
+            int netWorth = this.players.get(i).getNetWorth();
+            int location1D = this.players.get(i).getToken().getLocation();
+            dataTrnsfrObj = new PlayerData(name, number, cash, netWorth, location1D);
+            playerData.put(number, dataTrnsfrObj);
+        }
+        return playerData;
     }
 
 }

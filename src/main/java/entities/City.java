@@ -5,13 +5,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class City extends PropertyTile implements Buildable, Auctionable, Buyable, Serializable {
-    private final String colour;
+    private final int block;
     private ArrayList<Building> buildings;
 
     // TODO: update the entities.Board class to use this constructor for entities.City
-    public City(String name, int price, int rent, String colour) {
+    public City(String name, int price, int rent, int block) {
         super(name, price, rent);
-        this.colour = colour;
+        this.block = block;
         this.buildings = new ArrayList<>();
     }
 
@@ -43,10 +43,10 @@ public class City extends PropertyTile implements Buildable, Auctionable, Buyabl
         }
     }
 
-    public String getColour() {return this.colour;}
+    public int getBlock() {return this.block;}
 
     public boolean sameColourBlock(City c) {
-        return this.colour.equals(c.getColour());
+        return this.block == c.getBlock();
     }
 
     public void addBuilding(Building b) {
