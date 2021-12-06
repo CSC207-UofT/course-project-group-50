@@ -10,7 +10,12 @@ public class PropertyTile extends Tile implements Buyable, Serializable {
     private boolean owned;
     private Player owner;
 
-    //  I think we initialize all properties at the beginning of the game from a hard coded list with rent and price
+    /**
+     * Initializes this PropertyTile.
+     * @param name the name of this PropertyTile.
+     * @param price the price of purchase for this PropertyTile.
+     * @param rent the price of rent of this PropertyTile.
+     */
     public PropertyTile(String name, int price, int rent){
         this.name = name;
         this.price = price;
@@ -19,32 +24,60 @@ public class PropertyTile extends Tile implements Buyable, Serializable {
         this.owner = null;
     }
 
+    /**
+     * Returns the name of this PropertyTile.
+     * @return the name of this PropertyTile.
+     */
     public String getName() {
         return this.name;
     }
 
+    /**
+     * Returns the amount of rent of this PropertyTile.
+     * @return the amount of rent of this PropertyTile.
+     */
     public int getRent() {
         return this.rent;
     }
 
+    /**
+     * Sets the rent of this PropertyTile to a new amount.
+     * @param newRent new rent for this PropertyTile.
+     */
     // we would call this when someone builds(upgrades) on a property
-    public void setRent(int new_rent) {
-        this.rent = new_rent;
+    public void setRent(int newRent) {
+        this.rent = newRent;
     }
 
+    /**
+     * Returns the price of purchase for this PropertyTile.
+     * @return the price of purchase for this PropertyTile.
+     */
     public int getPrice() {
         return this.price;
     }
 
+    /**
+     * Sets the price of this PropertyTile to a new amount.
+     * @param newPrice new price for this PropertyTile.
+     */
     // this is used when someone upgrades so that the sell price is indicative of total price
-    public void setPrice(int new_price) {
-        this.price = new_price;
+    public void setPrice(int newPrice) {
+        this.price = newPrice;
     }
 
+    /**
+     * Returns the sale price for this PropertyTile.
+     * @return the sale price for this PropertyTile.
+     */
     public int getSalePrice() {
         return (int) Math.round(price * 0.8);
     }
 
+    /**
+     * Returns whether if this PropertyTile is owned.
+     * @return true iff this PropertyTile is owned.
+     */
     public boolean isOwned(){
         return this.owned;
     }
@@ -60,6 +93,10 @@ public class PropertyTile extends Tile implements Buyable, Serializable {
 
     }
 
+    /**
+     * Returns the player who owns this PropertyTile.
+     * @return the player who owns this PropertyTile.
+     */
     public Player getOwner() {
         return this.owner;
     }
