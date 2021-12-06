@@ -2,7 +2,6 @@ package usecases;
 
 import entities.Player;
 import entities.PropertyTile;
-import details.CmdLineUI; // TODO: remove ui from entity
 
 import java.io.Serializable;
 import java.util.*;

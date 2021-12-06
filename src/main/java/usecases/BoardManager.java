@@ -41,7 +41,6 @@ public class BoardManager implements Serializable {
     public int rollAndMove(int i) {
         Player currPlayer = players.get(i);
         Token currToken = currPlayer.getToken();
-        // TODO: Process player being in jail better
         // this is necessary so that the player does not roll if they are in jail
         int currRoll = 0;
         if(!currToken.isInJail()) {
