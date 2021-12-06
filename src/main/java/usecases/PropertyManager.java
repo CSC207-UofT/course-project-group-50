@@ -71,14 +71,14 @@ public class PropertyManager implements Serializable {
     }
 
     public PropertyTile stringToPropertyTile(String property_string){
-        PropertyTile return_property_tile = null;
+        PropertyTile ReturnPropertyTile = null;
         for (PropertyTile key : this.propertiesOwned.keySet()){
             if (Objects.equals(key.getName(), property_string)) {
-                return_property_tile = key;
+                ReturnPropertyTile = key;
                 break;
             }
         }
-        return return_property_tile;
+        return ReturnPropertyTile;
     }
 
 }

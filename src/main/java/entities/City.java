@@ -13,8 +13,8 @@ public class City extends PropertyTile implements Buildable, Auctionable, Buyabl
     /**
      * Creates a new City Tile.
      * @param name The name of this city.
-     * @param price The price of this city.
-     * @param rent The amount of rent paid if a player lands on this city tile.
+     * @param price The price of purchase this city.
+     * @param rent The amount of rent of this city.
      * @param colour The colour of this city.
      */
     public City(String name, int price, int rent, String colour) {
