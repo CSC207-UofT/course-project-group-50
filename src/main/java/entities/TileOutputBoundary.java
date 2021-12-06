@@ -35,6 +35,4 @@ public interface TileOutputBoundary {
 
     void upgradeProperty(Player player, City city);
 
-
-
 }
