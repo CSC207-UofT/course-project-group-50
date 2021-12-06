@@ -87,48 +87,7 @@ public class CmdLineUI implements interfaceadapters.UI, Serializable {
         return input;
     }
 
-    /**
-     * Interact with user for the filename of the previously saved game, and pass it to the load method
-     */
-    public GameController loadGame() {
-        String filename = null;
-        int item = 0;
-        do{
-            try{
-                System.out.println("Please enter the name of the file as it appears in the game directory:");
-                filename = scanner.nextLine();
-                new FileInputStream(filename + ".txt");
-                item = 1;
-            }
-            catch (IOException exception){
-                exception.printStackTrace();
-            }
-        }
-        while(item != 1);
-        // added item as a dummy variable which only gets value assigned to 1 when the filename given by the user
-        // is correct, unless the code goes to the catch block and item continues to have value 0
-        return GameSetUp.load(filename);
-    }
 
-    /**
-     * Quit the game and save if the user wants to
-     * @param gc The GameController object that can be saved if the user wants
-     */
-    public void quitGame(GameController gc) {
-        String input;
-        // If gc is null, then the user is quitting before the game starts, so there is nothing to save
-        if (gc != null) {
-            do {
-                System.out.println("Would you like to save the game? Enter Y or N:");
-                input = scanner.nextLine();
-            }
-            while (!Objects.equals(input, "Y") && !Objects.equals(input, "N"));
-            if (input.equals("Y")) {
-                System.out.println("Please enter the filename you would like to save the game as:");
-                input = scanner.nextLine();
-                GameSetUp.save(gc, input);
-            }
-        } System.out.println("You have successfully quit the game!");
-    }
+
 
 }

@@ -20,6 +20,7 @@ public class GameController implements Serializable, UseCaseOutputBoundary {
     private ArrayList<Integer> order;
     private final UI ui;
     private Presenter presenter;
+    private boolean isRunning;
 
     public GameController(UI ui, ArrayList<Integer> order, Presenter presenter, List<String> usernames) {
         this.ui = ui;
@@ -31,6 +32,7 @@ public class GameController implements Serializable, UseCaseOutputBoundary {
         this.boardManager = new BoardManager(this.bankManager, this.propertyManager, this);
         this.order = order;
         this.presenter = presenter;
+        this.isRunning = true;
     }
 
     public void runPlayerSetUp() {
@@ -48,7 +50,7 @@ public class GameController implements Serializable, UseCaseOutputBoundary {
         TimeUnit.SECONDS.sleep(2);
         // This loop will run as long as there is no explicit winner or no winner by default (i.e., everyone except
         // one player has gone bankrupt
-        while (!boardManager.isWinner(netWorthGoal) || !boardManager.onlyOneNonBankrupt()) {
+        while (!boardManager.isWinner(netWorthGoal) || !boardManager.onlyOneNonBankrupt() || isRunning) {
             // guiTokenIndex  is a variable that keeps track of which token should move for the GameBoardPanel to use
             // cannot simply use i in the for loop because i comes from order, which is randomized
             int guiTokenIndex = 1;
@@ -60,6 +62,9 @@ public class GameController implements Serializable, UseCaseOutputBoundary {
                 }
             }
             boardManager.printCurrentStatistics(order);
+            if (!isRunning){
+                return;
+            }
         }
         // If we reach this point in the code, someone has won the game
         boardManager.processWinner(netWorthGoal);
@@ -99,4 +104,19 @@ public class GameController implements Serializable, UseCaseOutputBoundary {
         return ui.getInput(messages, acceptedResponses);
     }
 
+    public List<String> getUsernames(){
+        return usernames;
+    }
+
+    public void setPresenter(Presenter presenter) {
+        this.presenter = presenter;
+    }
+
+    public Presenter getPresenter() {
+        return presenter;
+    }
+
+    public void setRunning(boolean running) {
+        this.isRunning = running;
+    }
 }
