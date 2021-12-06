@@ -1,10 +1,7 @@
 package interfaceadapters;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 // takes all the user input and initializes the game controller
 public class GameSetUp implements Serializable{
@@ -86,11 +83,8 @@ public class GameSetUp implements Serializable{
         // If gc is null, then the user is quitting before the game starts, so there is nothing to save
         if (gc != null) {
             gc.setRunning(false);
-            do {
-                input = ui.getAnyInput("Would you like to save the game? Enter Y or N:");
-            }
-            while (!Objects.equals(input, "Y") && !Objects.equals(input, "N"));
-            if (input.equals("Y")) {
+            input = ui.getInput("Would you like to save the game? Enter Y or N:", Arrays.asList("y", "n"));
+            if (input.equalsIgnoreCase("Y")) {
                 input = ui.getAnyInput("Please enter the filename you would like to save the game as:");
                 serializerBoundary.save(gc, input);
             }

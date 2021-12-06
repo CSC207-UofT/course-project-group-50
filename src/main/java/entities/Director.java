@@ -5,14 +5,15 @@ import java.util.Arrays;
 public class Director {
     private BoardBuilder builder;
 
-    /* TODO: The main benefit of using a entities.Builder pattern is for extensible design.
+    /* The main benefit of using a Builder pattern is for extensible design.
         We could create many board "themes" (ie. UofT board, regular, Halloween),
         each with different "city" names, different arrangement of tiles, etc. */
 
-    /* TODO: In future versions, should edit the entities.Builder pattern to direct different elements of game setup
+    /* In future versions, should edit the Builder pattern to direct different elements of game setup
         Right now, this is primarily a proof of concept.
         More sophisticated methods will be added as we settle on data structs for storing/reading/handling board data
-            1. change the interface for entities.City, so that the entities.BoardBuilder manages the colour blocks separately
+            1. change the interface for entities.City, so that the entities.BoardBuilder manages the colour blocks
+            separately
             2. perhaps expanding to a GameBuilder, managing player setup, token setup, etc */
 
     /**
