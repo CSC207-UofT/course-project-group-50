@@ -68,7 +68,7 @@ public class TileManagerPayRent {
     }
 
     public void sellProperty(Player player, PropertyTile property){
-        propertyManager.sellProperty(player, property);
+        propertyManager.sellProperty(property);
         bankManager.addSellbackOfProperty(player, property);
     }
 

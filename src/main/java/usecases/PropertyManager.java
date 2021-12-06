@@ -20,7 +20,7 @@ public class PropertyManager implements Serializable {
     }
 
     // we don't need the seller argument here guys
-    public void sellProperty(Player seller, PropertyTile property){
+    public void sellProperty(PropertyTile property){
         propertiesOwned.remove(property);
         property.setOwner(null);
     }
@@ -51,7 +51,7 @@ public class PropertyManager implements Serializable {
             }
         }
         for(PropertyTile property : propertiesToSell) {
-            sellProperty(owner, property);
+            sellProperty(property);
         }
     }
 
