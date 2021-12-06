@@ -8,8 +8,6 @@ public class City extends PropertyTile implements Buildable, Auctionable, Buyabl
     private final String colour;
     private ArrayList<Building> buildings;
 
-    // TODO: update the entities.Board class to use this constructor for entities.City
-
     /**
      * Creates a new City Tile.
      * @param name The name of this city.
@@ -73,10 +71,6 @@ public class City extends PropertyTile implements Buildable, Auctionable, Buyabl
     public void addBuilding(Building b) {
         buildings.add(b);
     }
-
-    // TODO: before implementing removeBuilding, we should have a conversation about what types of
-    //  buildings / building identifiers we want to use here
-    // Steve: For the sake of interfaces, I am going to temporarily implement removeBuilding() Method.
 
     /**
      * Remove a building from this city.

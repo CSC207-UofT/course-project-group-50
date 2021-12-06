@@ -28,7 +28,7 @@ public class Presenter extends JFrame implements ActionListener, Serializable {
         JButton quit = new JButton("Quit Game");
         setContentPane(boardPanel);
         getContentPane().add(quit);
-        ImageIcon image = new ImageIcon("./images/monopoly.png");
+        ImageIcon image = new ImageIcon("./src/images/monopoly.png");
         setIconImage(image.getImage());
         this.gameSetUp = gameSetUp;
         quit.addActionListener(this);
@@ -37,6 +37,8 @@ public class Presenter extends JFrame implements ActionListener, Serializable {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("Quit Game")){
+            // dispose of the thread
+            dispose();
             this.gameSetUp.quitGame(this.gameSetUp.getGc());
         }
     }

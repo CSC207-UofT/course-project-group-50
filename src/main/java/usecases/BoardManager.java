@@ -41,7 +41,6 @@ public class BoardManager implements Serializable {
     public int rollAndMove(int i) {
         Player currPlayer = players.get(i);
         Token currToken = currPlayer.getToken();
-        // TODO: Process player being in jail better
         // this is necessary so that the player does not roll if they are in jail
         int currRoll = 0;
         if(!currToken.isInJail()) {
@@ -132,7 +131,7 @@ public class BoardManager implements Serializable {
 
     /**
      * Print the current statistics of the game
-     * @order The list of integers corresponding to the order that the statistics will be printed in.
+     * @param order The list of integers corresponding to the order that the statistics will be printed in.
      * @throws InterruptedException If the current thread is interrupted
      */
     public void printCurrentStatistics(List<Integer> order) throws InterruptedException {

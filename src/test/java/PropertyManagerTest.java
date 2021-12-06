@@ -5,6 +5,8 @@ import org.junit.Test;
 import usecases.ConstantsInputBoundary;
 import usecases.PropertyManager;
 
+import java.util.HashMap;
+
 import static org.junit.Assert.*;
 
 public class PropertyManagerTest {
@@ -68,6 +70,20 @@ public class PropertyManagerTest {
                 propertyManager.getPropertiesOwned().containsKey(property2));
     }
 
+    @Test(timeout = 50)
+    public void testPropertiesOwned() {
+        propertyManager.buyProperty(player1, property1);
+        propertyManager.buyProperty(player2, property2);
+        HashMap<PropertyTile, Player> properties = new HashMap<>();
+        properties.put(property1, player1);
+        properties.put(property2, player2);
+        assertEquals(propertyManager.getPropertiesOwned(), properties);
+    }
 
+    @Test(timeout = 50)
+    public void testStringToProperty() {
+        propertyManager.buyProperty(player1, property1);
+        assertEquals(propertyManager.stringToPropertyTile("Property 1"), property1);
+    }
 
 }
