@@ -16,7 +16,7 @@ public class SurpriseTileTest {
     public void setUp() {
         testSurpriseTile = new SurpriseTile();
         player1 = new Player("entities.Player 1", new ConstantsInputBoundary());
-        TileManagerFacade testTileManagerFacade = new GameSetup().testTileManagerFacade();
+        testTileManagerFacade = new GameSetup().getTileManagerFacade();
     }
 
     @Test(timeout = 50)

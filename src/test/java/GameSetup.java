@@ -37,7 +37,7 @@ public class GameSetup {
         return gc.getBoardManager();
     }
 
-    public TileManagerFacade testTileManagerFacade(){
+    public TileManagerFacade getTileManagerFacade(){
         return new TileManagerFacade(gc, boardManager, new BankManager(), new PropertyManager());
     }
 

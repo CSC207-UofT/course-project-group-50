@@ -3,7 +3,7 @@ import org.junit.Before;
 import org.junit.Test;
 import usecases.ConstantsInputBoundary;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public class PlayerTest {
     Player test_player;
@@ -44,5 +44,14 @@ public class PlayerTest {
     @Test(timeout = 50)
     public void TestToString() {
         assertEquals("entities.Player test_player – Cash: $1000, Net Worth: $1000", test_player.toString());
+    }
+
+    @Test(timeout = 50)
+    public void TestSetBankrupt() {
+        test_player.setBankrupt();
+        assertTrue(test_player.isBankrupt());
+        assertEquals(test_player.getNetWorth(), 0);
+        assertEquals(test_player.getCash(), 0);
+        assertNull(test_player.getToken());
     }
 }
