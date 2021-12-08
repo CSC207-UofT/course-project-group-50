@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class City extends PropertyTile implements Buildable, Auctionable, Buyable, Serializable {
-    private final String colour;
+    private final int block;
     private ArrayList<Building> buildings;
 
     /**
@@ -13,11 +13,11 @@ public class City extends PropertyTile implements Buildable, Auctionable, Buyabl
      * @param name The name of this city.
      * @param price The price of purchase this city.
      * @param rent The amount of rent of this city.
-     * @param colour The colour of this city.
+     * @param block The block of this city, indicates the colour of the tile on the board
      */
-    public City(String name, int price, int rent, String colour) {
+    public City(String name, int price, int rent, int block) {
         super(name, price, rent);
-        this.colour = colour;
+        this.block = block;
         this.buildings = new ArrayList<>();
     }
 
@@ -50,18 +50,18 @@ public class City extends PropertyTile implements Buildable, Auctionable, Buyabl
     }
 
     /**
-     * Returns the colour of this city.
-     * @return the colour of this city.
+     * Returns the block number of this city.
+     * @return the block number of this city.
      */
-    public String getColour() {return this.colour;}
+    public int getBlock() {return this.block;}
 
     /**
-     * Returns true if and only if this City's colour is the same as the City c.
+     * Returns true if and only if this City's block is the same as the City c.
      * @param c A city.
-     * @return A boolean which indicates whether City c's colour is the same as this city.
+     * @return A boolean which indicates whether City c's block is the same as this city.
      */
     public boolean sameColourBlock(City c) {
-        return this.colour.equals(c.getColour());
+        return this.block == c.getBlock();
     }
 
     /**

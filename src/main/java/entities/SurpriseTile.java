@@ -2,7 +2,9 @@ package entities;
 
 import java.io.Serializable;
 
-public class SurpriseTile extends SpecialTile implements Serializable {
+public class SurpriseTile extends Tile implements Serializable {
+    public SurpriseTile() {super("Surprise", false);}
+
     @Override
     public void interact(Token token, TileOutputBoundary outBound) {
         CardDeck cardDeck = new CardDeck();

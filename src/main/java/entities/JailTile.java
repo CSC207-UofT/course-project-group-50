@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class JailTile extends SpecialTile {
+public class JailTile extends Tile {
+    public JailTile(){super("Jail", false);}
 
     /**
      * Interact with the tile

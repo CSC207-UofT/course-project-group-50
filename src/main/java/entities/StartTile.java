@@ -2,7 +2,8 @@ package entities;
 
 import java.io.Serializable;
 
-public class StartTile extends SpecialTile implements Serializable {
+public class StartTile extends Tile implements Serializable {
+    public StartTile(){super("Start", false);}
 
     /**
      * Interact with the tile
