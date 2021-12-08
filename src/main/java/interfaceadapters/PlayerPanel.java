@@ -13,7 +13,7 @@ import java.util.Map;
  * Builds the player stats section of the GUI from the information stored in a PlayerDTO object.
  */
 public class PlayerPanel extends JPanel {
-    protected static final int STATS_WIDTH = 700;
+    protected static final int STATS_WIDTH = 600;
     protected static final int STATS_HEIGHT = 100;
 
     protected final int USERNAME = 0;

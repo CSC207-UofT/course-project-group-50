@@ -14,8 +14,8 @@ import java.util.Map;
  * Builds the game board GUI from the information stored in a TileDTO object and token locations.
  */
 public class BoardPanel extends JPanel {
-    protected static final int BOARD_WIDTH = 700;
-    protected static final int BOARD_HEIGHT = 700;
+    protected static final int BOARD_WIDTH = 600;
+    protected static final int BOARD_HEIGHT = 600;
 
     protected final int PRICE = 4;
     protected final int NAME = 5;
@@ -196,7 +196,8 @@ public class BoardPanel extends JPanel {
         for(int i = 1; i <= numOfPlayers; i++){
             Point2D position = tokenPositions.get(i);
             List<JComponent> tileComponent = this.positionToTile.get(position);
-            tileComponent.get(i - 1).setBackground(Color.WHITE);
+            JComponent token = tileComponent.get(i - 1);
+            token.setBackground(Color.WHITE);
         }
     }
 
@@ -211,7 +212,8 @@ public class BoardPanel extends JPanel {
         for(int i = 1; i <= numOfPlayers; i++){
             Point2D position = tokenPositions.get(i);
             List<JComponent> tileComponent = this.positionToTile.get(position);
-            tileComponent.get(i - 1).setBackground(playerToColour.get(i));
+            JComponent token = tileComponent.get(i - 1);
+            token.setBackground(playerToColour.get(i));
         }
     }
 }

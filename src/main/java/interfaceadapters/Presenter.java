@@ -9,8 +9,8 @@ import java.util.Map;
 
 public class Presenter extends JFrame implements Serializable, GameOutputBoundary { //, ActionListener {
     protected GamePanel gamePanel;
-    protected static final int FRAME_WIDTH = 700;
-    protected static final int FRAME_HEIGHT = 800;
+    protected static final int FRAME_WIDTH = 600;
+    protected static final int FRAME_HEIGHT = 700;
 
     public Presenter() {
         setTitle("Simplified Monopoly");
