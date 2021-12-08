@@ -28,7 +28,6 @@ public class Presenter extends JFrame implements Serializable, GameOutputBoundar
 
         setVisible(true);
         setResizable(false);
-        pack();
 
 //        JButton quit = new JButton("Quit Game");
 //        getContentPane().add(quit);
@@ -37,7 +36,13 @@ public class Presenter extends JFrame implements Serializable, GameOutputBoundar
 
     @Override
     public void update(Map<String, TileData> boardData, Map<Integer, PlayerData> playerData) {
+        getContentPane().remove(displayPanel);
         this.displayPanel.update(boardData, playerData);
+        getContentPane().add(displayPanel);
+        pack();
+        setVisible(true);
+        revalidate();
+        repaint();
     }
 
 //    @Override

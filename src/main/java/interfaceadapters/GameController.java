@@ -29,9 +29,9 @@ public class GameController implements Serializable, UseCaseOutputBoundary {
         this.netWorthGoal = 5000;
         this.bankManager = new BankManager();
         this.propertyManager = new PropertyManager();
-        this.boardManager = new BoardManager(this.bankManager, this.propertyManager, this);
+        this.boardManager = new BoardManager(this.bankManager, this.propertyManager, this, new Presenter());
         this.order = order;
-        this.presenter = presenter;
+        // this.presenter = presenter;
     }
 
     public void runPlayerSetUp() {
@@ -77,7 +77,7 @@ public class GameController implements Serializable, UseCaseOutputBoundary {
         // Roll for the player
         int newLoc = boardManager.rollAndMove(i);
         // Update Game Board and move player's token to new tile
-        //presenter.boardPanel.updateBoard(guiTokenIndex, newLoc);
+        // presenter.boardPanel.updateBoard(guiTokenIndex, newLoc);
         // Make player's token interact with tile
         boardManager.interactWithTile(i);
         //TODO: If player lands on special tile and moves forward/backward, the gui does not update

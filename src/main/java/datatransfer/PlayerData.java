@@ -16,4 +16,12 @@ public class PlayerData {
         this.netWorth = netWorth;
         this.location = location;
     }
+
+    @Override
+    public String toString() {
+        String s = "#" + this.number + " – " + this.username + "\n" + "c : " + this.cash + " ,nw: " +
+                this.netWorth + " ,l" + this.location;
+        return s;
+    }
+
 }

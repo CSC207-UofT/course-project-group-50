@@ -19,44 +19,24 @@ public class DisplayPanel extends JPanel {
     protected JPanel boardPanel;
     protected JPanel playerPanel;
 
+    private JPanel[] tilePanelHolder;
     private JPanel[] playerPanelHolder;
     private JPanel[][] boardPanelHolder;
 
     private Map<Integer, Color> blockToColour;
     private Map<Integer, Color> playerToColour;
+    private Map<String, Integer> usernameToBlock;
     private Map<Integer, Point2D> tokenPositions;
 
     public DisplayPanel() {
         setLayout(new BorderLayout());
+        this.usernameToBlock = new HashMap<>();
 
         initializeColours();
         initializeBoardPanel();
         initializePlayerPanel();
         add(this.boardPanel, "Center");
         add(this.playerPanel, "South");
-    }
-
-    @Override
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        drawTokens(g);
-    }
-
-    private void drawTokens(Graphics g) {
-        for(int i = 1; i <= this.numOfPlayers; i++) {
-            drawToken(g, i, this.tokenPositions.get(i));
-        }
-    }
-
-    private void drawToken(Graphics g, int i, Point2D position) {
-        int tileX = (int) position.getX();
-        int tileY = (int) position.getY();
-
-        int cX = boardPanelHolder[tileY][tileX].getX();
-        int cY = boardPanelHolder[tileY][tileX].getY();
-
-        g.setColor(this.playerToColour.get(i));
-        g.fillOval(cX, cY, 5, 5);
     }
 
     private void initializeBoardPanel() {
@@ -94,11 +74,11 @@ public class DisplayPanel extends JPanel {
     public void update(Map<String, TileData> boardData, Map<Integer, PlayerData> playerData) {
         updateBoard(boardData);
         updatePlayerStats(playerData);
-        revalidate();
-        repaint();
     }
 
     private void updateBoard(Map<String, TileData> boardData){
+
+
         for(Map.Entry<String, TileData> city : boardData.entrySet()) {
             String key = city.getKey();
             TileData value = city.getValue();
@@ -107,6 +87,8 @@ public class DisplayPanel extends JPanel {
             int y = (int) value.position.getY();
 
             JPanel tilePanel =  this.boardPanelHolder[y][x];
+
+            tilePanel.removeAll();
             tilePanel.setLayout(new BorderLayout());
             tilePanel.setBorder(BorderFactory.createLineBorder(Color.black));
 
@@ -115,27 +97,29 @@ public class DisplayPanel extends JPanel {
             tileName.setBackground(this.blockToColour.get(value.block));
             tileName.setHorizontalAlignment(JTextField.CENTER);
             tileName.setBorder(javax.swing.BorderFactory.createEmptyBorder());
-
             tilePanel.add(tileName, "Center");
+
 
             JTextField tileTag;
             if (value.rent != 0) {
-                tileTag = new JTextField("$" + String.valueOf(value.rent));
+                tileTag = new JTextField("Rent: $" + String.valueOf(value.rent));
                 if (value.owned) {
-                    // TODO: replace this with owner
-                    tileTag.setForeground(this.playerToColour.get(1));
+                    tileTag.setForeground(this.playerToColour.get(this.usernameToBlock.get(value.owner)));
                 } else if (value.price == 0){
                     tileTag.setForeground(Color.RED);
                 } else {
-                    tileTag = new JTextField("$" + String.valueOf(value.price));
+                    tileTag = new JTextField("Price: $" + String.valueOf(value.price));
                     tileTag.setBackground(Color.WHITE);
                 }
+
                 tileTag.setEditable(false);
                 tileTag.setHorizontalAlignment(JTextField.CENTER);
                 tileTag.setBorder(javax.swing.BorderFactory.createEmptyBorder());
                 tilePanel.add(tileTag, "North");
             }
+
         }
+
     }
 
     private void updatePlayerStats(Map<Integer, PlayerData> playerData) {
@@ -146,12 +130,17 @@ public class DisplayPanel extends JPanel {
             this.tokenPositions.put(i, translate1DTo2D(i));
 
             JPanel statBox = this.playerPanelHolder[i - 1];
+            statBox.removeAll();
             statBox.setLayout(new BorderLayout());
             statBox.setBackground(Color.white);
 
             PlayerData value = playerData.get(i);
 
             JTextField username = new JTextField(value.username);
+            if (this.usernameToBlock.size() < this.numOfPlayers) {
+                this.usernameToBlock.put(value.username, i);
+            }
+
             username.setEditable(false);
             username.setForeground(playerToColour.get(i));
             username.setBorder(javax.swing.BorderFactory.createEmptyBorder());

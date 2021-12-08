@@ -21,7 +21,7 @@ public class BoardManager implements Serializable {
     private final UseCaseOutputBoundary outBound;
     private final GameOutputBoundary gameOutput;
 
-    public BoardManager(BankManager bankManager, PropertyManager propertyManager, UseCaseOutputBoundary outBound) throws IOException {
+    public BoardManager(BankManager bankManager, PropertyManager propertyManager, UseCaseOutputBoundary outBound, GameOutputBoundary gameOutput) throws IOException {
         this.players = new ArrayList<>();
         Director director = new Director();
         BoardBuilder builder = new BoardBuilder();
@@ -30,8 +30,7 @@ public class BoardManager implements Serializable {
         this.bankManager = bankManager;
         this.propertyManager = propertyManager;
         this.outBound = outBound;
-        this.gameOutput = new Presenter();
-        printBoard();
+        this.gameOutput = gameOutput;
     }
 
     public void addPlayer(String username) {
@@ -62,6 +61,7 @@ public class BoardManager implements Serializable {
             this.bankManager.passStart(currPlayer);
             this.outBound.notifyUser(currPlayer.getUsername() +  ", you were given $200 for passing Start!");
         }
+
         printBoard();
         return currToken.getLocation();
     }
@@ -78,7 +78,6 @@ public class BoardManager implements Serializable {
         Tile tokenTile = this.board.getTileAt(currToken.getLocation());
         TileManagerFacade tileManager = new TileManagerFacade(outBound, this, bankManager, propertyManager);
         tokenTile.interact(currToken, tileManager);
-        printBoard();
     }
 
     /**
@@ -150,7 +149,6 @@ public class BoardManager implements Serializable {
             int cash = player.getCash();
             int netWorth = player.getNetWorth();
             outBound.notifyUser(player.getUsername() + ": Cash = " + cash + ", Net Worth = " + netWorth);
-            printBoard();
         }
         outBound.notifyUser("\n");
         TimeUnit.SECONDS.sleep(4);
@@ -192,8 +190,10 @@ public class BoardManager implements Serializable {
     }
 
     private void printBoard(){
-        Map<String, TileData> boardData = this.board.getBoardDataTransferObj();
-        Map<Integer, PlayerData> playerData = this.getPlayerDataTransferObj();
+        Map<String, TileData> boardData = new HashMap<>();
+        boardData = this.board.getBoardDataTransferObj();
+        Map<Integer, PlayerData> playerData = new HashMap<>();
+        playerData = this.getPlayerDataTransferObj();
         this.gameOutput.update(boardData, playerData);
     }
 
