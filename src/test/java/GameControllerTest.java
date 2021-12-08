@@ -10,6 +10,7 @@ import usecases.PropertyManager;
 import usecases.TileManagerBuyProperty;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,7 +29,7 @@ public class GameControllerTest {
 
 
     @Before
-    public void setUp() {
+    public void setUp() throws IOException {
         System.setOut(new PrintStream(outContent));
         GameSetup setup =  new GameSetup();
         testGameController = setup.getGameController();

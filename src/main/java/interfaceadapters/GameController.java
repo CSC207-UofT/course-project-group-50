@@ -6,6 +6,7 @@ import usecases.BoardManager;
 import usecases.UseCaseOutputBoundary;
 import usecases.PropertyManager;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,19 +21,17 @@ public class GameController implements Serializable, UseCaseOutputBoundary {
     private final List<String> usernames;
     private ArrayList<Integer> order;
     private final UI ui;
-    private Presenter presenter;
     private boolean isRunning;
 
-    public GameController(UI ui, ArrayList<Integer> order, Presenter presenter, List<String> usernames) {
+    public GameController(UI ui, ArrayList<Integer> order, List<String> usernames) throws IOException {
         this.ui = ui;
         this.filepath = "";
         this.usernames = usernames;
         this.netWorthGoal = 5000;
         this.bankManager = new BankManager();
         this.propertyManager = new PropertyManager();
-        this.boardManager = new BoardManager(this.bankManager, this.propertyManager, this);
+        this.boardManager = new BoardManager(this.bankManager, this.propertyManager, this, new Presenter());
         this.order = order;
-        this.presenter = presenter;
         this.isRunning = true;
     }
 
@@ -80,8 +79,6 @@ public class GameController implements Serializable, UseCaseOutputBoundary {
         ui.printMessage("\n");
         // Roll for the player
         int newLoc = boardManager.rollAndMove(i);
-        // Update Game Board and move player's token to new tile
-        presenter.boardPanel.updateBoard(guiTokenIndex, newLoc);
         // Make player's token interact with tile
         boardManager.interactWithTile(i);
         //TODO: If player lands on special tile and moves forward/backward, the gui does not update
@@ -106,14 +103,6 @@ public class GameController implements Serializable, UseCaseOutputBoundary {
 
     public List<String> getUsernames(){
         return usernames;
-    }
-
-    public void setPresenter(Presenter presenter) {
-        this.presenter = presenter;
-    }
-
-    public Presenter getPresenter() {
-        return presenter;
     }
 
     public BoardManager getBoardManager(){return boardManager;}

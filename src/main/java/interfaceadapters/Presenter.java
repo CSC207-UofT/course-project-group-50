@@ -1,45 +1,51 @@
 package interfaceadapters;
-
+import datatransferobj.PlayerDTO;
+import datatransferobj.TileDTO;
+import usecases.GameOutputBoundary;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.io.Serializable;
+import java.util.Map;
 
-public class Presenter extends JFrame implements ActionListener, Serializable {
+public class Presenter extends JFrame implements Serializable, GameOutputBoundary { //, ActionListener {
+    protected GamePanel gamePanel;
+    protected static final int FRAME_WIDTH = 700;
+    protected static final int FRAME_HEIGHT = 800;
 
-    protected static final int WIDTH = 700;
-    protected static final int HEIGHT = 700;
-    private static final int HEIGHT_OFFSET = 40;
-    private static final int WIDTH_OFFSET = 18;
-    protected GameBoardPanel boardPanel;
-    private final GameSetUp gameSetUp;
-
-    public Presenter(int numOfPlayers, GameSetUp gameSetUp) {
+    public Presenter() {
         setTitle("Simplified Monopoly");
-        // Height + HEIGHT_OFFSET fixes rendering issues where JFrame doesn't show its entire dimensions
-        // Same with WIDTH + WIDTH_OFFSET
-        setSize(WIDTH + WIDTH_OFFSET, HEIGHT + HEIGHT_OFFSET);
+        setSize(FRAME_WIDTH, FRAME_HEIGHT);
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+
+        this.gamePanel = new GamePanel();
+        getContentPane().add(gamePanel);
+
         setVisible(true);
         setResizable(false);
-        // TODO: Exit on close won't work with serialization because it will end the application
-        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-        boardPanel = new GameBoardPanel(numOfPlayers);
-        JButton quit = new JButton("Quit Game");
-        setContentPane(boardPanel);
-        getContentPane().add(quit);
-        ImageIcon image = new ImageIcon("./src/images/monopoly.png");
-        setIconImage(image.getImage());
-        this.gameSetUp = gameSetUp;
-        quit.addActionListener(this);
+
+//        JButton quit = new JButton("Quit Game");
+//        getContentPane().add(quit);
+//        quit.addActionListener(this);
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {
-        if (e.getActionCommand().equals("Quit Game")){
-            // dispose of the thread
-            dispose();
-            this.gameSetUp.quitGame(this.gameSetUp.getGc());
-        }
+    public void update(Map<String, TileDTO> boardData, Map<Integer, PlayerDTO> playerData) {
+        getContentPane().remove(gamePanel);
+        this.gamePanel.update(boardData, playerData);
+        getContentPane().add(gamePanel);
+        pack();
+        setVisible(true);
+        revalidate();
+        repaint();
     }
+
+//    @Override
+//    public void actionPerformed(ActionEvent e) {
+//        if (e.getActionCommand().equals("Quit Game")){
+//            // dispose of the thread
+//            dispose();
+//            this.gameSetUp.quitGame(this.gameSetUp.getGc());
+//        }
+//    }
 }

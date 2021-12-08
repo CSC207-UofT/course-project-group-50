@@ -8,6 +8,8 @@ import usecases.BoardManager;
 import usecases.PropertyManager;
 import usecases.TileManagerUpgradeProperty;
 
+import java.io.IOException;
+
 import static org.junit.Assert.*;
 
 public class TileManagerUpgradePropertyTest {
@@ -17,7 +19,7 @@ public class TileManagerUpgradePropertyTest {
     TileManagerUpgradeProperty testTileManagerUpgradeProperty;
 
     @Before
-    public void setUp() {
+    public void setUp() throws IOException {
         GameSetup setup =  new GameSetup();
         testGameController = setup.getGameController();
         testBoardManager = setup.getBoardManager();
@@ -28,7 +30,7 @@ public class TileManagerUpgradePropertyTest {
     @Test(timeout = 50)
     public void testUpgradeProperty() {
         Player player = testBoardManager.getPlayerFromUsername(testBoardManager.getPlayerUsernameFromNumber(1));
-        City city = new City("testCity", 100, 10, "red");
+        City city = new City("testCity", 100, 10, 1);
         testPropertyManager.buyProperty(player, city);
         testTileManagerUpgradeProperty.upgradeProperty(player, city);
         assertEquals(city.getRent(), 20);
