@@ -10,6 +10,7 @@ import usecases.BoardManager;
 import usecases.ConstantsInputBoundary;
 import usecases.TileManagerFacade;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -27,7 +28,7 @@ public class JailTileTest {
     TileManagerFacade testTileManagerFacade;
 
     @Before
-    public void setUp() {
+    public void setUp() throws IOException {
         GameSetup setup =  new GameSetup();
         testTileManagerFacade = setup.getTileManagerFacade();
         testBoardManager = setup.getBoardManager();

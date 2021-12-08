@@ -5,6 +5,8 @@ import org.junit.Before;
 import org.junit.Test;
 import usecases.*;
 
+import java.io.IOException;
+
 import static org.junit.Assert.*;
 
 public class TileManagerBuyPropertyTest {
@@ -15,7 +17,7 @@ public class TileManagerBuyPropertyTest {
     TileManagerBuyProperty testTileManagerBuyProperty;
 
     @Before
-    public void setUp() {
+    public void setUp() throws IOException {
         GameSetup setup =  new GameSetup();
         testGameController = setup.getGameController();
         testBoardManager = setup.getBoardManager();
@@ -27,7 +29,7 @@ public class TileManagerBuyPropertyTest {
     @Test(timeout = 50)
     public void testBuyPropertyPlayerHasEnough() {
         Player player = testBoardManager.getPlayerFromUsername(testBoardManager.getPlayerUsernameFromNumber(1));
-        City city = new City("testCity", 100, 10, "red");
+        City city = new City("testCity", 100, 10, 1);
         testTileManagerBuyProperty.buyProperty(player, city);
         assertTrue(testPropertyManager.getPropertiesOwned().containsKey(city) &&
                 testPropertyManager.getPropertiesOwned().get(city) == player);
@@ -40,7 +42,7 @@ public class TileManagerBuyPropertyTest {
     public void testBuyPropertyPlayerNotEnough() {
         Player player = testBoardManager.getPlayerFromUsername(testBoardManager.getPlayerUsernameFromNumber(1));
         player.setCash(50);
-        City city = new City("testCity", 100, 10, "red");
+        City city = new City("testCity", 100, 10, 1);
         testTileManagerBuyProperty.buyProperty(player, city);
         assertFalse(testPropertyManager.getPropertiesOwned().containsKey(city) &&
                 testPropertyManager.getPropertiesOwned().get(city) == player);

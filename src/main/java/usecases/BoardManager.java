@@ -1,23 +1,29 @@
 package usecases;
 
+import datatransferobj.PlayerDTO;
+import datatransferobj.TileDTO;
 import entities.*;
 import exceptions.NoWinnerException;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 public class BoardManager implements Serializable {
 
-    public static final int BOARD_SIZE = 24;
+    public static final int BOARD_SIZE = 28;
     private final List<Player> players;
     private final Board board;
     private final BankManager bankManager;
     private final PropertyManager propertyManager;
     private final UseCaseOutputBoundary outBound;
+    private final GameOutputBoundary gameOutput;
 
-    public BoardManager(BankManager bankManager, PropertyManager propertyManager, UseCaseOutputBoundary outBound) {
+    public BoardManager(BankManager bankManager, PropertyManager propertyManager, UseCaseOutputBoundary outBound, GameOutputBoundary gameOutput) throws IOException {
         this.players = new ArrayList<>();
         Director director = new Director();
         BoardBuilder builder = new BoardBuilder();
@@ -26,6 +32,7 @@ public class BoardManager implements Serializable {
         this.bankManager = bankManager;
         this.propertyManager = propertyManager;
         this.outBound = outBound;
+        this.gameOutput = gameOutput;
     }
 
     public void addPlayer(String username) {
@@ -55,6 +62,7 @@ public class BoardManager implements Serializable {
             this.bankManager.passStart(currPlayer);
             this.outBound.notifyUser(currPlayer.getUsername() +  ", you were given $200 for passing Start!");
         }
+        printBoard();
         return currToken.getLocation();
     }
 
@@ -179,6 +187,30 @@ public class BoardManager implements Serializable {
         outBound.notifyUser("Game over! The winner is: ");
         outBound.notifyUser(player.getUsername());
         outBound.notifyUser("Thanks for playing!");
+    }
+
+    private void printBoard(){
+        Map<String, TileDTO> boardData;
+        boardData = this.board.getBoardDataTransferObj();
+        Map<Integer, PlayerDTO> playerData;
+        playerData = this.getPlayerDataTransferObj();
+        this.gameOutput.update(boardData, playerData);
+    }
+
+    private Map<Integer, PlayerDTO> getPlayerDataTransferObj(){
+        Map<Integer, PlayerDTO> playerData = new HashMap<>();
+        PlayerDTO dto;
+
+        for(int i = 0; i < this.players.size(); i++) {
+            String name = this.players.get(i).getUsername();
+            int number = i + 1;
+            int cash = this.players.get(i).getCash();
+            int netWorth = this.players.get(i).getNetWorth();
+            int location1D = this.players.get(i).getToken().getLocation();
+            dto = new PlayerDTO(name, number, cash, netWorth, location1D);
+            playerData.put(number, dto);
+        }
+        return playerData;
     }
 
 }

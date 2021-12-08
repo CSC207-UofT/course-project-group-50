@@ -23,15 +23,14 @@ public class GameSetUp implements Serializable{
     /**
      * Sets up and runs a game of Simplified Monopoly
      */
-    public void setUpGame() {
+    public void setUpGame() throws IOException {
         String input = ui.getStartInfo().toUpperCase();
 
         // This branch executes if the user wishes to start a game
         if (input.equals("S")) {
             List<String> usernames = ui.getPlayerNames();
             ArrayList<Integer> order = generateOrder(usernames.size());
-            Presenter presenter = new Presenter(usernames.size(), this);
-            gc = new GameController(ui, order, presenter, usernames);
+            gc = new GameController(ui, order, usernames);
             gc.runPlayerSetUp();
         }
         // This branch executes if a user wishes to load an existing game

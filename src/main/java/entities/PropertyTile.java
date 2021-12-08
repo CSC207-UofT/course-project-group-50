@@ -4,10 +4,8 @@ import java.io.Serializable;
 import java.lang.Math;
 
 public class PropertyTile extends Tile implements Buyable, Serializable {
-    private final String name;
     private int price;
     private int rent;
-    private boolean owned;
     private Player owner;
 
     /**
@@ -17,10 +15,9 @@ public class PropertyTile extends Tile implements Buyable, Serializable {
      * @param rent the price of rent of this PropertyTile.
      */
     public PropertyTile(String name, int price, int rent){
-        this.name = name;
+        super(name, false);
         this.price = price;
         this.rent = rent;
-        this.owned = false;
         this.owner = null;
     }
 
@@ -72,14 +69,6 @@ public class PropertyTile extends Tile implements Buyable, Serializable {
      */
     public int getSalePrice() {
         return (int) Math.round(price * 0.8);
-    }
-
-    /**
-     * Returns whether if this PropertyTile is owned.
-     * @return true iff this PropertyTile is owned.
-     */
-    public boolean isOwned(){
-        return this.owned;
     }
 
     public void setOwner(Player owner){

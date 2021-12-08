@@ -5,6 +5,8 @@ import org.junit.Test;
 import usecases.ConstantsInputBoundary;
 import usecases.TileManagerFacade;
 
+import java.io.IOException;
+
 import static org.junit.Assert.assertEquals;
 
 public class StartTileTest {
@@ -13,7 +15,7 @@ public class StartTileTest {
     TileManagerFacade testTileManagerFacade;
 
     @Before
-    public void setUp() {
+    public void setUp() throws IOException {
         testStartTile = new StartTile();
         player1 = new Player("entities.Player 1", new ConstantsInputBoundary());
         testTileManagerFacade = new GameSetup().getTileManagerFacade();

@@ -9,6 +9,8 @@ import usecases.BankManager;
 import usecases.BoardManager;
 import usecases.ConstantsInputBoundary;
 
+import java.io.IOException;
+
 import static org.junit.Assert.*;
 
 public class BoardManagerTest {
@@ -16,7 +18,7 @@ public class BoardManagerTest {
     BoardManager testBoardManager;
 
     @Before
-    public void setUp() {
+    public void setUp() throws IOException {
         GameSetup setup =  new GameSetup();
         testGameController = setup.getGameController();
         testBoardManager = setup.getBoardManager();
