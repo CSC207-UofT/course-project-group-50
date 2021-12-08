@@ -6,6 +6,8 @@ import datatransfer.TileData;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Point2D;
+import java.util.List;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,23 +18,31 @@ public class DisplayPanel extends JPanel {
     protected static final int FRAME_HEIGHT = 800;
     private int numOfPlayers;
 
+    protected final int PRICE = 4;
+    protected final int NAME = 5;
+
     protected JPanel boardPanel;
     protected JPanel playerPanel;
 
-    private JPanel[] tilePanelHolder;
+    private final Map<Point2D, List<JComponent>> positionToTile;
+
     private JPanel[] playerPanelHolder;
     private JPanel[][] boardPanelHolder;
 
+
     private Map<Integer, Color> blockToColour;
     private Map<Integer, Color> playerToColour;
-    private Map<String, Integer> usernameToBlock;
+    private final Map<String, Integer> usernameToNum;
     private Map<Integer, Point2D> tokenPositions;
 
     public DisplayPanel() {
         setLayout(new BorderLayout());
-        this.usernameToBlock = new HashMap<>();
 
         initializeColours();
+        this.usernameToNum = new HashMap<>();
+        this.tokenPositions = new HashMap<>();
+        this.positionToTile = new HashMap<>();
+
         initializeBoardPanel();
         initializePlayerPanel();
         add(this.boardPanel, "Center");
@@ -49,9 +59,42 @@ public class DisplayPanel extends JPanel {
 
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                this.boardPanelHolder[i][j] = new JPanel();
-                this.boardPanelHolder[i][j].setPreferredSize(new Dimension(BOARD_WIDTH / 8, BOARD_HEIGHT / 8));
-                this.boardPanel.add(this.boardPanelHolder[i][j]);
+                JPanel tile = new JPanel();
+                tile.setLayout(new BorderLayout());
+                tile.setPreferredSize(new Dimension(BOARD_WIDTH / 8, BOARD_HEIGHT / 8));
+
+                JTextField tilePrice = new JTextField("");
+                tilePrice.setEditable(false);
+                tilePrice.setHorizontalAlignment(JTextField.CENTER);
+                tilePrice.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+                tile.add(tilePrice, "North");
+
+                List<JComponent> tileComponents = new ArrayList<>();
+
+                JPanel tokenListPanel = new JPanel();
+                tokenListPanel.setBackground(Color.WHITE);
+                tokenListPanel.setLayout(new FlowLayout());
+                for(int k = 1; k <= 4; k++) {
+                    JPanel tokenPanel = new JPanel();
+                    tokenPanel.setBackground(Color.WHITE);
+                    tokenListPanel.add(tokenPanel);
+                    tileComponents.add(tokenPanel);
+                }
+                tile.add(tokenListPanel, "South");
+
+                JTextField tileName = new JTextField("");
+                tileName.setEditable(false);
+                tileName.setHorizontalAlignment(JTextField.CENTER);
+                tileName.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+                tile.add(tileName, "Center");
+
+                tileComponents.add(tilePrice);
+                tileComponents.add(tileName);
+
+                this.positionToTile.put(new Point2D.Double(i, j), tileComponents);
+
+                this.boardPanelHolder[i][j] = tile;
+                this.boardPanel.add(tile);
             }
         }
     }
@@ -72,62 +115,64 @@ public class DisplayPanel extends JPanel {
     }
 
     public void update(Map<String, TileData> boardData, Map<Integer, PlayerData> playerData) {
+        resetTokens();
         updateBoard(boardData);
         updatePlayerStats(playerData);
+        drawTokens();
+    }
+
+    private void resetTokens(){
+        for(int i = 1; i <= this.numOfPlayers; i++){
+            Point2D position = this.tokenPositions.get(i);
+            List<JComponent> tileComponent = this.positionToTile.get(position);
+            tileComponent.get(i - 1).setBackground(Color.WHITE);
+        }
+    }
+
+    private void drawTokens(){
+        for(int i = 1; i <= this.numOfPlayers; i++){
+            Point2D position = this.tokenPositions.get(i);
+            List<JComponent> tileComponent = this.positionToTile.get(position);
+            tileComponent.get(i - 1).setBackground(this.playerToColour.get(i));
+        }
     }
 
     private void updateBoard(Map<String, TileData> boardData){
-
-
         for(Map.Entry<String, TileData> city : boardData.entrySet()) {
             String key = city.getKey();
             TileData value = city.getValue();
 
-            int x = (int) value.position.getX();
-            int y = (int) value.position.getY();
+            Point2D position = translate1DTo2D(value.position);
 
-            JPanel tilePanel =  this.boardPanelHolder[y][x];
+            JPanel tile = this.boardPanelHolder[(int) position.getY()][(int) position.getX()];
+            tile.setBorder(BorderFactory.createLineBorder(Color.black));
 
-            tilePanel.removeAll();
-            tilePanel.setLayout(new BorderLayout());
-            tilePanel.setBorder(BorderFactory.createLineBorder(Color.black));
+            List<JComponent> tileComponents = this.positionToTile.get(position);
 
-            JTextField tileName = new JTextField(key);
-            tileName.setEditable(false);
+            JTextField tileName =  (JTextField) tileComponents.get(NAME);
+            tileName.setText(key);
             tileName.setBackground(this.blockToColour.get(value.block));
-            tileName.setHorizontalAlignment(JTextField.CENTER);
-            tileName.setBorder(javax.swing.BorderFactory.createEmptyBorder());
-            tilePanel.add(tileName, "Center");
 
-
-            JTextField tileTag;
+            JTextField tileTag = (JTextField) tileComponents.get(PRICE);
             if (value.rent != 0) {
-                tileTag = new JTextField("Rent: $" + String.valueOf(value.rent));
+                tileTag.setText("Rent: $" + value.rent);
                 if (value.owned) {
-                    tileTag.setForeground(this.playerToColour.get(this.usernameToBlock.get(value.owner)));
+                    tileTag.setForeground(this.playerToColour.get(this.usernameToNum.get(value.owner)));
                 } else if (value.price == 0){
                     tileTag.setForeground(Color.RED);
                 } else {
-                    tileTag = new JTextField("Price: $" + String.valueOf(value.price));
+                    tileTag.setText("Price: $" + value.price);
                     tileTag.setBackground(Color.WHITE);
                 }
-
-                tileTag.setEditable(false);
-                tileTag.setHorizontalAlignment(JTextField.CENTER);
-                tileTag.setBorder(javax.swing.BorderFactory.createEmptyBorder());
-                tilePanel.add(tileTag, "North");
             }
-
         }
-
     }
 
     private void updatePlayerStats(Map<Integer, PlayerData> playerData) {
         this.numOfPlayers = playerData.size();
-        this.tokenPositions = new HashMap<>();
 
         for (int i = 1; i <= this.numOfPlayers; i++) {
-            this.tokenPositions.put(i, translate1DTo2D(i));
+            this.tokenPositions.put(i, translate1DTo2D(playerData.get(i).location));
 
             JPanel statBox = this.playerPanelHolder[i - 1];
             statBox.removeAll();
@@ -137,19 +182,19 @@ public class DisplayPanel extends JPanel {
             PlayerData value = playerData.get(i);
 
             JTextField username = new JTextField(value.username);
-            if (this.usernameToBlock.size() < this.numOfPlayers) {
-                this.usernameToBlock.put(value.username, i);
+            if (this.usernameToNum.size() < this.numOfPlayers) {
+                this.usernameToNum.put(value.username, i);
             }
 
             username.setEditable(false);
             username.setForeground(playerToColour.get(i));
             username.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 
-            JTextField cash = new JTextField("Cash: $" + String.valueOf(value.cash));
+            JTextField cash = new JTextField("Cash: $" + value.cash);
             cash.setEditable(false);
             cash.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 
-            JTextField netWorth = new JTextField("Net Worth: $" + String.valueOf(value.netWorth));
+            JTextField netWorth = new JTextField("Net Worth: $" + value.netWorth);
             netWorth.setEditable(false);
             netWorth.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 
@@ -161,13 +206,13 @@ public class DisplayPanel extends JPanel {
 
     private Point2D translate1DTo2D(int index1D){
         if (index1D < 8) {
-            return new Point2D.Double(0, 7 - index1D);
+            return new Point2D.Double(7 - index1D, 0);
         } else if(index1D <  14) {
-            return new Point2D.Double(index1D % 7, 0);
+            return new Point2D.Double(0, index1D % 7 );
         } else if (index1D < 22) {
-            return new Point2D.Double(7, index1D - (7 * 2));
+            return new Point2D.Double(index1D - (7 * 2), 7);
         } else {
-            return new Point2D.Double(7 - (index1D % 7), 7);
+            return new Point2D.Double(7, 7 - (index1D % 7));
         }
     }
 

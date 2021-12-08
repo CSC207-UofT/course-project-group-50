@@ -11,29 +11,9 @@ import datatransfer.TileData;
 public class Board implements Serializable {
     public static final int BOARD_SIZE = 28;
     public List<Tile> tiles;
-    public Map<Integer, Point2D> index1DTo2D;
 
     public Board(){
         this.tiles = new ArrayList<>();
-        this.index1DTo2D = new HashMap<>();
-        translate1DTo2D();
-    }
-
-    // TODO: transfer this to Presenter and adjust BoardOutputBoundary
-    public void translate1DTo2D(){
-        int quarterSize = this.BOARD_SIZE / 4;
-        int boardSideLen = this.BOARD_SIZE / 4 + 1;
-        for(int i = 0; i < this.BOARD_SIZE; i++) {
-            if (i < boardSideLen) {
-                this.index1DTo2D.put(i, new Point2D.Double(0, quarterSize - i));
-            } else if(i <  boardSideLen * 2 - 2) {
-                this.index1DTo2D.put(i, new Point2D.Double(i % quarterSize, 0));
-            } else if (i < boardSideLen * 3 - 2) {
-                this.index1DTo2D.put(i, new Point2D.Double(quarterSize, i - (quarterSize * 2)));
-            } else {
-                this.index1DTo2D.put(i, new Point2D.Double(quarterSize - (i % quarterSize), quarterSize));
-            }
-        }
     }
 
     /**
@@ -63,7 +43,6 @@ public class Board implements Serializable {
         for (int i = 0; i < this.BOARD_SIZE; i++) {
             Tile t = this.tiles.get(i);
             String name = t.getName();
-            Point2D position = this.index1DTo2D.get(i);
             Boolean owned = t.isOwned();
 
             String owner;
@@ -78,12 +57,12 @@ public class Board implements Serializable {
                 int rent = ((City) t).getRent();
                 int block = ((City) t).getBlock();
 
-                dataTrnsfrObj = new TileData(name, position, owned, owner, price, rent, block);
+                dataTrnsfrObj = new TileData(name, i, owned, owner, price, rent, block);
             } else if (t instanceof PublicProperty) {
                 int rent = ((PublicProperty) t).getRent();
-                dataTrnsfrObj = new TileData(name, position, owned, owner, 0, rent, 8);
+                dataTrnsfrObj = new TileData(name, i, owned, owner, 0, rent, 8);
             } else {
-                dataTrnsfrObj = new TileData(name, position, owned, owner, 0, 0, 9);
+                dataTrnsfrObj = new TileData(name, i, owned, owner, 0, 0, 9);
             }
             boardData.put(name, dataTrnsfrObj);
         }
