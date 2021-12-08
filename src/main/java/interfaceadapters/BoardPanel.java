@@ -10,6 +10,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Builds the game board GUI from the information stored in a TileDTO object and token locations.
+ */
 public class BoardPanel extends JPanel {
     protected static final int BOARD_WIDTH = 700;
     protected static final int BOARD_HEIGHT = 700;
@@ -35,6 +38,10 @@ public class BoardPanel extends JPanel {
         buildTemplate();
     }
 
+    /**
+     * Sets up an empty GridLayout for the board, and creates references to empty JPanel elements within the grid that
+     * can be used to update the board GUI later.
+     */
     private void buildTemplate() {
         this.boardPanelHolder = new JPanel[8][8];
 
@@ -80,6 +87,14 @@ public class BoardPanel extends JPanel {
         }
     }
 
+    /**
+     * Refreshes the board panel of the GUI using information from the TileDTO and updated token positions.
+     * @param numOfPlayers the number of players in this game
+     * @param boardData a DTO containing an updated copy of board information, including prices, ownership, and rent
+     * @param playerToColour maps each player's number to their associated Color
+     * @param usernameToNum maps each username to an associated player number
+     * @param tokenTo1DPosition maps each token number to its position in the 1D array representing tile locations
+     */
     public void update(int numOfPlayers, Map<String, TileDTO> boardData, Map<Integer, Color> playerToColour,
                        Map<String, Integer> usernameToNum, Map<Integer, Integer> tokenTo1DPosition){
         if(tokenPositions.size() > 0){
@@ -91,12 +106,22 @@ public class BoardPanel extends JPanel {
         refreshBoard(boardData, playerToColour, usernameToNum);
     }
 
+    /**
+     * For each token that is currently on the board, adds it to BoardPanels record of current token Positions
+     * @param tokenTo1DPosition maps each token number to its position in the 1D array representing tile locations
+     */
     private void updateTokenPositions(Map<Integer, Integer> tokenTo1DPosition) {
         for(Map.Entry<Integer, Integer> token : tokenTo1DPosition.entrySet()){
             this.tokenPositions.put(token.getKey(), translate1DTo2D(token.getValue()));
         }
     }
 
+    /**
+     * Refreshes the board tile information, including price, ownership, and rent.
+     * @param boardData a DTO containing an updated copy of board information, including prices, ownership, and rent
+     * @param playerToColour maps each player's number to their associated Color
+     * @param usernameToNum maps each username to an associated player number
+     */
     private void refreshBoard(Map<String, TileDTO> boardData, Map<Integer, Color> playerToColour,
                               Map<String, Integer> usernameToNum){
         for(Map.Entry<String, TileDTO> city : boardData.entrySet()) {
@@ -129,6 +154,11 @@ public class BoardPanel extends JPanel {
         }
     }
 
+    /**
+     * Maps a 1D index representing tile position to a 2D coordinate the new GridLayout.
+     * @param index1D a 1D index representing tile position
+     * @return the 2D position of the tile in the GridLayout
+     */
     private Point2D translate1DTo2D(int index1D){
         if(index1D < 8) {
             return new Point2D.Double(7 - index1D, 0);
@@ -141,6 +171,9 @@ public class BoardPanel extends JPanel {
         }
     }
 
+    /**
+     * Initializes a map that takes each block number to a Colour optimized for colour-blind users.
+     */
     private void initializeBoardColours() {
         this.blockToColour = new HashMap<>();
         this.blockToColour.put(1, new Color(0, 158, 115));
@@ -154,6 +187,11 @@ public class BoardPanel extends JPanel {
         this.blockToColour.put(9, Color.WHITE);
     }
 
+    /**
+     * Paints over the current tokens, deleting them from the GUI to prepare for the next roll.
+     * @param numOfPlayers the number of players in this game
+     * @param tokenPositions maps each token's number to its 2D position in the GridLayout
+     */
     private void resetTokens(int numOfPlayers, Map<Integer, Point2D> tokenPositions){
         for(int i = 1; i <= numOfPlayers; i++){
             Point2D position = tokenPositions.get(i);
@@ -162,6 +200,12 @@ public class BoardPanel extends JPanel {
         }
     }
 
+    /**
+     * Paints the tokens on the board GUI at their updated locations.
+     * @param numOfPlayers the number of players in this game
+     * @param tokenPositions maps each token's number to its 2D position in the GridLayout
+     * @param playerToColour maps each player's number to their associated Color
+     */
     private void drawTokens(int numOfPlayers, Map<Integer, Point2D> tokenPositions,
                             Map<Integer, Color> playerToColour){
         for(int i = 1; i <= numOfPlayers; i++){

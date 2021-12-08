@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit;
 
 public class BoardManager implements Serializable {
 
-    public static final int BOARD_SIZE = 24;
+    public static final int BOARD_SIZE = 28;
     private final List<Player> players;
     private final Board board;
     private final BankManager bankManager;

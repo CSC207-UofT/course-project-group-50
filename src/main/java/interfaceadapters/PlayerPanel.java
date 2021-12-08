@@ -9,6 +9,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Builds the player stats section of the GUI from the information stored in a PlayerDTO object.
+ */
 public class PlayerPanel extends JPanel {
     protected static final int STATS_WIDTH = 700;
     protected static final int STATS_HEIGHT = 100;
@@ -30,6 +33,10 @@ public class PlayerPanel extends JPanel {
         buildTemplate();
     }
 
+    /**
+     * Sets up an empty FlowLayout for the board, and creates references to empty JPanel elements within the layout that
+     * can be used to update the stats panel later.
+     */
     private void buildTemplate(){
         JPanel[] playerPanelHolder = new JPanel[4];
 
@@ -57,6 +64,12 @@ public class PlayerPanel extends JPanel {
         }
     }
 
+    /**
+     * Refreshes the stats panel of the GUI using information from the PlayerDTO.
+     * @param numOfPlayers the number of players in this game
+     * @param playerData a DTO containing raw information on player name, number, cash, net worth, etc
+     * @param playerToColour maps each player's number to its associated Colour
+     */
     public void update(int numOfPlayers, Map<Integer, PlayerDTO> playerData, Map<Integer, Color> playerToColour) {
         for (int i = 1; i <= numOfPlayers; i++) {
             PlayerDTO value = playerData.get(i);
