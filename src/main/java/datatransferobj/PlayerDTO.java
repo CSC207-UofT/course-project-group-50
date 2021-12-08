@@ -1,6 +1,8 @@
 package datatransferobj;
 
-// Simple data transfer object for passing player information through layers according to Clean Architecture.
+/**
+ * Simple data transfer object for passing player information through layers according to Clean Architecture.
+ */
 public class PlayerDTO {
     public String username;
     public int number;

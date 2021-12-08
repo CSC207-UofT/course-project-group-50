@@ -1,6 +1,8 @@
 package datatransferobj;
 
-// Simple data transfer object for passing tile information through layers according to Clean Architecture.
+/**
+ * Simple data transfer object for passing tile information through layers according to Clean Architecture.
+ */
 public class TileDTO {
     public String name;
     public int position;
