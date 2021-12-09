@@ -25,6 +25,7 @@ Danny: Added missing documentations; fixed minor errors such as fixing variable 
 
 ### Significant pull requests
 - **Parth**: https://github.com/CSC207-UofT/course-project-group-50/pull/24
+    I worked on save and load and fixed a bug that was stopping them from working as desired, which allowed the game to be saved and loaded correctly. They play an important role in the program by giving the players the flexibility to stop and come back to the game later. I also added the quitGame method, which interacts with the player about saving the game when they quit. Lastly, to make sure that everything was being serialized correctly, I made the necessary instance variables of the class, GameController, being saved.
 
 - **Anis**: https://github.com/CSC207-UofT/course-project-group-50/pull/54
 
