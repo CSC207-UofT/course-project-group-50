@@ -5,6 +5,7 @@ import datatransferobj.TileDTO;
 import usecases.GameOutputBoundary;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
 import java.io.Serializable;
 import java.util.Map;
 
@@ -23,10 +24,7 @@ public class Presenter extends JFrame implements Serializable, GameOutputBoundar
 
         setVisible(true);
         setResizable(false);
-
-//        JButton quit = new JButton("Quit Game");
-//        getContentPane().add(quit);
-//        quit.addActionListener(this);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 
     /**
@@ -46,12 +44,4 @@ public class Presenter extends JFrame implements Serializable, GameOutputBoundar
         repaint();
     }
 
-//    @Override
-//    public void actionPerformed(ActionEvent e) {
-//        if (e.getActionCommand().equals("Quit Game")){
-//            // dispose of the thread
-//            dispose();
-//            this.gameSetUp.quitGame(this.gameSetUp.getGc());
-//        }
-//    }
 }
