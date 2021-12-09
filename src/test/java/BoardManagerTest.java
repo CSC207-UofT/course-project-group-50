@@ -30,7 +30,7 @@ public class BoardManagerTest {
         assertNotNull(testBoardManager.getPlayerFromUsername("player3"));
     }
 
-    @Test(timeout = 150)
+    @Test(timeout = 1000)
     public void testRollAndMove() {
         // we can just test location against 0 as we use a fresh game
         assertTrue(testBoardManager.rollAndMove(0) != 0);
