@@ -29,7 +29,7 @@ public class JailTileTest {
 
     @Before
     public void setUp() throws IOException {
-        GameSetup setup =  new GameSetup();
+        GameSetupTest setup =  new GameSetupTest();
         testTileManagerFacade = setup.getTileManagerFacade();
         testBoardManager = setup.getBoardManager();
         testJailTile = new JailTile();

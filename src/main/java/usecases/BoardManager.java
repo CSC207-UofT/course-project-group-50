@@ -93,6 +93,20 @@ public class BoardManager implements Serializable {
     }
 
     /**
+     * Get the number of player
+     * @param player The player's number who we want
+     * @return Return the number of player number i
+     */
+    public int getIntFromPlayer(Player player) {
+        for(int i = 0; i < this.players.size(); i++){
+            if(this.players.get(i).equals(player)){
+                return i;
+            }
+        }
+        return 0;
+    }
+
+    /**
      * @return Returns whether there is a player playing on this board who has won the game at the time
      * that this method was called.
      */
