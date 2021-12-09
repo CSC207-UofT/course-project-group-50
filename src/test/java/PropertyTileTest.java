@@ -11,7 +11,7 @@ public class PropertyTileTest {
     Player test_player;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         test_property = new PropertyTile("samraj's house", 200, 20);
         test_player = new Player("samrooj", new ConstantsInputBoundary());
     }

@@ -28,5 +28,4 @@ public class StartTileTest {
         int expected = 1200;
         assertEquals(expected, player1.getCash());
     }
-
 }

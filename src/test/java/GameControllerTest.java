@@ -27,7 +27,7 @@ public class GameControllerTest {
     @Before
     public void setUp() throws IOException {
         System.setOut(new PrintStream(outContent));
-        GameSetupTest setup =  new GameSetupTest();
+        GameSetupTest setup = new GameSetupTest();
         testGameController = setup.getGameController();
         testBoardManager = setup.getBoardManager();
         testPropertyManager = new PropertyManager();
@@ -42,7 +42,7 @@ public class GameControllerTest {
     @Test(timeout = 50)
     public void testNotifyUser() {
         testGameController.notifyUser("hey");
-        assertEquals("hey" + "\n" , outContent.toString());
+        assertEquals("hey" + "\n", outContent.toString());
     }
 
     @Test(timeout = 50)
@@ -54,16 +54,16 @@ public class GameControllerTest {
 
     @Test(timeout = 50)
     public void testGetBoardManager() {
-        assertEquals(testGameController.getBoardManager() , testBoardManager);
+        assertEquals(testGameController.getBoardManager(), testBoardManager);
     }
 
     @Test(timeout = 50)
     public void testGetOrder() {
-        assertEquals(testGameController.getOrder() , new ArrayList<>(Arrays.asList(1, 2)));
+        assertEquals(testGameController.getOrder(), new ArrayList<>(Arrays.asList(1, 2)));
     }
 
     @After
-    public void restoreStream(){
+    public void restoreStream() {
         System.setOut(originalOut);
     }
 }

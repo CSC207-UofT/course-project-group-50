@@ -85,5 +85,4 @@ public class PropertyManagerTest {
         propertyManager.buyProperty(player1, property1);
         assertEquals(propertyManager.stringToPropertyTile("Property 1"), property1);
     }
-
 }

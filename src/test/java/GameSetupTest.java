@@ -29,15 +29,15 @@ public class GameSetupTest {
         return testGameController;
     }
 
-    public GameController getGameController(){
+    public GameController getGameController() {
         return this.gc;
     }
 
-    public BoardManager getBoardManager(){
+    public BoardManager getBoardManager() {
         return gc.getBoardManager();
     }
 
-    public TileManagerFacade getTileManagerFacade(){
+    public TileManagerFacade getTileManagerFacade() {
         return new TileManagerFacade(gc, boardManager, new BankManager(), new PropertyManager());
     }
 

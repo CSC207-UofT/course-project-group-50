@@ -20,7 +20,7 @@ public class TileManagerUpgradePropertyTest {
 
     @Before
     public void setUp() throws IOException {
-        GameSetupTest setup =  new GameSetupTest();
+        GameSetupTest setup = new GameSetupTest();
         testGameController = setup.getGameController();
         testBoardManager = setup.getBoardManager();
         testPropertyManager = new PropertyManager();
@@ -34,8 +34,8 @@ public class TileManagerUpgradePropertyTest {
         testPropertyManager.buyProperty(player, city);
         testTileManagerUpgradeProperty.upgradeProperty(player, city);
         assertEquals(city.getRent(), 20);
-        assertEquals(city.getPrice(), (int) Math.round(100*1.4));
-        assertEquals(player.getCash(), 1000 - (int) Math.round(100*0.4));
+        assertEquals(city.getPrice(), (int) Math.round(100 * 1.4));
+        assertEquals(player.getCash(), 1000 - (int) Math.round(100 * 0.4));
         assertEquals(player.getNetWorth(), 1000);
         assertNotNull(city.getBuildings());
 

@@ -26,5 +26,4 @@ public class CardDeckTest {
         messages.add("Tax Fraud. You'll pay $100 to the bank.");
         assertTrue(messages.contains(drawnCard.getMessage()));
     }
-
 }

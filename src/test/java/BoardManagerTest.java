@@ -19,7 +19,7 @@ public class BoardManagerTest {
 
     @Before
     public void setUp() throws IOException {
-        GameSetupTest setup =  new GameSetupTest();
+        GameSetupTest setup = new GameSetupTest();
         testGameController = setup.getGameController();
         testBoardManager = setup.getBoardManager();
     }
@@ -43,16 +43,16 @@ public class BoardManagerTest {
 
     @Test(timeout = 50)
     public void testGetUsernameFromNumber() {
-        if(testGameController.getOrder().get(0) == 0){
+        if (testGameController.getOrder().get(0) == 0) {
             assertSame("player1", testBoardManager.getPlayerUsernameFromNumber(1));
-        }else{
+        } else {
             assertSame("player2", testBoardManager.getPlayerUsernameFromNumber(1));
         }
     }
 
     @Test(timeout = 50)
     public void testIsWinner() {
-       // just calls and returns BankManager method which is tested in BankManagerTest
+        // just calls and returns BankManager method which is tested in BankManagerTest
     }
 
     @Test(timeout = 50)

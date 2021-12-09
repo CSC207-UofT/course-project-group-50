@@ -18,7 +18,7 @@ public class TileManagerBuyPropertyTest {
 
     @Before
     public void setUp() throws IOException {
-        GameSetupTest setup =  new GameSetupTest();
+        GameSetupTest setup = new GameSetupTest();
         testGameController = setup.getGameController();
         testBoardManager = setup.getBoardManager();
         testPropertyManager = new PropertyManager();

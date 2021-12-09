@@ -56,7 +56,7 @@ public class TokenTest {
     @Test(timeout = 50)
     public void testMoveNegMod() {
         testToken.move(-3);
-        int expected = 25;
+        int expected = 25; // there are 28 tiles on the board
         assertEquals(expected, testToken.getLocation());
     }
 }

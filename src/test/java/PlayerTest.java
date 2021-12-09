@@ -9,7 +9,7 @@ public class PlayerTest {
     Player test_player;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         test_player = new Player("test_player", new ConstantsInputBoundary());
     }
 
