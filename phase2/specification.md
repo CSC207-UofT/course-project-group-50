@@ -7,7 +7,7 @@ For Phase 2, we focused on adding a GUI for a more immersive and intuitive gamin
 - Current location of each player's **token** on the game board
 - Color scheme **optimized for colour-blind individuals**
 
-![GUI](https://github.com/CSC207-UofT/course-project-group-50/blob/main/phase2/simplifiedMonopoly.png)
+<img src="https://github.com/CSC207-UofT/course-project-group-50/blob/main/phase2/simplifiedMonopoly.png" alt="GUI" width="200"/>
 
 ## Updated Specification
 Our goal was to create a simplified version of the popular real-estate board game, Monopoly. Players participate in a game with up to three other players.The objective of the game is to be the first player to reach a net worth of $5000. If all but one player has gone bankrupt, the remaining non-bankrupt player wins. The game will proceed according to the following specifications: 
