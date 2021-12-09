@@ -10,11 +10,12 @@ public class PropertyTile extends Tile implements Buyable, Serializable {
 
     /**
      * Initializes this PropertyTile.
-     * @param name the name of this PropertyTile.
+     *
+     * @param name  the name of this PropertyTile.
      * @param price the price of purchase for this PropertyTile.
-     * @param rent the price of rent of this PropertyTile.
+     * @param rent  the price of rent of this PropertyTile.
      */
-    public PropertyTile(String name, int price, int rent){
+    public PropertyTile(String name, int price, int rent) {
         super(name, false);
         this.price = price;
         this.rent = rent;
@@ -23,6 +24,7 @@ public class PropertyTile extends Tile implements Buyable, Serializable {
 
     /**
      * Returns the name of this PropertyTile.
+     *
      * @return the name of this PropertyTile.
      */
     public String getName() {
@@ -31,6 +33,7 @@ public class PropertyTile extends Tile implements Buyable, Serializable {
 
     /**
      * Returns the amount of rent of this PropertyTile.
+     *
      * @return the amount of rent of this PropertyTile.
      */
     public int getRent() {
@@ -39,6 +42,7 @@ public class PropertyTile extends Tile implements Buyable, Serializable {
 
     /**
      * Sets the rent of this PropertyTile to a new amount.
+     *
      * @param newRent new rent for this PropertyTile.
      */
     // we would call this when someone builds(upgrades) on a property
@@ -48,6 +52,7 @@ public class PropertyTile extends Tile implements Buyable, Serializable {
 
     /**
      * Returns the price of purchase for this PropertyTile.
+     *
      * @return the price of purchase for this PropertyTile.
      */
     public int getPrice() {
@@ -56,6 +61,7 @@ public class PropertyTile extends Tile implements Buyable, Serializable {
 
     /**
      * Sets the price of this PropertyTile to a new amount.
+     *
      * @param newPrice new price for this PropertyTile.
      */
     // this is used when someone upgrades so that the sell price is indicative of total price
@@ -65,17 +71,23 @@ public class PropertyTile extends Tile implements Buyable, Serializable {
 
     /**
      * Returns the sale price for this PropertyTile.
+     *
      * @return the sale price for this PropertyTile.
      */
     public int getSalePrice() {
         return (int) Math.round(price * 0.8);
     }
 
-    public void setOwner(Player owner){
-        if(owner != null){
+    /**
+     * Updates the owner and owned status of this property to match Player.
+     *
+     * @param owner the Player that owns this property.
+     */
+    public void setOwner(Player owner) {
+        if (owner != null) {
             this.owner = owner;
             this.owned = true;
-        }else{
+        } else {
             this.owner = null;
             this.owned = false;
         }
@@ -84,6 +96,7 @@ public class PropertyTile extends Tile implements Buyable, Serializable {
 
     /**
      * Returns the player who owns this PropertyTile.
+     *
      * @return the player who owns this PropertyTile.
      */
     public Player getOwner() {

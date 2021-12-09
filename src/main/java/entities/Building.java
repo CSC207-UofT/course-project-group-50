@@ -8,7 +8,8 @@ public class Building implements Serializable {
 
     /**
      * Creates a new Building.
-     * @param cost the cost of this building.
+     *
+     * @param cost         the cost of this building.
      * @param rentIncrease the amount of rent increased.
      */
     public Building(float cost, float rentIncrease) {
@@ -18,13 +19,19 @@ public class Building implements Serializable {
 
     /**
      * Returns the cost of this building.
+     *
      * @return The cost of the building.
      */
-    public float getCost() {return this.cost;}
+    public float getCost() {
+        return this.cost;
+    }
 
     /**
      * Returns the amount of rent increased.
+     *
      * @return the amount of rent increased.
      */
-    public float getRentIncrease() {return this.rentIncrease;}
+    public float getRentIncrease() {
+        return this.rentIncrease;
+    }
 }

@@ -1,4 +1,5 @@
 package interfaceadapters;
+
 import datatransferobj.PlayerDTO;
 import datatransferobj.TileDTO;
 import usecases.GameOutputBoundary;
@@ -30,7 +31,8 @@ public class Presenter extends JFrame implements Serializable, GameOutputBoundar
 
     /**
      * Refreshes the GUI by delegating to GamePanel
-     * @param boardData a DTO containing an updated copy of board information, including prices, ownership, and rent
+     *
+     * @param boardData  a DTO containing an updated copy of board information, including prices, ownership, and rent
      * @param playerData a DTO containing raw information on player name, number, cash, net worth, etc
      */
     @Override

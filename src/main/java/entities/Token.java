@@ -4,10 +4,9 @@ import java.io.Serializable;
 
 public class Token implements Movable, Serializable {
     private int location;
-    private String colour;
     private boolean inJail;
     private int jailDays;
-    private Player player;
+    private final Player player;
     private ConstantsOutputBoundary constOutBound;
 
     public Token(Player player, ConstantsOutputBoundary constOutBound) {
@@ -20,10 +19,14 @@ public class Token implements Movable, Serializable {
 
     public Token(String colour, Player player) {
         this.location = 0;
-        this.colour = colour;
         this.player = player;
     }
 
+    /**
+     * Moves the token forward on the board by tilesToAdvance tiles
+     *
+     * @param tilesToAdvance the number of tiles to move forward
+     */
     public void move(int tilesToAdvance) {
         int a = location + tilesToAdvance;
         int b = constOutBound.getBoardSize();
@@ -34,10 +37,6 @@ public class Token implements Movable, Serializable {
 
     public int getLocation() {
         return this.location;
-    }
-
-    public String getColour() {
-        return this.colour;
     }
 
     public boolean isInJail() {

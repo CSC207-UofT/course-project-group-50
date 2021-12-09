@@ -20,7 +20,7 @@ public class Card implements Serializable {
         return message;
     }
 
-    public String toString () {
+    public String toString() {
         return message;
     }
 }
