@@ -20,7 +20,7 @@ public class TileManagerUpgradePropertyTest {
 
     @Before
     public void setUp() throws IOException {
-        GameSetup setup =  new GameSetup();
+        GameSetupTest setup =  new GameSetupTest();
         testGameController = setup.getGameController();
         testBoardManager = setup.getBoardManager();
         testPropertyManager = new PropertyManager();

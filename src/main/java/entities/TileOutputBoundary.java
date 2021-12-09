@@ -25,6 +25,10 @@ public interface TileOutputBoundary {
 
     boolean buyProperty(Player player, PropertyTile property);
 
+    void cardZero(Player player);
+
+    void cardOne(Player player);
+
     void cardTwo(Player player);
 
     void cardThree(Player player);
@@ -34,5 +38,6 @@ public interface TileOutputBoundary {
     void passStart(Player player);
 
     void upgradeProperty(Player player, City city);
+
 
 }

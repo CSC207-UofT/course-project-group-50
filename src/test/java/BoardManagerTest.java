@@ -19,7 +19,7 @@ public class BoardManagerTest {
 
     @Before
     public void setUp() throws IOException {
-        GameSetup setup =  new GameSetup();
+        GameSetupTest setup =  new GameSetupTest();
         testGameController = setup.getGameController();
         testBoardManager = setup.getBoardManager();
     }
@@ -39,6 +39,11 @@ public class BoardManagerTest {
     @Test(timeout = 50)
     public void testInteractWithTile() {
         // no need to test as this just gets location and calls interact, test the 2 methods used, and we are good
+    }
+
+    @Test(timeout = 50)
+    public void testGetIntFromPlayer() {
+        assertEquals(0, testBoardManager.getIntFromPlayer(testBoardManager.getPlayerFromUsername("player1")));
     }
 
     @Test(timeout = 50)
