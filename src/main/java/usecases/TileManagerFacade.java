@@ -30,12 +30,22 @@ public class TileManagerFacade implements TileOutputBoundary {
         new TileManagerPayRent(bankManager, outBound, propertyManager).payRent(player1, property);
     }
 
-    public void upgradeProperty(Player player, City city){
+    public void upgradeProperty(Player player, City city) {
         new TileManagerUpgradeProperty(outBound).upgradeProperty(player, city);
     }
 
     public boolean buyProperty(Player player, PropertyTile property) {
         return new TileManagerBuyProperty(propertyManager, bankManager).buyProperty(player, property);
+    }
+
+    public void cardZero(Player player){
+        player.getToken().move(1);
+        boardManager.interactWithTile(boardManager.getIntFromPlayer(player));
+    }
+
+    public void cardOne(Player player){
+        player.getToken().move(-1);
+        boardManager.interactWithTile(boardManager.getIntFromPlayer(player));
     }
 
     public void cardTwo(Player player) {

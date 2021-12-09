@@ -9,6 +9,8 @@ import usecases.BankManager;
 import usecases.BoardManager;
 import usecases.ConstantsInputBoundary;
 
+import java.io.IOException;
+
 import static org.junit.Assert.*;
 
 public class BoardManagerTest {
@@ -16,8 +18,8 @@ public class BoardManagerTest {
     BoardManager testBoardManager;
 
     @Before
-    public void setUp() {
-        GameSetup setup =  new GameSetup();
+    public void setUp() throws IOException {
+        GameSetupTest setup =  new GameSetupTest();
         testGameController = setup.getGameController();
         testBoardManager = setup.getBoardManager();
     }
@@ -28,15 +30,20 @@ public class BoardManagerTest {
         assertNotNull(testBoardManager.getPlayerFromUsername("player3"));
     }
 
-    @Test(timeout = 50)
+    @Test(timeout = 1000)
     public void testRollAndMove() {
         // we can just test location against 0 as we use a fresh game
-        assertTrue(testBoardManager.rollAndMove(1) != 0);
+        assertTrue(testBoardManager.rollAndMove(0) != 0);
     }
 
     @Test(timeout = 50)
     public void testInteractWithTile() {
         // no need to test as this just gets location and calls interact, test the 2 methods used, and we are good
+    }
+
+    @Test(timeout = 50)
+    public void testGetIntFromPlayer() {
+        assertEquals(0, testBoardManager.getIntFromPlayer(testBoardManager.getPlayerFromUsername("player1")));
     }
 
     @Test(timeout = 50)

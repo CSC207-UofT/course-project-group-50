@@ -21,10 +21,15 @@ public class TileManagerAuction {
         this.boardManager = boardManager;
     }
 
+
+    /**
+     * Directs the process of auctioning a property.
+     * @param player1 the Player that landed on the auction tile.
+     */
     public void auction(Player player1) {
         Player player2 = auctionPlayerHelper(player1);
-        if(player2 != null) {
-            ArrayList<Object> offer = auctionOfferHelper();
+        if (player2 != null) {
+            ArrayList<Object> offer = auctionOfferHelper(player1, player2);
             PropertyTile offeredProperty = (PropertyTile) offer.get(0);
             PropertyTile tradeProperty = (PropertyTile) offer.get(1);
             int additionalCompensation = (int) offer.get(2);
@@ -32,9 +37,9 @@ public class TileManagerAuction {
                     " Do you accept the trade offer from " + player1.getUsername() + " of " + offeredProperty.getName() +
                     " and " + additionalCompensation + " in exchange for " + tradeProperty.getName() +
                     "? Please enter Y / N.", new ArrayList<>(Arrays.asList("y", "n")));
-            if(response.equalsIgnoreCase("N")){
+            if (response.equalsIgnoreCase("N")) {
                 this.outBound.notifyUser("Trade offer has been denied.");
-            }else{ // trade accepted
+            } else { // trade accepted
                 this.outBound.notifyUser("Trade offer has been accepted!");
                 propertyManager.swap_properties(offeredProperty, tradeProperty);
                 bankManager.subtractMoney(player1, additionalCompensation);
@@ -72,23 +77,21 @@ public class TileManagerAuction {
             else if (player1.getUsername().equals(player2.getUsername())) {
                 this.outBound.notifyUser("You cannot choose yourself!");
                 auctionPlayerHelper(player1);
-            }
-            else {
+            } else {
                 return player2;
             }
         }
         return null;
     }
 
-    private ArrayList<Object> auctionOfferHelper(){
+
+    private ArrayList<Object> auctionOfferHelper(Player player1, Player player2) {
         PropertyTile offeredProperty = null;
         PropertyTile tradeProperty = null;
-        while(offeredProperty == null | tradeProperty == null){
-            String offeredPropertyString = this.outBound.getAnyResponse(
-                    "Enter name of property you would like to offer in the trade");
+        while (offeredProperty == null | tradeProperty == null) {
+            String offeredPropertyString = offeredPropertyOwnershipHelper(player1);
             offeredProperty = propertyManager.stringToPropertyTile(offeredPropertyString);
-            String tradePropertyString = this.outBound.getAnyResponse(
-                    "Enter name of property you would like to receive in the trade");
+            String tradePropertyString = tradePropertyOwnershipHelper(player2);
             tradeProperty = propertyManager.stringToPropertyTile(tradePropertyString);
         }
         int additionalCompensation = Integer.parseInt(this.outBound.getAnyResponse("How much do you offer " +
@@ -96,4 +99,31 @@ public class TileManagerAuction {
         return new ArrayList<>(Arrays.asList(offeredProperty, tradeProperty, additionalCompensation));
     }
 
+    private String offeredPropertyOwnershipHelper(Player player1) {
+        String s = this.outBound.getAnyResponse(
+                "Enter name of property you would like to offer in the trade.\n Your properties:" +
+                            propertyManager.propertiesOwnedByPlayer(player1));
+        if (propertyManager.propertiesOwnedByPlayer(player1).contains(s)) {
+            return s;
+        } else {
+            this.outBound.notifyUser("You do not own this property. Please try again.");
+            offeredPropertyOwnershipHelper(player1);
+        }
+        return s;
+    }
+
+    private String tradePropertyOwnershipHelper(Player player2) {
+        String s = this.outBound.getAnyResponse(
+                "Enter name of property you would like to receive in the trade.\n" + player2.getUsername() +
+                        "'s properties:" + propertyManager.propertiesOwnedByPlayer(player2));
+        if (propertyManager.propertiesOwnedByPlayer(player2).contains(s)) {
+            return s;
+        } else {
+            this.outBound.notifyUser(player2.getUsername() + " does not own this property. Please try again.");
+            tradePropertyOwnershipHelper(player2);
+        }
+        return s;
+
+    }
 }
+

@@ -8,6 +8,7 @@ public class CmdLineUI implements interfaceadapters.UI, Serializable {
 
     /**
      * Start the game and give the user various options at the menu like start, load, and quit
+     *
      * @return Input from the user
      */
     public String getStartInfo() {
@@ -20,7 +21,7 @@ public class CmdLineUI implements interfaceadapters.UI, Serializable {
         System.out.println("Note that you can only quit the game in between of rounds to ensure that the loaded game" +
                 " starts from the next round.");
         String input;
-        do{
+        do {
             System.out.println("Enter S to start the game, load to load an existing game, and Q to quit.");
             input = scanner.nextLine();
         } while (!input.equalsIgnoreCase("S") &&
@@ -32,6 +33,7 @@ public class CmdLineUI implements interfaceadapters.UI, Serializable {
 
     /**
      * Interact with the user to get the number of players and the usernames
+     *
      * @return List containing the usernames of the players
      */
     public List<String> getPlayerNames() {
@@ -42,7 +44,7 @@ public class CmdLineUI implements interfaceadapters.UI, Serializable {
         List<String> usernames = new ArrayList<>();
 
         System.out.println("How many players do you want? Please pick a number from 2-4 (inclusive).");
-        while(true) {
+        while (true) {
             input = scanner.nextLine();
             // \d+ is the regex for any integer
             if (input.matches("\\d+") && Integer.parseInt(input) >= 2 && Integer.parseInt(input) <= 4) {
@@ -77,19 +79,15 @@ public class CmdLineUI implements interfaceadapters.UI, Serializable {
 
     public String getInput(List<String> messages, List<String> acceptedResponses) {
         String input;
-        do{
+        do {
             // Display all messages to the user
-            for(String m : messages) {
+            for (String m : messages) {
                 System.out.println(m);
             }
             // Get the users input
             input = scanner.nextLine();
             // by the preconditions of this method, each element of acceptedResponses is lowercase
-        } while(!acceptedResponses.contains(input.toLowerCase()));
+        } while (!acceptedResponses.contains(input.toLowerCase()));
         return input;
     }
-
-
-
-
 }
