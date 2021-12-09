@@ -35,8 +35,11 @@ Danny: Added missing documentations; fixed minor errors such as fixing variable 
 
     This pull request introduced significant changes to the way we formatted and updated the GUI, allowing for a more inuitive, informative representation of the board and player stats. By introducing an output boundary interface and data transfer objects, this pull request also resolved issues with refreshing the GUI after each turn.
 
-- **Steve**: https://github.com/CSC207-UofT/course-project-group-50/pull/72
-
+- **Steve**: https://github.com/CSC207-UofT/course-project-group-50/pull/85 https://github.com/CSC207-UofT/course-project-group-50/pull/55
+    
+    This pull request was important to me as this was my very first attempt at creating the GUI of the program. Although
+    it hasn't made it through our final version, my intuition for the GUI has improved and was able to help creating the GUI.
+    Also, discussing managers was not my key strengths but with this merge, I was able to know what the managers tasks are and what layers it communicates to.
 - **Danny**: https://github.com/CSC207-UofT/course-project-group-50/pull/14
 
 - **Samraj**: https://github.com/CSC207-UofT/course-project-group-50/commit/413fc05a2878c00182fbf429a63616d0004adf98 and https://github.com/CSC207-UofT/course-project-group-50/pull/58
