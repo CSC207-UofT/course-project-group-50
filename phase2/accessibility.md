@@ -1,7 +1,7 @@
 # Accessibility Report
-#### 1. For each Principle of Universal Design, write 2-5 sentences or point form notes explaining which features your program adhere to that principle. If you do not have any such features you can either:
-##### (a) Describe features that you could implement in the future that would adhere to principle or
-##### (b) Explain why the principle does not apply to a program like yours
+### 1. For each Principle of Universal Design, write 2-5 sentences or point form notes explaining which features your program adhere to that principle. If you do not have any such features you can either:
+#### (a) Describe features that you could implement in the future that would adhere to principle or
+#### (b) Explain why the principle does not apply to a program like yours
 
 ##### Principle 1: Equitable Use
 - In order to make the design useful and marketable to people with diverse abilities, we selected a colour scheme to optimize visibility and contrast for colour-blind individuals. 
@@ -30,9 +30,11 @@ If we continue developing this program and produce a marketable app, we should e
 
 ##### Principle 7: Size and Space for Approach and Use
 - Since our game has no real-world physical aspect (ie. no controller), this design principle doesn’t directly apply to our project. However, since our current design requires up to four users to interact with a single command-line interface, it’s possible our design doesn’t currently “provide a clear line of sight to important elements” for up to four users crowded around a computer. In the future, we could create a login system allowing users to participate in a multiplayer game from their own devices.
+
  
-#### 2. Write a paragraph about who you would market your program towards, if you were to sell or license your program to customers. This could be a specific category such as "students" or more vague, such as "people who like games". Try to give a bit more detail along with the category.
+### 2. Write a paragraph about who you would market your program towards, if you were to sell or license your program to customers. This could be a specific category such as "students" or more vague, such as "people who like games". Try to give a bit more detail along with the category.
 If we were to sell or license our program, we should market it broadly towards people who like games. In particular, we might be interested in marketing towards fans of the original Monopoly board game who are interested in a computer-based version of this classic game. Since our game is a simplified version of Monopoly, without the complex rules, special conditions, and exceptions of the original game, we could market it towards ameteur Monopoly players and, specifically, users who want to experience the fun of Monopoly without the hassle of overly complicated rules, which can be difficult to grasp.
+
  
-#### 3. Write a paragraph about whether or not your program is less likely to be used by certain demographics. For example, a program that converts txt files to files that can be printed by a braille printer are less likely to be used by people who do not read braille.
+### 3. Write a paragraph about whether or not your program is less likely to be used by certain demographics. For example, a program that converts txt files to files that can be printed by a braille printer are less likely to be used by people who do not read braille.
 Our program is less likely to be used by older individuals, who are generally less familiar with technology. Therefore, this demographic is less likely to successfully find and download our game. This is unfortunate, since classic Monopoly has been around since the 1930s and it’s likely that this demographic grew up playing the board game and would be enthusiastic about our similar game. To avoid missing out on this demographic entirely, we should consider devoting additional marketing efforts towards older individuals who are more tech-savvy. 

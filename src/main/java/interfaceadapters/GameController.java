@@ -1,6 +1,5 @@
 package interfaceadapters;
 
-import entities.Board;
 import usecases.BankManager;
 import usecases.BoardManager;
 import usecases.UseCaseOutputBoundary;
@@ -19,7 +18,7 @@ public class GameController implements Serializable, UseCaseOutputBoundary {
     private final String filepath;
     private final int netWorthGoal;
     private final List<String> usernames;
-    private ArrayList<Integer> order;
+    private final ArrayList<Integer> order;
     private final UI ui;
     private boolean isRunning;
 
@@ -36,14 +35,14 @@ public class GameController implements Serializable, UseCaseOutputBoundary {
     }
 
     public void runPlayerSetUp() {
-        for(String s : usernames) {
+        for (String s : usernames) {
             boardManager.addPlayer(s);
         }
     }
 
     public void runGame() throws InterruptedException {
         ui.printMessage("The playing order is:");
-        for(int i : order) {
+        for (int i : order) {
             ui.printMessage(boardManager.getPlayerUsernameFromNumber(i));
         }
         ui.printMessage("Let the game begin! \n");
@@ -56,12 +55,14 @@ public class GameController implements Serializable, UseCaseOutputBoundary {
             int guiTokenIndex = 1;
             for (int i : order) {
                 // Check if the player whose turn it is can legally continue to play the game
-                if(boardManager.canPlay(usernames.get(i))) {
+                if (boardManager.canPlay(usernames.get(i))) {
                     runTurn(i, guiTokenIndex);
                     guiTokenIndex++;
                 }
                 // Checks if the game is running or not, if not then the game loop ends
-                if(!isRunning) {return;}
+                if (!isRunning) {
+                    return;
+                }
             }
             boardManager.printCurrentStatistics(order);
         }
@@ -71,7 +72,8 @@ public class GameController implements Serializable, UseCaseOutputBoundary {
 
     /**
      * Run the current turn
-     * @param i The index of the player whose turn it is
+     *
+     * @param i             The index of the player whose turn it is
      * @param guiTokenIndex The index of the token on the gui that is meant to move
      * @throws InterruptedException If the current thread is interrupted
      */
@@ -101,13 +103,17 @@ public class GameController implements Serializable, UseCaseOutputBoundary {
         return ui.getInput(messages, acceptedResponses);
     }
 
-    public List<String> getUsernames(){
+    public List<String> getUsernames() {
         return usernames;
     }
 
-    public BoardManager getBoardManager(){return boardManager;}
+    public BoardManager getBoardManager() {
+        return boardManager;
+    }
 
-    public ArrayList<Integer> getOrder(){return order;}
+    public ArrayList<Integer> getOrder() {
+        return order;
+    }
 
     public void setRunning(boolean running) {
         this.isRunning = running;

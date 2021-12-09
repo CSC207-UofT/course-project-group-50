@@ -42,6 +42,7 @@ public class BoardManager implements Serializable {
 
     /**
      * Roll for player whose turn it is
+     *
      * @param i Index representing the player whose turn it is
      * @return The tile that the player's token lands on (after they rolled)
      */
@@ -50,17 +51,17 @@ public class BoardManager implements Serializable {
         Token currToken = currPlayer.getToken();
         // this is necessary so that the player does not roll if they are in jail
         int currRoll = 0;
-        if(!currToken.isInJail()) {
+        if (!currToken.isInJail()) {
             currRoll = currPlayer.roll();
         }
-        this.outBound.notifyUser(currPlayer.getUsername() +  ", you just rolled a " + currRoll + "!");
+        this.outBound.notifyUser(currPlayer.getUsername() + ", you just rolled a " + currRoll + "!");
 
         int prevLoc = currToken.getLocation();
         currToken.move(currRoll);
         // If we pass start, give the player $200
-        if(prevLoc + currRoll > BOARD_SIZE) {
+        if (prevLoc + currRoll > BOARD_SIZE) {
             this.bankManager.passStart(currPlayer);
-            this.outBound.notifyUser(currPlayer.getUsername() +  ", you were given $200 for passing Start!");
+            this.outBound.notifyUser(currPlayer.getUsername() + ", you were given $200 for passing Start!");
         }
         printBoard();
         return currToken.getLocation();
@@ -69,6 +70,7 @@ public class BoardManager implements Serializable {
     /**
      * Move the player whose turn it is to the correct tile and handle the interaction between the player and the
      * tile
+     *
      * @param i Index representing the player whose turn it is
      */
     public void interactWithTile(int i) {
@@ -82,6 +84,7 @@ public class BoardManager implements Serializable {
 
     /**
      * Get the username of player number i
+     *
      * @param i The number of the player whose username we wish to get
      * @return Return the username of player number i
      */
@@ -116,8 +119,8 @@ public class BoardManager implements Serializable {
      */
     public boolean onlyOneNonBankrupt() {
         int numNonBankrupt = 0;
-        for(Player player: players){
-            if(bankManager.checkBankruptcy(player)){
+        for (Player player : players) {
+            if (bankManager.checkBankruptcy(player)) {
                 numNonBankrupt += 1;
             }
         }
@@ -126,6 +129,7 @@ public class BoardManager implements Serializable {
 
     /**
      * Determine whether the player can legally play in this turn
+     *
      * @param username The username of the player we wish to check
      * @return Whether player can legally play in this turn
      */
@@ -140,11 +144,12 @@ public class BoardManager implements Serializable {
 
     /**
      * Get the Player object corresponding to a given username
+     *
      * @return The Player object corresponding to a given username, or null if none exist.
      */
     public Player getPlayerFromUsername(String username) {
-        for(Player player : players) {
-            if(player.getUsername().equals(username)) {
+        for (Player player : players) {
+            if (player.getUsername().equals(username)) {
                 return player;
             }
         }
@@ -153,12 +158,13 @@ public class BoardManager implements Serializable {
 
     /**
      * Print the current statistics of the game
+     *
      * @param order The list of integers corresponding to the order that the statistics will be printed in.
      * @throws InterruptedException If the current thread is interrupted
      */
     public void printCurrentStatistics(List<Integer> order) throws InterruptedException {
         outBound.notifyUser("The statistics for this round are: ");
-        for(int i: order) {
+        for (int i : order) {
             Player player = players.get(i);
             int cash = player.getCash();
             int netWorth = player.getNetWorth();
@@ -170,21 +176,22 @@ public class BoardManager implements Serializable {
 
     /**
      * Process the winner of the game
+     *
      * @param netWorthGoal The target net worth for this game
      * @throws NoWinnerException If there is no winner in this game
      */
     public void processWinner(int netWorthGoal) {
         // First check if there is an explicit winner
-        for(Player player: players) {
-            if(bankManager.netWorthGreater(player, netWorthGoal)) {
+        for (Player player : players) {
+            if (bankManager.netWorthGreater(player, netWorthGoal)) {
                 processWinnerHelper(player);
             }
         }
         // If we reach this point in the code, there is no explicit winner, so check winners by default.
         // Note that there can only be one winner by default, so if there is one person that isn't bankrupt,
         // they must be the winner (since, by the preconditions, this method can only be called if there is a winner)
-        for(Player player: players) {
-            if(!bankManager.checkBankruptcy(player)) {
+        for (Player player : players) {
+            if (!bankManager.checkBankruptcy(player)) {
                 processWinnerHelper(player);
                 return;
             }
@@ -195,6 +202,7 @@ public class BoardManager implements Serializable {
 
     /**
      * Helper method for processWinner that reports the winner to the user
+     *
      * @param player The winner of the game
      */
     private void processWinnerHelper(Player player) {
@@ -203,7 +211,11 @@ public class BoardManager implements Serializable {
         outBound.notifyUser("Thanks for playing!");
     }
 
-    private void printBoard(){
+    /**
+     * Passes an unformatted copy of the current board and player states through GameOutputBoundary to
+     * the interface adapters layer to be formatted by the Presenter
+     */
+    private void printBoard() {
         Map<String, TileDTO> boardData;
         boardData = this.board.getBoardDataTransferObj();
         Map<Integer, PlayerDTO> playerData;
@@ -211,11 +223,16 @@ public class BoardManager implements Serializable {
         this.gameOutput.update(boardData, playerData);
     }
 
-    private Map<Integer, PlayerDTO> getPlayerDataTransferObj(){
+    /**
+     * Packages the key information about each player into a data transfer object
+     *
+     * @return A DTO with the name, number, cash, net worth, and location of each player
+     */
+    private Map<Integer, PlayerDTO> getPlayerDataTransferObj() {
         Map<Integer, PlayerDTO> playerData = new HashMap<>();
         PlayerDTO dto;
 
-        for(int i = 0; i < this.players.size(); i++) {
+        for (int i = 0; i < this.players.size(); i++) {
             String name = this.players.get(i).getUsername();
             int number = i + 1;
             int cash = this.players.get(i).getCash();

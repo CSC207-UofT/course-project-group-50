@@ -11,14 +11,15 @@ public class Director {
 
     /**
      * Directs builder to create a regular Monopoly board, ie. the default themes and cities
+     *
      * @param builder the Builder object that will assemble the board
      */
     public void makeRegularBoard(BoardBuilder builder) {
         builder.reset();
         builder.createTiles(Arrays.asList(
                 new StartTile(),
-                new City("Rio", 100,10,1),
-                new City("Delhi", 100, 10,1),
+                new City("Rio", 100, 10, 1),
+                new City("Delhi", 100, 10, 1),
                 new City("Bangkok", 150, 15, 2),
                 new PublicProperty("Harbour", 100, 35),
                 new City("Cairo", 150, 15, 2),
@@ -27,7 +28,7 @@ public class Director {
                 new City("Jakarta", 180, 20, 3),
                 new City("Berlin", 180, 20, 3),
                 new City("Moscow", 200, 30, 4),
-                new PublicProperty("Railway",150, 35),
+                new PublicProperty("Railway", 150, 35),
                 new City("Toronto", 200, 30, 4),
                 new City("Seoul", 200, 30, 4),
                 new JailTile(),
@@ -35,8 +36,8 @@ public class Director {
                 new City("Riyadh", 250, 35, 5),
                 new City("Sydney", 250, 35, 5),
                 new PublicProperty("Electricity", 200, 70),
-                new City("Beijing",300,40, 6),
-                new City("Dubai",300,40,6),
+                new City("Beijing", 300, 40, 6),
+                new City("Dubai", 300, 40, 6),
                 new AuctionTile(),
                 new City("Paris", 300, 40, 6),
                 new City("Hong Kong", 350, 50, 7),

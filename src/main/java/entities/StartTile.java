@@ -3,11 +3,14 @@ package entities;
 import java.io.Serializable;
 
 public class StartTile extends Tile implements Serializable {
-    public StartTile(){super("Start", false);}
+    public StartTile() {
+        super("Start", false);
+    }
 
     /**
      * Interact with the tile
-     * @param token The token object that is interacting with the tile
+     *
+     * @param token    The token object that is interacting with the tile
      * @param outBound TileOutputBoundary object which allows the tile to interact with the player while following
      *                 clean architecture
      */
