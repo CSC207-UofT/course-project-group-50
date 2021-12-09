@@ -49,6 +49,8 @@ public class PropertyManager implements Serializable {
     public void swap_properties(PropertyTile property1, PropertyTile property2) {
         Player property1OriginalOwner = property1.getOwner();
         Player property2OriginalOwner = property2.getOwner();
+        property1.setOwner(property2OriginalOwner);
+        property2.setOwner(property1OriginalOwner);
         this.propertiesOwned.replace(property1, property1OriginalOwner, property2OriginalOwner);
         this.propertiesOwned.replace(property2, property2OriginalOwner, property1OriginalOwner);
     }

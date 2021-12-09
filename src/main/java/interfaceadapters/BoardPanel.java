@@ -151,6 +151,7 @@ public class BoardPanel extends JPanel {
                     tileTag.setForeground(Color.RED);
                 } else {
                     tileTag.setText("Price: $" + value.price);
+                    tileTag.setForeground(Color.BLACK);
                     tileTag.setBackground(Color.WHITE);
                 }
             }
