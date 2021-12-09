@@ -9,11 +9,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class GameSetup {
+public class GameSetupTest {
     private GameController gc;
     private BoardManager boardManager;
 
-    public GameSetup() throws IOException {
+    public GameSetupTest() throws IOException {
         this.gc = testGameController();
         this.boardManager = gc.getBoardManager();
     }

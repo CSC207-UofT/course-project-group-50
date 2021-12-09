@@ -23,7 +23,7 @@ public class PlayerPanel extends JPanel {
     private final Map<Integer, List<JComponent>> playerToStats;
 
 
-    public PlayerPanel(){
+    public PlayerPanel() {
         setLayout(new FlowLayout());
         setBackground(Color.white);
         setPreferredSize(new Dimension(STATS_WIDTH, STATS_HEIGHT));
@@ -37,7 +37,7 @@ public class PlayerPanel extends JPanel {
      * Sets up an empty FlowLayout for the board, and creates references to empty JPanel elements within the layout that
      * can be used to update the stats panel later.
      */
-    private void buildTemplate(){
+    private void buildTemplate() {
         JPanel[] playerPanelHolder = new JPanel[4];
 
         for (int i = 0; i < 4; i++) {
@@ -48,7 +48,7 @@ public class PlayerPanel extends JPanel {
             List<JComponent> statsComponents = new ArrayList<>();
 
             String[] textPosition = new String[]{"North", "Center", "South"};
-            for(int j = 0; j < 3; j++){
+            for (int j = 0; j < 3; j++) {
                 JTextField text = new JTextField("");
                 text.setEditable(false);
                 text.setBorder(javax.swing.BorderFactory.createEmptyBorder());
@@ -66,8 +66,9 @@ public class PlayerPanel extends JPanel {
 
     /**
      * Refreshes the stats panel of the GUI using information from the PlayerDTO.
-     * @param numOfPlayers the number of players in this game
-     * @param playerData a DTO containing raw information on player name, number, cash, net worth, etc
+     *
+     * @param numOfPlayers   the number of players in this game
+     * @param playerData     a DTO containing raw information on player name, number, cash, net worth, etc
      * @param playerToColour maps each player's number to its associated Colour
      */
     public void update(int numOfPlayers, Map<Integer, PlayerDTO> playerData, Map<Integer, Color> playerToColour) {

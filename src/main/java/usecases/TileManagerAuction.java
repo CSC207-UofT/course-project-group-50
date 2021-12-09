@@ -21,8 +21,10 @@ public class TileManagerAuction {
         this.boardManager = boardManager;
     }
 
-    /** Initiate an auction state when one of the players land on the AuctionTile.
-     * @param player1 The player initiating the auction.
+
+    /**
+     * Directs the process of auctioning a property.
+     * @param player1 the Player that landed on the auction tile.
      */
     public void auction(Player player1) {
         Player player2 = auctionPlayerHelper(player1);
@@ -81,6 +83,7 @@ public class TileManagerAuction {
         }
         return null;
     }
+
 
     private ArrayList<Object> auctionOfferHelper(Player player1, Player player2) {
         PropertyTile offeredProperty = null;

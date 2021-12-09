@@ -31,7 +31,7 @@ public class GameControllerTest {
     @Before
     public void setUp() throws IOException {
         System.setOut(new PrintStream(outContent));
-        GameSetup setup =  new GameSetup();
+        GameSetupTest setup =  new GameSetupTest();
         testGameController = setup.getGameController();
         testBoardManager = setup.getBoardManager();
         testPropertyManager = new PropertyManager();

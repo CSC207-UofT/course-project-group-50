@@ -7,38 +7,42 @@ import java.io.Serializable;
 import java.util.*;
 
 public class PropertyManager implements Serializable {
-    private HashMap<PropertyTile, Player> propertiesOwned;
+    private final HashMap<PropertyTile, Player> propertiesOwned;
 
-    public PropertyManager(){
+    public PropertyManager() {
         this.propertiesOwned = new HashMap<>();
     }
 
-    public void buyProperty(Player buyer, PropertyTile property){
+    public void buyProperty(Player buyer, PropertyTile property) {
         propertiesOwned.put(property, buyer);
         property.setOwner(buyer);
     }
 
     // we don't need the seller argument here guys
-    public void sellProperty(PropertyTile property){
+    public void sellProperty(PropertyTile property) {
         propertiesOwned.remove(property);
         property.setOwner(null);
     }
 
-    /** Returns a list of strings of properties that is owned by a player.
+    /**
+     * Returns a list of strings of properties that is owned by a player.
+     *
      * @param player A Monopoly player.
      * @return A list of properties that is owned by the player.
      */
-    public List<String> propertiesOwnedByPlayer(Player player){
+    public List<String> propertiesOwnedByPlayer(Player player) {
         ArrayList<String> owned = new ArrayList<>();
-        for(PropertyTile property: this.propertiesOwned.keySet()){
-            if(property.getOwner() == player){
+        for (PropertyTile property : this.propertiesOwned.keySet()) {
+            if (property.getOwner() == player) {
                 owned.add(property.getName());
             }
         }
         return owned;
     }
 
-    /** Swaps the properties between two players involved in an auction.
+    /**
+     * Swaps the properties between two players involved in an auction.
+     *
      * @param property1 The first property that is being traded.
      * @param property2 The second property that is being traded.
      */
@@ -49,18 +53,20 @@ public class PropertyManager implements Serializable {
         this.propertiesOwned.replace(property2, property2OriginalOwner, property1OriginalOwner);
     }
 
-    /** Sell all the properties owned by the player.
+    /**
+     * Sell all the properties owned by the player.
+     *
      * @param owner The player who is bankrupt.
      */
     // since this is used when player is bankrupt we do not update money
-    public void resetProperties(Player owner){
+    public void resetProperties(Player owner) {
         List<PropertyTile> propertiesToSell = new ArrayList<>();
-        for(PropertyTile property: propertiesOwned.keySet()){
-            if(owner.equals(property.getOwner())){
+        for (PropertyTile property : propertiesOwned.keySet()) {
+            if (owner.equals(property.getOwner())) {
                 propertiesToSell.add(property);
             }
         }
-        for(PropertyTile property : propertiesToSell) {
+        for (PropertyTile property : propertiesToSell) {
             sellProperty(property);
         }
     }
@@ -69,9 +75,9 @@ public class PropertyManager implements Serializable {
         return this.propertiesOwned;
     }
 
-    public PropertyTile stringToPropertyTile(String property_string){
+    public PropertyTile stringToPropertyTile(String property_string) {
         PropertyTile ReturnPropertyTile = null;
-        for (PropertyTile key : this.propertiesOwned.keySet()){
+        for (PropertyTile key : this.propertiesOwned.keySet()) {
             if (Objects.equals(key.getName(), property_string)) {
                 ReturnPropertyTile = key;
                 break;
