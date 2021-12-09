@@ -5,6 +5,7 @@ import java.util.List;
 public interface TileOutputBoundary {
     /**
      * Notify the user of some information
+     *
      * @param message The information you want to notify the user of
      */
     void notifyUser(String message);
@@ -13,10 +14,10 @@ public interface TileOutputBoundary {
      * Get a response from a user.
      * Preconditions: - acceptedResponse is a list of lowercase Strings
      *
-     * @param message The message to display to the user
+     * @param message           The message to display to the user
      * @param acceptedResponses List of responses we want to allow the user to respond with
      * @return The response entered by the user
-     *
+     * <p>
      * Postconditions: - the returned String is in acceptedResponses
      */
     String getResponse(String message, List<String> acceptedResponses);

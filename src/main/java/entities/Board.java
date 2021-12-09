@@ -12,35 +12,40 @@ public class Board implements Serializable {
     public static final int BOARD_SIZE = 28;
     public List<Tile> tiles;
 
-    public Board(){
+    public Board() {
         this.tiles = new ArrayList<>();
     }
 
     /**
      * Return the tile at the given index
+     *
      * @param index The index for the required tile
      * @return Tile at the requested index
      */
-    public Tile getTileAt(int index){
+    public Tile getTileAt(int index) {
         return this.tiles.get(index);
     }
 
     /**
      * Set the tiles of the Board
+     *
      * @param tiles List of tiles that the tiles on the board need to be set to
      */
-    public void setTiles(List<Tile> tiles) {this.tiles = tiles;}
+    public void setTiles(List<Tile> tiles) {
+        this.tiles = tiles;
+    }
 
     /**
      * Return a formatted HashMap data structure that will eventually
      * be passed through output boundaries (respecting Clean Architecture) to the presenter
+     *
      * @return A formatted HashMap data structure
      */
     public Map<String, TileDTO> getBoardDataTransferObj() {
         Map<String, TileDTO> boardData = new HashMap<>();
         TileDTO dto;
 
-        for (int i = 0; i < this.BOARD_SIZE; i++) {
+        for (int i = 0; i < BOARD_SIZE; i++) {
             Tile t = this.tiles.get(i);
             String name = t.getName();
 
@@ -51,7 +56,7 @@ public class Board implements Serializable {
                 int block = ((City) t).getBlock();
 
                 Boolean owned = t.isOwned();
-                if(owned){
+                if (owned) {
                     owner = ((City) t).getOwner().getUsername();
                 }
 

@@ -7,14 +7,15 @@ import java.io.*;
 
 public class GameStateSerializer implements SerializerBoundary {
 
-    private CmdLineUI ui = new CmdLineUI();
+    private final CmdLineUI ui = new CmdLineUI();
 
     /**
      * Save the game object to a file in the game directory
-     * @param game The GameController object that is being saved
+     *
+     * @param game     The GameController object that is being saved
      * @param filename Name of the file where the object is to be written
      */
-    public void save(GameController game, String filename){
+    public void save(GameController game, String filename) {
         try {
             // opens the file and writes the object into it, then closes the file and prints.
             FileOutputStream fileOut =
@@ -24,18 +25,18 @@ public class GameStateSerializer implements SerializerBoundary {
             out.close();
             fileOut.close();
             ui.printMessage("The game has been saved to " + filename + ".txt in the game directory.");
-        }
-        catch (IOException exception){
+        } catch (IOException exception) {
             exception.printStackTrace();
         }
     }
 
     /**
      * Load the game object from a file in the game directory
+     *
      * @param filepath Name of the file as it appears in the game directory without the extension
      * @return The GameController object that has been retrieved
      */
-    public GameController load(String filepath){
+    public GameController load(String filepath) {
         // initializes gc as null which can be returned if the code goes into the catch blocks.
         GameController gc = null;
         try {
@@ -48,8 +49,7 @@ public class GameStateSerializer implements SerializerBoundary {
 
         } catch (IOException exception) {
             exception.printStackTrace();
-        }
-        catch (ClassNotFoundException exception){
+        } catch (ClassNotFoundException exception) {
             ui.printMessage("GameController class not found!");
             exception.printStackTrace();
         }

@@ -21,9 +21,14 @@ public class TileManagerAuction {
         this.boardManager = boardManager;
     }
 
+    /**
+     * Directs the process of auctioning a property.
+     *
+     * @param player1 the Player that landed on the auction tile.
+     */
     public void auction(Player player1) {
         Player player2 = auctionPlayerHelper(player1);
-        if(player2 != null) {
+        if (player2 != null) {
             ArrayList<Object> offer = auctionOfferHelper();
             PropertyTile offeredProperty = (PropertyTile) offer.get(0);
             PropertyTile tradeProperty = (PropertyTile) offer.get(1);
@@ -32,9 +37,9 @@ public class TileManagerAuction {
                     " Do you accept the trade offer from " + player1.getUsername() + " of " + offeredProperty.getName() +
                     " and " + additionalCompensation + " in exchange for " + tradeProperty.getName() +
                     "? Please enter Y / N.", new ArrayList<>(Arrays.asList("y", "n")));
-            if(response.equalsIgnoreCase("N")){
+            if (response.equalsIgnoreCase("N")) {
                 this.outBound.notifyUser("Trade offer has been denied.");
-            }else{ // trade accepted
+            } else { // trade accepted
                 this.outBound.notifyUser("Trade offer has been accepted!");
                 propertyManager.swap_properties(offeredProperty, tradeProperty);
                 bankManager.subtractMoney(player1, additionalCompensation);
@@ -72,18 +77,17 @@ public class TileManagerAuction {
             else if (player1.getUsername().equals(player2.getUsername())) {
                 this.outBound.notifyUser("You cannot choose yourself!");
                 auctionPlayerHelper(player1);
-            }
-            else {
+            } else {
                 return player2;
             }
         }
         return null;
     }
 
-    private ArrayList<Object> auctionOfferHelper(){
+    private ArrayList<Object> auctionOfferHelper() {
         PropertyTile offeredProperty = null;
         PropertyTile tradeProperty = null;
-        while(offeredProperty == null | tradeProperty == null){
+        while (offeredProperty == null | tradeProperty == null) {
             String offeredPropertyString = this.outBound.getAnyResponse(
                     "Enter name of property you would like to offer in the trade");
             offeredProperty = propertyManager.stringToPropertyTile(offeredPropertyString);

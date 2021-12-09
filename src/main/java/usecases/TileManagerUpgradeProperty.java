@@ -12,18 +12,23 @@ public class TileManagerUpgradeProperty {
         this.outBound = outBound;
     }
 
-    public void upgradeProperty(Player player, City city){
+    /**
+     * Upgrades the City owned by Player by adding buildings.
+     *
+     * @param player the Player that owns the City
+     * @param city   the City owned by the Player
+     */
+    public void upgradeProperty(Player player, City city) {
         int upgrade_cost = (int) Math.round(city.getPrice() * 0.4);
-        if(player.getCash() >= upgrade_cost){
+        if (player.getCash() >= upgrade_cost) {
             Building upgradeBuilding = new Building(upgrade_cost, city.getRent());
             player.subtractCash(upgrade_cost);
             city.addBuilding(upgradeBuilding);
             city.setPrice(city.getPrice() + upgrade_cost);
             city.setRent(city.getRent() * 2);
             this.outBound.notifyUser("Property has been upgraded, new rent is " + city.getRent());
-        }else{
+        } else {
             this.outBound.notifyUser(player.getUsername() + ", you do not have enough to pay.");
         }
     }
-
 }

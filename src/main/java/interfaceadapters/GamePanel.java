@@ -19,7 +19,7 @@ public class GamePanel extends JPanel {
 
     private Map<Integer, Color> playerToColour;
     private final Map<String, Integer> usernameToNum;
-    private Map<Integer, Integer> tokenTo1DPosition;
+    private final Map<Integer, Integer> tokenTo1DPosition;
 
     public GamePanel() {
         setLayout(new BorderLayout());
@@ -38,11 +38,12 @@ public class GamePanel extends JPanel {
 
     /**
      * Refreshes the GUI using information from DTOs, delegating to BoardPanel and PlayerPanel
-     * @param boardData a DTO containing an updated copy of board information, including prices, ownership, and rent
+     *
+     * @param boardData  a DTO containing an updated copy of board information, including prices, ownership, and rent
      * @param playerData a DTO containing raw information on player name, number, cash, net worth, etc
      */
     public void update(Map<String, TileDTO> boardData, Map<Integer, PlayerDTO> playerData) {
-        if(this.numOfPlayers == 0){
+        if (this.numOfPlayers == 0) {
             constantSetUp(playerData);
         }
 
@@ -55,9 +56,10 @@ public class GamePanel extends JPanel {
     /**
      * Instantiates the attributes and objects that are constant throughout the game, and only need to be "updated" once,
      * i.e. when we first receive a copy of the DTOs
+     *
      * @param playerData a DTO containing raw information on player name, number, cash, net worth, etc
      */
-    private void constantSetUp(Map<Integer, PlayerDTO> playerData){
+    private void constantSetUp(Map<Integer, PlayerDTO> playerData) {
         this.numOfPlayers = playerData.size();
         for (int i = 1; i <= numOfPlayers; i++) {
             this.usernameToNum.put(playerData.get(i).username, i);
@@ -67,10 +69,11 @@ public class GamePanel extends JPanel {
 
     /**
      * Initializes a map that takes each token's number to its 1D location in the tile array.
-     * @param boardData a DTO containing an updated copy of board information, including prices, ownership, and rent
+     *
+     * @param boardData  a DTO containing an updated copy of board information, including prices, ownership, and rent
      * @param playerData a DTO containing raw information on player name, number, cash, net worth, etc
      */
-    private void initializeMaps(Map<String, TileDTO> boardData, Map<Integer, PlayerDTO> playerData){
+    private void initializeMaps(Map<String, TileDTO> boardData, Map<Integer, PlayerDTO> playerData) {
         for (int i = 1; i <= numOfPlayers; i++) {
             this.tokenTo1DPosition.put(i, playerData.get(i).location);
         }
