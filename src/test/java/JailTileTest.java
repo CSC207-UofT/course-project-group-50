@@ -1,19 +1,11 @@
-import details.CmdLineUI;
 import entities.JailTile;
 import entities.Player;
-import interfaceadapters.GameController;
-import interfaceadapters.GameSetUp;
-import interfaceadapters.Presenter;
 import org.junit.Before;
 import org.junit.Test;
 import usecases.BoardManager;
-import usecases.ConstantsInputBoundary;
 import usecases.TileManagerFacade;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -23,13 +15,12 @@ public class JailTileTest {
     JailTile testJailTile;
     Player player1;
     Player player2;
-    GameController testGameController;
     BoardManager testBoardManager;
     TileManagerFacade testTileManagerFacade;
 
     @Before
     public void setUp() throws IOException {
-        GameSetup setup =  new GameSetup();
+        GameSetupTest setup =  new GameSetupTest();
         testTileManagerFacade = setup.getTileManagerFacade();
         testBoardManager = setup.getBoardManager();
         testJailTile = new JailTile();

@@ -1,5 +1,6 @@
 import entities.Player;
 import entities.StartTile;
+import interfaceadapters.GameSetUp;
 import org.junit.Before;
 import org.junit.Test;
 import usecases.ConstantsInputBoundary;
@@ -18,7 +19,7 @@ public class StartTileTest {
     public void setUp() throws IOException {
         testStartTile = new StartTile();
         player1 = new Player("entities.Player 1", new ConstantsInputBoundary());
-        testTileManagerFacade = new GameSetup().getTileManagerFacade();
+        testTileManagerFacade = new GameSetupTest().getTileManagerFacade();
     }
 
     @Test(timeout = 50)

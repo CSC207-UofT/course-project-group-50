@@ -1,5 +1,3 @@
-import entities.City;
-import entities.Player;
 import interfaceadapters.GameController;
 import org.junit.After;
 import org.junit.Before;
@@ -7,7 +5,6 @@ import org.junit.Test;
 import usecases.BankManager;
 import usecases.BoardManager;
 import usecases.PropertyManager;
-import usecases.TileManagerBuyProperty;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -16,7 +13,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 
 public class GameControllerTest {
@@ -31,7 +27,7 @@ public class GameControllerTest {
     @Before
     public void setUp() throws IOException {
         System.setOut(new PrintStream(outContent));
-        GameSetup setup =  new GameSetup();
+        GameSetupTest setup =  new GameSetupTest();
         testGameController = setup.getGameController();
         testBoardManager = setup.getBoardManager();
         testPropertyManager = new PropertyManager();
@@ -46,7 +42,7 @@ public class GameControllerTest {
     @Test(timeout = 50)
     public void testNotifyUser() {
         testGameController.notifyUser("hey");
-        assertEquals("hey" + "\r\n" , outContent.toString());
+        assertEquals("hey" + "\n" , outContent.toString());
     }
 
     @Test(timeout = 50)

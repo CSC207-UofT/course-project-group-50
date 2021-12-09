@@ -22,7 +22,7 @@ public class BankManagerTest {
         testBankManager = new BankManager();
         player1 = new Player("entities.Player 1", new ConstantsInputBoundary());
         player2 = new Player("entities.Player 2", new ConstantsInputBoundary());
-        property1 = new City("Property 1", 50, 10, "red");
+        property1 = new City("Property 1", 50, 10, 1);
     }
 
     @Test(timeout = 50)
