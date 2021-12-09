@@ -84,3 +84,4 @@ We considered packaging by feature since it’s both simple and intuitive, with 
 
 ## Future Directions
 
+For Phase 2, we focused heavily on developing the GUI and making it as intuitive and accessible to the players as possible. In the near future, we plan on adding the save feature in the GUI. For Phase 1, we developed a working save and load option in the command line UI. But since the process of serialization is dramatically different for graphical user interfaces, we tested various approaches, and finally decided to not include the option to quit and save in the GUI due to time constraints. For GUI serialization, instead of simply saving and re-accessing the stored GUI object later, we have to save the raw data, and then rebuild the GUI when the game is loaded. Due to time constraints, we chose not to focus on this, and rather focus on the crucial features such as the GUI, enhancement of underlying code, testing, and debugging.
